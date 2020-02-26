@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/kentcdodds/react-workshop-app#readme",
   "files": [
-    "dist"
+    "dist",
+    "load-exercises.js",
+    "setup-tests.js"
   ],
   "scripts": {
     "build": "kcd-scripts build",
