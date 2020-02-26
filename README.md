@@ -126,10 +126,10 @@ MIT
 <!-- prettier-ignore-start -->
 [npm]: https://www.npmjs.com
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/travis/kentcdodds/@kentcdodds/react-workshop-app.svg?style=flat-square
-[build]: https://travis-ci.org/kentcdodds/@kentcdodds/react-workshop-app
-[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/@kentcdodds/react-workshop-app.svg?style=flat-square
-[coverage]: https://codecov.io/github/kentcdodds/@kentcdodds/react-workshop-app
+[build-badge]: https://img.shields.io/travis/kentcdodds/react-workshop-app.svg?style=flat-square
+[build]: https://travis-ci.org/kentcdodds/react-workshop-app
+[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/react-workshop-app.svg?style=flat-square
+[coverage]: https://codecov.io/github/kentcdodds/react-workshop-app
 [version-badge]: https://img.shields.io/npm/v/@kentcdodds/react-workshop-app.svg?style=flat-square
 [package]: https://www.npmjs.com/package/@kentcdodds/react-workshop-app
 [downloads-badge]: https://img.shields.io/npm/dm/@kentcdodds/react-workshop-app.svg?style=flat-square

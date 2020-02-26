@@ -1,6 +1,9 @@
 {
   "name": "@kentcdodds/react-workshop-app",
   "version": "0.0.0-semantically-released",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "An abstraction for all my React workshops",
   "main": "dist/index.js",
   "keywords": [],
