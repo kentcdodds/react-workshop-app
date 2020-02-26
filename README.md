@@ -20,11 +20,13 @@
 
 ## The problem
 
-// TODO
+I have several repositories for
+[my React workshops](https://kentcdodds.com/workshops)
 
 ## This solution
 
-// TODO
+This is a set of common abstractions I found useful in those workshop
+repositories
 
 ## Table of Contents
 
@@ -33,8 +35,6 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Inspiration](#inspiration)
-- [Other Solutions](#other-solutions)
 - [Issues](#issues)
   - [🐛 Bugs](#-bugs)
   - [💡 Feature Requests](#-feature-requests)
@@ -54,16 +54,31 @@ npm install --save @kentcdodds/react-workshop-app
 
 ## Usage
 
-// TODO
+This is intended to be used with create-react-app (but it doesn't have to be).
 
-## Inspiration
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+import preval from 'preval.macro'
+import createWorkshopApp from '@kentcdodds/react-workshop-app'
+import pkg from '../package.json'
 
-// TODO
+const exerciseInfo = preval`module.exports = require('@kentcdodds/react-workshop-app/load-exercises')`
 
-## Other Solutions
+const WorkshopApp = createWorkshopApp({
+  getExerciseImport: id => () => import(`./exercises/${id}.js`),
+  getFinalImport: id => () => import(`./exercises-final/${id}.js`),
+  getExampleImport: id => () => import(`./examples/${id}.js`),
+  exerciseInfo,
+  projectTitle: pkg.title,
+})
 
-I'm not aware of any, if you are please [make a pull request][prs] and add it
-here!
+const rootEl = document.getElementById('⚛')
+ReactDOM.render(<WorkshopApp />, rootEl)
+```
+
+Then you'll need to have those directories set up. Probably easiest to look at
+one of my repos that use this.
 
 ## Issues
 
