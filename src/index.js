@@ -1,5 +1,6 @@
 import preval from 'preval.macro'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import {
   BrowserRouter as Router,
   Switch,
@@ -339,19 +340,166 @@ function createKCDWorkshopApp({
     }, [className])
   }
 
+  // function WorkshopApp() {
+  //   const [location, setLocation] = React.useState(history.location)
+  //   React.useEffect(() => history.listen(l => setLocation(l)), [])
+  //   useExerciseTitle(location)
+  //   useLocationBodyClassName(location)
+
+  //   const IsolatedComponent = useIsolatedComponent(location)
+
+  //   return (
+  //     <React.Suspense
+  //       fallback={
+  //         <div style={{height: '100vh'}} className="totally-centered">
+  //           Loading...
+  //         </div>
+  //       }
+  //     >
+  //       {IsolatedComponent ? (
+  //         <div className="isolated-top-container">
+  //           <div className="isolated-div-wrapper">
+  //             <IsolatedComponent />
+  //           </div>
+  //         </div>
+  //       ) : (
+  //         <Routes />
+  //       )}
+  //     </React.Suspense>
+  //   )
+  // }
+
   // The reason we don't put the Isolated components as regular routes
   // and do all this complex stuff instead is so the React DevTools component
   // tree is as small as possible to make it easier for people to figure
   // out what is relevant to the example.
-  function WorkshopApp() {
-    const [location, setLocation] = React.useState(history.location)
-    React.useEffect(() => history.listen(l => setLocation(l)), [])
-    useExerciseTitle(location)
-    useLocationBodyClassName(location)
+  function getIsolatedModuleImport({
+    isIsolated,
+    isFinal,
+    isExercise,
+    isExample,
+    exerciseName,
+  }) {
+    if (!isIsolated) {
+      return null
+    }
+    if (!exerciseName) {
+      return null
+    }
 
-    const IsolatedComponent = useIsolatedComponent(location)
+    if (isFinal) {
+      return getFinalImport(exerciseName)
+    } else if (isExercise) {
+      return getExerciseImport(exerciseName)
+    } else if (getExampleImport && isExample) {
+      return getExampleImport(exerciseName)
+    }
+    return null
+  }
 
-    return (
+  let previousLocation = history.location
+
+  function handleLocationChange(location = history.location) {
+    const {pathname} = location
+    // add location pathname to classList of the body
+    document.body.classList.remove(
+      previousLocation.pathname.replace(/\//g, '_'),
+    )
+    document.body.classList.add(pathname.replace(/\//g, '_'))
+
+    // set the title to have info for the exercise
+    const isIsolated = pathname.startsWith('/isolated')
+    const isFinal = pathname.includes('/exercises-final/')
+    const isExercise = pathname.includes('/exercises/')
+    const isExample = pathname.includes('/examples/')
+    const exerciseName = isIsolated
+      ? pathname.split(/\/isolated\/.*?\//).slice(-1)[0]
+      : pathname.split('/').slice(-1)[0]
+
+    document.title = [
+      projectTitle,
+      exerciseName,
+      isExercise ? 'Exercise' : null,
+      isFinal ? 'Final' : null,
+    ]
+      .filter(Boolean)
+      .join(' | ')
+
+    const isolatedModuleImport = getIsolatedModuleImport({
+      isIsolated,
+      isFinal,
+      isExercise,
+      isExample,
+      exerciseName,
+    })
+
+    if (isolatedModuleImport) {
+      renderIsolated(isolatedModuleImport)
+    } else {
+      renderReact()
+    }
+    previousLocation = location
+  }
+
+  const rootEl = document.getElementById('⚛')
+
+  function renderIsolated(isolatedModuleImport) {
+    ReactDOM.unmountComponentAtNode(rootEl)
+    rootEl.innerHTML = `
+      <div style={{height: '100vh'}} className="totally-centered">
+        Loading...
+      </div>
+    `
+    isolatedModuleImport().then(async ({default: defaultExport}) => {
+      if (typeof defaultExport === 'function') {
+        ReactDOM.render(React.createElement(defaultExport), rootEl)
+      } else if (typeof defaultExport === 'string') {
+        document.documentElement.innerHTML = defaultExport
+
+        // to get all the scripts to actually run, you have to create new script
+        // elements, and no, cloneElement doesn't work unfortunately.
+        // Apparently, scripts will only get loaded/run if you use createElement.
+        const scripts = Array.from(document.querySelectorAll('script'))
+        const loadingScriptsQueue = []
+        for (const script of scripts) {
+          // if we're dealing with an inline script, we need to wait for all other
+          // scripts to finish loading before we run it
+          if (!script.hasAttribute('src')) {
+            // eslint-disable-next-line no-await-in-loop
+            await Promise.all(loadingScriptsQueue)
+          }
+          // replace the script
+          const newScript = document.createElement('script')
+          for (const attrName of script.getAttributeNames()) {
+            newScript.setAttribute(attrName, script.getAttribute(attrName))
+          }
+          newScript.innerHTML = script.innerHTML
+          script.parentNode.insertBefore(newScript, script)
+          script.parentNode.removeChild(script)
+
+          // if the new script has a src, add it to the queue
+          if (script.hasAttribute('src')) {
+            loadingScriptsQueue.push(
+              new Promise(resolve => (newScript.onload = resolve)),
+            )
+          }
+        }
+
+        // now make sure all src scripts are loaded before continuing
+        await Promise.all(loadingScriptsQueue)
+
+        // Babel will call this when the DOMContentLoaded event fires
+        // but because the content has already loaded, that event will never
+        // fire, so we'll run it ourselves
+        if (window.Babel) {
+          window.Babel.transformScriptTags()
+        }
+      }
+    })
+  }
+
+  function renderReact() {
+    ReactDOM.render(
       <React.Suspense
         fallback={
           <div style={{height: '100vh'}} className="totally-centered">
@@ -359,20 +507,27 @@ function createKCDWorkshopApp({
           </div>
         }
       >
-        {IsolatedComponent ? (
-          <div className="isolated-top-container">
-            <div className="isolated-div-wrapper">
-              <IsolatedComponent />
-            </div>
-          </div>
-        ) : (
-          <Routes />
-        )}
-      </React.Suspense>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/:exerciseId">
+              <ExerciseContainer />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </Router>
+      </React.Suspense>,
+      rootEl,
     )
   }
 
-  return WorkshopApp
+  history.listen(handleLocationChange)
+  // kick it off to get us started
+  handleLocationChange()
 }
 
 export default createKCDWorkshopApp
