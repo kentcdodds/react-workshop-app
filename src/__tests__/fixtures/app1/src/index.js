@@ -26,16 +26,18 @@ const getExampleImport = jest.fn(() => () =>
 const fakeFetchResponses = [{test: jest.fn(), handler: jest.fn()}]
 const projectTitle = 'Test Project'
 
-const WorkshopApp = createKCDWorkshopApp({
-  getExerciseImport,
-  getFinalImport,
-  getExampleImport,
-  exerciseInfo,
-  fakeFetchResponses,
-  projectTitle,
-})
+function go() {
+  createKCDWorkshopApp({
+    getExerciseImport,
+    getFinalImport,
+    getExampleImport,
+    exerciseInfo,
+    fakeFetchResponses,
+    projectTitle,
+  })
+}
 
-Object.assign(WorkshopApp, {
+export {
   exerciseInfo,
   MockExercise,
   getExerciseImport,
@@ -45,6 +47,6 @@ Object.assign(WorkshopApp, {
   getExampleImport,
   fakeFetchResponses,
   projectTitle,
-})
+}
 
-export default WorkshopApp
+export default go
