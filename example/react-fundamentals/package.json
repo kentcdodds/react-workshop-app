@@ -1,0 +1,82 @@
+{
+  "name": "react-fundamentals",
+  "version": "1.0.0",
+  "description": "The material for learning React fundamentals",
+  "title": "React Fundamentals ⚛",
+  "keywords": [],
+  "homepage": "http://react-fundamentals.netlify.com/",
+  "license": "GPL-3.0-only",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6",
+    "yarn": ">=1"
+  },
+  "dependencies": {
+    "@kentcdodds/react-workshop-app": "file:../..",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "chalk": "^3.0.0",
+    "codegen.macro": "^3.0.0",
+    "is-ci-cli": "^2.0.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  },
+  "devDependencies": {
+    "@testing-library/cypress": "^5.3.0",
+    "cypress": "^4.0.2",
+    "eslint-plugin-cypress": "^2.10.3",
+    "husky": "^4.0.10",
+    "npm-run-all": "^4.1.5",
+    "react-scripts": "^3.3.0",
+    "serve": "^11.3.0",
+    "start-server-and-test": "^1.10.8"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "serve": "serve --no-clipboard --single --listen 8080 build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "test:coverage": "npm run test -- --watchAll=false --coverage",
+    "test:exercises": "npm run test -- testing.*exercises\\/ --onlyChanged",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "test:e2e": "is-ci \"test:e2e:run\" \"test:e2e:dev\"",
+    "pretest:e2e:run": "npm run build",
+    "test:e2e:run": "start-server-and-test serve http://localhost:8080 cy:run",
+    "test:e2e:dev": "start-server-and-test start http://localhost:3000 cy:open",
+    "setup": "node ./scripts/setup",
+    "lint": "eslint .",
+    "// postinstall": "to avoid multiple copies of react on the page. /me shrugs",
+    "postinstall": "rm -rf node_modules/react node_modules/react-dom",
+    "validate": "npm-run-all --parallel build test:coverage lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run validate"
+    }
+  },
+  "babel": {
+    "presets": [
+      "babel-preset-react-app"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/exercises-final/**/*.js"
+    ]
+  },
+  "browserslist": {
+    "development": [
+      "last 2 chrome versions",
+      "last 2 firefox versions",
+      "last 2 edge versions"
+    ],
+    "production": [
+      ">1%",
+      "last 4 versions",
+      "Firefox ESR",
+      "not ie < 11"
+    ]
+  }
+}
