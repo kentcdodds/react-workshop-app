@@ -11,6 +11,8 @@ const styleTag = document.createElement('style')
 styleTag.innerHTML = `${normalizeStyles}${workshopStyles}`
 document.head.prepend(styleTag)
 
+const originalHTML = document.documentElement.innerHTML
+
 function createKCDWorkshopApp({
   imports,
   filesInfo,
@@ -64,19 +66,31 @@ function createKCDWorkshopApp({
     previousLocation = location
   }
 
-  const rootEl = document.getElementById('⚛')
   let unmount
 
   function renderIsolated(isolatedModuleImport) {
-    unmount?.(rootEl)
-    rootEl.innerHTML = `
-      <div style={{height: '100vh'}} className="totally-centered">
-        Loading...
-      </div>
-    `
+    flushApp()
+    if (!isolatedModuleImport) {
+      document.body.innerHTML = `
+        <div class="fill-screen-center">
+          <div>
+            Sorry... nothing here. To open one of the exercises, go to
+            <code>\`/exerciseNumber\`</code>, for example:
+            <a href="/1"><code>/1</code></a>
+          </div>
+        </div>
+      `
+      return
+    }
+
     isolatedModuleImport().then(async ({default: defaultExport}) => {
       if (typeof defaultExport === 'function') {
-        ReactDOM.render(React.createElement(defaultExport), rootEl)
+        ReactDOM.render(
+          <div className="fill-screen-center">
+            {React.createElement(defaultExport)}
+          </div>,
+          document.getElementById('⚛'),
+        )
       } else if (typeof defaultExport === 'string') {
         document.documentElement.innerHTML = defaultExport
 
@@ -123,20 +137,29 @@ function createKCDWorkshopApp({
   }
 
   function renderReact() {
-    unmount?.(rootEl)
-    rootEl.innerHTML = `
-      <div style={{height: '100vh'}} className="totally-centered">
-        Loading...
-      </div>
-    `
+    flushApp()
     import('./react-app').then(reactApp => {
       unmount = reactApp.renderReactApp({
+        history,
         projectTitle,
         filesInfo,
         lazyComponents,
+        imports,
         renderOptions,
       })
     })
+  }
+
+  function flushApp() {
+    document.documentElement.innerHTML = originalHTML
+    if (document.getElementById('⚛')) {
+      unmount?.(document.getElementById('⚛'))
+    }
+    document.getElementById('⚛').innerHTML = `
+      <div class="fill-screen-center">
+        Loading...
+      </div>
+    `
   }
 
   history.listen(handleLocationChange)

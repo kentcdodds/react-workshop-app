@@ -9,19 +9,28 @@ import {
 } from 'react-router-dom'
 import {hijackEffects} from 'stop-runaway-react-effects'
 
+const originalUseEffect = React.useEffect
+
 function renderReactApp({
+  history,
   projectTitle,
   filesInfo,
   lazyComponents,
+  imports,
   renderOptions: {stopRunawayEffects = true} = {},
 }) {
-  if (process.env.NODE_ENV !== 'production' && stopRunawayEffects) {
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    stopRunawayEffects &&
+    React.useEffect === originalUseEffect
+  ) {
     hijackEffects()
   }
 
   const exerciseInfo = []
+  const exerciseTypes = ['final', 'exercise', 'extraCredit', 'instruction']
   for (const fileInfo of filesInfo) {
-    if (fileInfo.parentDir === 'final' || fileInfo.parentDir === 'exercise') {
+    if (exerciseTypes.includes(fileInfo.type)) {
       exerciseInfo[fileInfo.number] = exerciseInfo[fileInfo.number] ?? {
         extraCredit: [],
       }
@@ -41,8 +50,10 @@ function renderReactApp({
   }
 
   for (const info of exerciseInfo) {
-    info.next = exerciseInfo[info.number + 1]
-    info.previous = exerciseInfo[info.number - 1]
+    if (info) {
+      info.next = exerciseInfo[info.number + 1]
+      info.previous = exerciseInfo[info.number - 1]
+    }
   }
 
   function handleAnchorClick(event) {
@@ -55,7 +66,7 @@ function renderReactApp({
 
   function ComponentContainer({label, ...props}) {
     return (
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
         <h2 style={{textAlign: 'center'}}>{label}</h2>
         <div
           style={{
@@ -71,6 +82,7 @@ function renderReactApp({
       </div>
     )
   }
+  ComponentContainer.displayName = 'ComponentContainer'
 
   function ExtraCreditLinks({exerciseNumber}) {
     const {extraCredit} = exerciseInfo[exerciseNumber]
@@ -98,17 +110,83 @@ function renderReactApp({
       </div>
     )
   }
+  ExtraCreditLinks.displayName = 'ExtraCreditLinks'
+
+  function IsolatedHtml({importHtml}) {
+    const [{status, html, error}, setState] = React.useState({
+      status: 'idle',
+      html: null,
+    })
+
+    React.useEffect(() => {
+      importHtml().then(
+        ({default: htmlString}) => {
+          setState({html: htmlString, error: null, status: 'success'})
+        },
+        e => {
+          setState({html: null, error: e, status: 'success'})
+        },
+      )
+    }, [importHtml])
+
+    return (
+      <div style={{minHeight: 300, width: '100%'}}>
+        {status === 'idle' || status === 'loading' ? (
+          <div className="totally-centered">Loading...</div>
+        ) : status === 'error' ? (
+          <div className="totally-centered">
+            <div>Error loading</div>
+            <pre>{error.message}</pre>
+          </div>
+        ) : (
+          <HtmlInIframe html={html} />
+        )}
+      </div>
+    )
+  }
+  IsolatedHtml.displayName = 'IsolatedHtml'
+
+  function HtmlInIframe({html}) {
+    const iframeRef = React.useRef(null)
+    React.useEffect(() => {
+      if (!iframeRef.current.contentDocument) {
+        // if they're navigating around quickly this can happen
+        return
+      }
+      iframeRef.current.contentDocument.open()
+      iframeRef.current.contentDocument.write(html)
+      iframeRef.current.contentDocument.close()
+    }, [html])
+    return (
+      // eslint-disable-next-line jsx-a11y/iframe-has-title
+      <iframe style={{border: 'none'}} ref={iframeRef} />
+    )
+  }
+  HtmlInIframe.displayName = 'HtmlInIframe'
 
   function ExerciseContainer() {
     const {exerciseNumber} = useParams()
     const {title, exercise, final} = exerciseInfo[exerciseNumber]
-    const Exercise = lazyComponents[exercise.id]
-    const Final = lazyComponents[final.id]
+    let exerciseElement, finalElement
+
+    if (lazyComponents[exercise.id]) {
+      exerciseElement = React.createElement(lazyComponents[exercise.id])
+    }
+    if (lazyComponents[final.id]) {
+      finalElement = React.createElement(lazyComponents[final.id])
+    }
+    if (exercise.ext === '.html') {
+      exerciseElement = <IsolatedHtml importHtml={imports[exercise.id]} />
+    }
+    if (final.ext === '.html') {
+      finalElement = <IsolatedHtml importHtml={imports[final.id]} />
+    }
+
     return (
       <div
         style={{
           padding: '20px 20px 40px 20px',
-          minHeight: '100%',
+          minHeight: '100vh',
           display: 'grid',
           gridGap: '20px',
           gridTemplateColumns: '1fr 1fr',
@@ -123,7 +201,7 @@ function renderReactApp({
             </a>
           }
         >
-          <Exercise />
+          {exerciseElement}
         </ComponentContainer>
         <ComponentContainer
           label={
@@ -132,13 +210,14 @@ function renderReactApp({
             </a>
           }
         >
-          <Final />
+          {finalElement}
         </ComponentContainer>
         <NavigationFooter exerciseNumber={exerciseNumber} />
         <ExtraCreditLinks exerciseNumber={exerciseNumber} />
       </div>
     )
   }
+  ExerciseContainer.displayName = 'ExerciseContainer'
 
   function NavigationFooter({exerciseNumber}) {
     const info = exerciseInfo[exerciseNumber]
@@ -176,6 +255,7 @@ function renderReactApp({
       </div>
     )
   }
+  NavigationFooter.displayName = 'NavigationFooter'
 
   function Home() {
     return (
@@ -202,51 +282,47 @@ function renderReactApp({
           {' Final Version'}
         </span>
         <div>
-          {exerciseInfo.map(({id, number, title, final, exercise}) => {
-            return (
-              <div key={id} style={{margin: 10, fontSize: '1.2rem'}}>
-                {number}
-                {'. '}
-                <Link to={`/${number}`}>{title}</Link>{' '}
-                <a
-                  style={{textDecoration: 'none'}}
-                  href={exercise.isolatedPath}
-                  onClick={handleAnchorClick}
-                  title="exercise"
-                >
-                  <span role="img" aria-label="muscle">
-                    💪
-                  </span>
-                </a>
-                {' – '}
-                <a
-                  style={{textDecoration: 'none'}}
-                  href={final.isolatedPath}
-                  onClick={handleAnchorClick}
-                  title="final"
-                >
-                  <span role="img" aria-label="checkered flag">
-                    🏁
-                  </span>
-                </a>
-              </div>
-            )
-          })}
+          {exerciseInfo
+            .filter(Boolean)
+            .map(({id, number, title, final, exercise}) => {
+              return (
+                <div key={id} style={{margin: 10, fontSize: '1.2rem'}}>
+                  {number}
+                  {'. '}
+                  <Link to={`/${number}`}>{title}</Link>{' '}
+                  <a
+                    style={{textDecoration: 'none'}}
+                    href={exercise.isolatedPath}
+                    onClick={handleAnchorClick}
+                    title="exercise"
+                  >
+                    <span role="img" aria-label="muscle">
+                      💪
+                    </span>
+                  </a>
+                  {' – '}
+                  <a
+                    style={{textDecoration: 'none'}}
+                    href={final.isolatedPath}
+                    onClick={handleAnchorClick}
+                    title="final"
+                  >
+                    <span role="img" aria-label="checkered flag">
+                      🏁
+                    </span>
+                  </a>
+                </div>
+              )
+            })}
         </div>
       </div>
     )
   }
+  Home.displayName = 'Home'
 
   function NotFound() {
     return (
-      <div
-        style={{
-          height: '100%',
-          display: 'grid',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+      <div className="totally-centered">
         <div>
           {`Sorry... nothing here. To open one of the exercises, go to `}
           <code>{`/exerciseNumber`}</code>
@@ -258,6 +334,7 @@ function renderReactApp({
       </div>
     )
   }
+  NotFound.displayName = 'NotFound'
 
   ReactDOM.render(
     <React.Suspense
