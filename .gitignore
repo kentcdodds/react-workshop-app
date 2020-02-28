@@ -6,6 +6,8 @@ build
 .opt-out
 .DS_Store
 
+*ignored*
+
 # these cause more harm than good
 # when working with contributors
 package-lock.json
