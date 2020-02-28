@@ -1,6 +1,0 @@
-{
-  "title": "Test Workshop",
-  "dependencies": {
-    "codegen.macro": "^3.0.0"
-  }
-}

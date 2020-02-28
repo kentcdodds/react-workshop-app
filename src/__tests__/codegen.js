@@ -1,7 +1,7 @@
 import path from 'path'
 import codegen from '../codegen'
 
-const cwd = path.join(__dirname, 'fixtures/app1')
+const cwd = path.join(__dirname, '../../example/react-fundamentals')
 
 expect.addSnapshotSerializer({
   test(val) {

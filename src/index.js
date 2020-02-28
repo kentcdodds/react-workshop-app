@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {createBrowserHistory} from 'history'
 import hackFetch from './hack-fetch'
+import {renderReactApp} from './react-app'
 
 const workshopStyles = preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`
 const normalizeStyles = preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`
@@ -138,15 +139,13 @@ function createKCDWorkshopApp({
 
   function renderReact() {
     flushApp()
-    import('./react-app').then(reactApp => {
-      unmount = reactApp.renderReactApp({
-        history,
-        projectTitle,
-        filesInfo,
-        lazyComponents,
-        imports,
-        renderOptions,
-      })
+    unmount = renderReactApp({
+      history,
+      projectTitle,
+      filesInfo,
+      lazyComponents,
+      imports,
+      renderOptions,
     })
   }
 
