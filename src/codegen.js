@@ -8,9 +8,9 @@ function getCode({cwd = process.cwd(), ignore, renderOptions} = {}) {
   const imports = filesInfo.map(({id, fullFilePath, ext}) => {
     let loaders = ''
     if (ext === '.html') {
-      loaders = 'raw-loader!'
+      loaders = '!raw-loader!'
     } else if (ext === '.md' || ext === '.mdx') {
-      loaders = 'babel-loader!mdx-loader!'
+      loaders = '!babel-loader!mdx-loader!'
     }
     return `"${id}": () => import("${loaders}${fullFilePath}")`
   })

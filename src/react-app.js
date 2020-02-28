@@ -166,14 +166,17 @@ function renderReactApp({
 
   function ExerciseContainer() {
     const {exerciseNumber} = useParams()
-    const {title, exercise, final} = exerciseInfo[exerciseNumber]
-    let exerciseElement, finalElement
+    const {instruction, exercise, final} = exerciseInfo[exerciseNumber]
+    let exerciseElement, finalElement, instructionElement
 
     if (lazyComponents[exercise.id]) {
       exerciseElement = React.createElement(lazyComponents[exercise.id])
     }
     if (lazyComponents[final.id]) {
       finalElement = React.createElement(lazyComponents[final.id])
+    }
+    if (lazyComponents[instruction.id]) {
+      instructionElement = React.createElement(lazyComponents[instruction.id])
     }
     if (exercise.ext === '.html') {
       exerciseElement = <IsolatedHtml importHtml={imports[exercise.id]} />
@@ -187,31 +190,40 @@ function renderReactApp({
         style={{
           padding: '20px 20px 40px 20px',
           minHeight: '100vh',
-          display: 'grid',
-          gridGap: '20px',
-          gridTemplateColumns: '1fr 1fr',
-          gridTemplateRows: '30px 1fr 30px',
+          // display: 'grid',
+          // gridGap: '20px',
+          // gridTemplateColumns: '1fr 1fr',
         }}
       >
-        <h1 style={{gridColumn: 'span 2', textAlign: 'center'}}>{title}</h1>
-        <ComponentContainer
-          label={
-            <a href={exercise.isolatedPath} onClick={handleAnchorClick}>
-              Exercise
-            </a>
-          }
+        <div style={{gridColumn: 'span 2'}}>{instructionElement}</div>
+        <hr />
+        <div
+          style={{
+            display: 'grid',
+            gridGap: '20px',
+            gridTemplateColumns: '1fr 1fr',
+          }}
         >
-          {exerciseElement}
-        </ComponentContainer>
-        <ComponentContainer
-          label={
-            <a href={final.isolatedPath} onClick={handleAnchorClick}>
-              Final
-            </a>
-          }
-        >
-          {finalElement}
-        </ComponentContainer>
+          <ComponentContainer
+            label={
+              <a href={exercise.isolatedPath} onClick={handleAnchorClick}>
+                Exercise
+              </a>
+            }
+          >
+            {exerciseElement}
+          </ComponentContainer>
+          <ComponentContainer
+            label={
+              <a href={final.isolatedPath} onClick={handleAnchorClick}>
+                Final
+              </a>
+            }
+          >
+            {finalElement}
+          </ComponentContainer>
+        </div>
+        <hr />
         <NavigationFooter exerciseNumber={exerciseNumber} />
         <ExtraCreditLinks exerciseNumber={exerciseNumber} />
       </div>
