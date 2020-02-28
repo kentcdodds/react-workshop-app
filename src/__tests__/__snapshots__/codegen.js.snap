@@ -1,0 +1,219 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`review the snapshot please 1`] = `
+import makeWorkshopApp from '@kentcdodds/react-workshop-app'
+import pkg from '../package.json'
+
+const filesInfo = [
+  {
+    "id": "src/examples/example.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/examples/example.js",
+    "filePath": "src/examples/example.js",
+    "isolatedPath": "/isolated/examples/example.js",
+    "ext": ".js",
+    "filename": "example",
+    "type": "examples",
+    "number": 0,
+    "extraCreditNumber": 0
+  },
+  {
+    "id": "src/exercise/01.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/01.js",
+    "filePath": "src/exercise/01.js",
+    "isolatedPath": "/isolated/exercise/01.js",
+    "ext": ".js",
+    "filename": "01",
+    "type": "exercise",
+    "number": 1,
+    "extraCreditNumber": 1,
+    "title": "01 Example",
+    "extraCreditTitle": ""
+  },
+  {
+    "id": "src/exercise/01.md",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/01.md",
+    "filePath": "src/exercise/01.md",
+    "isolatedPath": "/isolated/exercise/01.md",
+    "ext": ".md",
+    "filename": "01",
+    "type": "instruction",
+    "number": 1,
+    "extraCreditNumber": 1,
+    "title": "01 example"
+  },
+  {
+    "id": "src/exercise/02.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/02.js",
+    "filePath": "src/exercise/02.js",
+    "isolatedPath": "/isolated/exercise/02.js",
+    "ext": ".js",
+    "filename": "02",
+    "type": "exercise",
+    "number": 2,
+    "extraCreditNumber": 2,
+    "title": "02 Example",
+    "extraCreditTitle": ""
+  },
+  {
+    "id": "src/exercise/02.md",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/02.md",
+    "filePath": "src/exercise/02.md",
+    "isolatedPath": "/isolated/exercise/02.md",
+    "ext": ".md",
+    "filename": "02",
+    "type": "instruction",
+    "number": 2,
+    "extraCreditNumber": 2,
+    "title": "02 example"
+  },
+  {
+    "id": "src/exercise/03.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/03.js",
+    "filePath": "src/exercise/03.js",
+    "isolatedPath": "/isolated/exercise/03.js",
+    "ext": ".js",
+    "filename": "03",
+    "type": "exercise",
+    "number": 3,
+    "extraCreditNumber": 3,
+    "title": "03 Example",
+    "extraCreditTitle": ""
+  },
+  {
+    "id": "src/exercise/03.md",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/03.md",
+    "filePath": "src/exercise/03.md",
+    "isolatedPath": "/isolated/exercise/03.md",
+    "ext": ".md",
+    "filename": "03",
+    "type": "instruction",
+    "number": 3,
+    "extraCreditNumber": 3,
+    "title": "03 example"
+  },
+  {
+    "id": "src/exercise/04.html",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/04.html",
+    "filePath": "src/exercise/04.html",
+    "isolatedPath": "/isolated/exercise/04.html",
+    "ext": ".html",
+    "filename": "04",
+    "type": "exercise",
+    "number": 4,
+    "extraCreditNumber": 4,
+    "title": "",
+    "extraCreditTitle": ""
+  },
+  {
+    "id": "src/exercise/04.md",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/04.md",
+    "filePath": "src/exercise/04.md",
+    "isolatedPath": "/isolated/exercise/04.md",
+    "ext": ".md",
+    "filename": "04",
+    "type": "instruction",
+    "number": 4,
+    "extraCreditNumber": 4,
+    "title": "04 Example (html)"
+  },
+  {
+    "id": "src/final/01.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/01.js",
+    "filePath": "src/final/01.js",
+    "isolatedPath": "/isolated/final/01.js",
+    "ext": ".js",
+    "filename": "01",
+    "type": "final",
+    "number": 1,
+    "extraCreditNumber": 1,
+    "title": "01 Example",
+    "extraCreditTitle": ""
+  },
+  {
+    "id": "src/final/02.extra-1.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/02.extra-1.js",
+    "filePath": "src/final/02.extra-1.js",
+    "isolatedPath": "/isolated/final/02.extra-1.js",
+    "ext": ".js",
+    "filename": "02.extra-1",
+    "type": "extraCredit",
+    "number": 2,
+    "extraCreditNumber": 1,
+    "title": "02 Example",
+    "extraCreditTitle": "Extra 1"
+  },
+  {
+    "id": "src/final/02.extra-2.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/02.extra-2.js",
+    "filePath": "src/final/02.extra-2.js",
+    "isolatedPath": "/isolated/final/02.extra-2.js",
+    "ext": ".js",
+    "filename": "02.extra-2",
+    "type": "extraCredit",
+    "number": 2,
+    "extraCreditNumber": 2,
+    "title": "02 Example",
+    "extraCreditTitle": "Extra 2"
+  },
+  {
+    "id": "src/final/02.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/02.js",
+    "filePath": "src/final/02.js",
+    "isolatedPath": "/isolated/final/02.js",
+    "ext": ".js",
+    "filename": "02",
+    "type": "final",
+    "number": 2,
+    "extraCreditNumber": 2,
+    "title": "02 Example",
+    "extraCreditTitle": ""
+  },
+  {
+    "id": "src/final/03.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/03.js",
+    "filePath": "src/final/03.js",
+    "isolatedPath": "/isolated/final/03.js",
+    "ext": ".js",
+    "filename": "03",
+    "type": "final",
+    "number": 3,
+    "extraCreditNumber": 3,
+    "title": "03 Example",
+    "extraCreditTitle": ""
+  },
+  {
+    "id": "src/index.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/index.js",
+    "filePath": "src/index.js",
+    "isolatedPath": "/isolated/index.js",
+    "ext": ".js",
+    "filename": "index",
+    "type": "src",
+    "number": 0,
+    "extraCreditNumber": 0
+  }
+]
+
+makeWorkshopApp({
+  imports: {
+    "src/examples/example.js": () => import("<PROJECT_ROOT>/src/examples/example.js"),
+    "src/exercise/01.js": () => import("<PROJECT_ROOT>/src/exercise/01.js"),
+    "src/exercise/01.md": () => import("babel-loader!mdx-loader!<PROJECT_ROOT>/src/exercise/01.md"),
+    "src/exercise/02.js": () => import("<PROJECT_ROOT>/src/exercise/02.js"),
+    "src/exercise/02.md": () => import("babel-loader!mdx-loader!<PROJECT_ROOT>/src/exercise/02.md"),
+    "src/exercise/03.js": () => import("<PROJECT_ROOT>/src/exercise/03.js"),
+    "src/exercise/03.md": () => import("babel-loader!mdx-loader!<PROJECT_ROOT>/src/exercise/03.md"),
+    "src/exercise/04.html": () => import("raw-loader!<PROJECT_ROOT>/src/exercise/04.html"),
+    "src/exercise/04.md": () => import("babel-loader!mdx-loader!<PROJECT_ROOT>/src/exercise/04.md"),
+    "src/final/01.js": () => import("<PROJECT_ROOT>/src/final/01.js"),
+    "src/final/02.extra-1.js": () => import("<PROJECT_ROOT>/src/final/02.extra-1.js"),
+    "src/final/02.extra-2.js": () => import("<PROJECT_ROOT>/src/final/02.extra-2.js"),
+    "src/final/02.js": () => import("<PROJECT_ROOT>/src/final/02.js"),
+    "src/final/03.js": () => import("<PROJECT_ROOT>/src/final/03.js"),
+    "src/index.js": () => import("<PROJECT_ROOT>/src/index.js")
+  },
+  filesInfo,
+  projectTitle: pkg.title,
+  
+})
+`;

@@ -1,52 +1,6 @@
-import React from 'react'
-import preval from 'preval.macro'
-import createKCDWorkshopApp from '../../../../'
+import codegen from 'codegen.macro'
 
-const exerciseInfo = preval`
-const path = require('path')
-const loadExercises = require('../../../../load-exercises')
-const cwd = path.join(process.cwd(), 'src/__tests__/fixtures/app1')
-module.exports = loadExercises(cwd)
+// eslint-disable-next-line babel/no-unused-expressions
+codegen`
+module.exports = require('../../../../codegen')({cwd: __dirname}).replace('@kentcdodds/react-workshop-app', '../../../../')
 `
-const MockExercise = jest.fn(() => <div data-testid="MockExercise" />)
-const getExerciseImport = jest.fn(() => () =>
-  Promise.resolve({default: MockExercise}),
-)
-
-const MockFinal = jest.fn(() => <div data-testid="MockFinal" />)
-const getFinalImport = jest.fn(() => () =>
-  Promise.resolve({default: MockFinal}),
-)
-
-const MockExample = jest.fn(() => <div data-testid="MockExample" />)
-const getExampleImport = jest.fn(() => () =>
-  Promise.resolve({default: MockExample}),
-)
-
-const fakeFetchResponses = [{test: jest.fn(), handler: jest.fn()}]
-const projectTitle = 'Test Project'
-
-function go() {
-  createKCDWorkshopApp({
-    getExerciseImport,
-    getFinalImport,
-    getExampleImport,
-    exerciseInfo,
-    fakeFetchResponses,
-    projectTitle,
-  })
-}
-
-export {
-  exerciseInfo,
-  MockExercise,
-  getExerciseImport,
-  MockFinal,
-  getFinalImport,
-  MockExample,
-  getExampleImport,
-  fakeFetchResponses,
-  projectTitle,
-}
-
-export default go
