@@ -152,9 +152,7 @@ function createKCDWorkshopApp({
 
   function flushApp() {
     document.documentElement.innerHTML = originalHTML
-    if (document.getElementById('⚛')) {
-      unmount?.(document.getElementById('⚛'))
-    }
+    unmount?.(document.getElementById('⚛'))
     document.getElementById('⚛').innerHTML = `
       <div class="fill-screen-center">
         Loading...

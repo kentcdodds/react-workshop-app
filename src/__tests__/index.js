@@ -5,7 +5,7 @@ import {
   act,
 } from '@testing-library/react'
 
-document.body.innerHTML = '<div class="⚛"></div>'
+document.body.innerHTML = '<div id="⚛"></div>'
 
 test('lib should be tested', async () => {
   require('./fixtures/app1/src')
