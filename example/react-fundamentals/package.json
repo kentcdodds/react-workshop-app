@@ -9,8 +9,7 @@
   "main": "src/index.js",
   "engines": {
     "node": ">=10",
-    "npm": ">=6",
-    "yarn": ">=1"
+    "npm": ">=6"
   },
   "dependencies": {
     "@kentcdodds/react-workshop-app": "file:../..",
