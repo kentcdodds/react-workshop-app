@@ -23,7 +23,7 @@
   "homepage": "https://github.com/kentcdodds/react-workshop-app#readme",
   "files": [
     "dist",
-    "load-exercises.js",
+    "codegen.js",
     "setup-tests.js"
   ],
   "scripts": {
