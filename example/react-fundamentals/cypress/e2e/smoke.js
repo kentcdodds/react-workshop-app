@@ -15,7 +15,7 @@ describe('the example app', () => {
     cy.findByText(/intro to raw react apis/i).click()
     cy.findByText(/nesting elements/i, {selector: 'a'}).click()
     cy.go('back')
-    cy.findAllByText(/using jsx/i, {selector: 'a'}).click()
+    // cy.findAllByText(/using jsx/i, {selector: 'a'}).click()
 
     cy.visit('/isolated/final/08.js')
     cy.findByLabelText(/username/i).type('animal crackers')
