@@ -7,6 +7,7 @@ import {
   Link,
   useParams,
 } from 'react-router-dom'
+import {Tabs, TabList, Tab, TabPanels, TabPanel} from '@reach/tabs'
 import {hijackEffects} from 'stop-runaway-react-effects'
 
 const originalUseEffect = React.useEffect
@@ -66,20 +67,17 @@ function renderReactApp({
 
   function ComponentContainer({label, ...props}) {
     return (
-      <div style={{display: 'flex', flexDirection: 'column'}}>
-        <h2 style={{textAlign: 'center'}}>{label}</h2>
-        <div
-          style={{
-            flex: 1,
-            padding: 20,
-            border: '1px solid',
-            display: 'grid',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          {...props}
-        />
-      </div>
+      <div
+        style={{
+          flex: 1,
+          padding: 20,
+          border: '1px solid',
+          display: 'grid',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        {...props}
+      />
     )
   }
   ComponentContainer.displayName = 'ComponentContainer'
@@ -164,6 +162,21 @@ function renderReactApp({
   }
   HtmlInIframe.displayName = 'HtmlInIframe'
 
+  function IsolatedPageLink({href, label}) {
+    return (
+      <a
+        style={{textDecoration: 'none', display: 'block', marginTop: 20}}
+        href={href}
+        onClick={handleAnchorClick}
+      >
+        <span role="img" aria-label="Construction worker">
+          👷
+        </span>{' '}
+        {label}
+      </a>
+    )
+  }
+
   function ExerciseContainer() {
     const {exerciseNumber} = useParams()
     const {instruction, exercise, final} = exerciseInfo[exerciseNumber]
@@ -190,42 +203,52 @@ function renderReactApp({
         style={{
           padding: '20px 20px 40px 20px',
           minHeight: '100vh',
+          // TODO: remove this?
           // display: 'grid',
           // gridGap: '20px',
           // gridTemplateColumns: '1fr 1fr',
         }}
       >
-        <div style={{gridColumn: 'span 2'}}>{instructionElement}</div>
-        <hr />
         <div
           style={{
             display: 'grid',
             gridGap: '20px',
-            gridTemplateColumns: '1fr 1fr',
+            gridTemplateColumns: '50% 50%',
           }}
         >
-          <ComponentContainer
-            label={
-              <a href={exercise.isolatedPath} onClick={handleAnchorClick}>
-                Exercise
-              </a>
-            }
-          >
-            {exerciseElement}
-          </ComponentContainer>
-          <ComponentContainer
-            label={
-              <a href={final.isolatedPath} onClick={handleAnchorClick}>
-                Final
-              </a>
-            }
-          >
-            {finalElement}
-          </ComponentContainer>
+          <div style={{overflowX: 'scroll'}}>{instructionElement}</div>
+          <div>
+            <Tabs>
+              <TabList>
+                <Tab>Exercise</Tab>
+                <Tab>Final</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <IsolatedPageLink
+                    href={exercise.isolatedPath}
+                    label="Open exercise on isolated page"
+                  />
+                  <hr />
+                  <div className="totally-centered">{exerciseElement}</div>
+                </TabPanel>
+                <TabPanel>
+                  <IsolatedPageLink
+                    href={final.isolatedPath}
+                    label="Open final on isolated page"
+                  />
+                  <hr />
+                  <div className="totally-centered">{finalElement}</div>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </div>
         </div>
         <hr />
-        <NavigationFooter exerciseNumber={exerciseNumber} />
         <ExtraCreditLinks exerciseNumber={exerciseNumber} />
+        <div style={{marginTop: 20}}>
+          <NavigationFooter exerciseNumber={exerciseNumber} />
+        </div>
       </div>
     )
   }

@@ -5,16 +5,17 @@ import {createBrowserHistory} from 'history'
 import hackFetch from './hack-fetch'
 import {renderReactApp} from './react-app'
 
-const workshopStyles = preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`
-const normalizeStyles = preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`
-
 const styleTag = document.createElement('style')
-styleTag.innerHTML = `${normalizeStyles}${workshopStyles}`
+styleTag.innerHTML = [
+  preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`,
+  preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`,
+  preval`module.exports = require('../other/css-file-to-string')('@reach/tabs/styles.css')`,
+].join('\n')
 document.head.prepend(styleTag)
 
 const originalHTML = document.documentElement.innerHTML
 
-function createKCDWorkshopApp({
+function makeKCDWorkshopApp({
   imports,
   filesInfo,
   projectTitle,
@@ -164,7 +165,7 @@ function createKCDWorkshopApp({
   handleLocationChange()
 }
 
-export default createKCDWorkshopApp
+export default makeKCDWorkshopApp
 
 /*
 eslint
