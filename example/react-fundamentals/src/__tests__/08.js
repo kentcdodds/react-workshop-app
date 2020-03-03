@@ -1,5 +1,5 @@
 import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
+import {render, fireEvent, wait} from '@testing-library/react'
 import Usage from '../final/08'
 // import Usage from '../exercise/08'
 
@@ -11,7 +11,12 @@ beforeEach(() => {
   console.info.mockClear()
 })
 
-test('calls the onSubmitUsername handler when the submit is fired', () => {
+test('calls the onSubmitUsername handler when the submit is fired', async () => {
+  window.fetch.mockImplementationOnce((url, config) =>
+    Promise.resolve({
+      json: () => Promise.resolve({username: JSON.parse(config.body).username}),
+    }),
+  )
   const {getByLabelText, getByText} = render(<Usage />)
   const input = getByLabelText(/username/i)
   const submit = getByText(/submit/i)
@@ -21,6 +26,8 @@ test('calls the onSubmitUsername handler when the submit is fired', () => {
   expect(input.value).toBe('a')
   fireEvent.click(submit)
 
-  expect(console.info).toHaveBeenCalledWith('username', input.value)
-  expect(console.info).toHaveBeenCalledTimes(1)
+  await wait(() => {
+    expect(console.info).toHaveBeenCalledWith('username', input.value)
+    expect(console.info).toHaveBeenCalledTimes(1)
+  })
 })

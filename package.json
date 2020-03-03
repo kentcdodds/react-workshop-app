@@ -58,7 +58,9 @@
   "devDependencies": {
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "cssnano": "^4.1.10",
+    "eslint-config-react-app": "^5.2.0",
     "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-flowtype": "^4.6.0",
     "kcd-scripts": "^5.2.0",
     "postcss-cli": "^7.1.0",
     "preval.macro": "^4.0.0",

@@ -31,8 +31,13 @@ function UsernameForm({onSubmitUsername}) {
 }
 
 function Usage() {
-  const onSubmitUsername = username => {
-    window.fetch('/user', {method: 'POST', body: JSON.stringify({username})})
+  const onSubmitUsername = async username => {
+    const response = await window.fetch('/user', {
+      method: 'POST',
+      body: JSON.stringify({username}),
+    })
+    const data = await response.json()
+    console.info('username', data.username)
   }
   return (
     <div style={{minWidth: 400}}>

@@ -1,5 +1,6 @@
 {
   "root": true,
+  "extends": ["react-app"],
   "rules": {
     "react/jsx-key": "off",
     "jsx-a11y/label-has-associated-control": "off",
