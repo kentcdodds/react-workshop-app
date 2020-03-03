@@ -487,6 +487,17 @@ const filesInfo = [
     "extraCreditNumber": 0
   },
   {
+    "id": "src/server.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/server.js",
+    "filePath": "src/server.js",
+    "isolatedPath": "/isolated/server.js",
+    "ext": ".js",
+    "filename": "server",
+    "type": "src",
+    "number": 0,
+    "extraCreditNumber": 0
+  },
+  {
     "id": "src/setupTests.js",
     "fullFilePath": "<PROJECT_ROOT>/src/setupTests.js",
     "filePath": "src/setupTests.js",
@@ -550,6 +561,7 @@ makeWorkshopApp({
     "src/final/09.extra-1.js": () => import("<PROJECT_ROOT>/src/final/09.extra-1.js"),
     "src/final/09.js": () => import("<PROJECT_ROOT>/src/final/09.js"),
     "src/index.js": () => import("<PROJECT_ROOT>/src/index.js"),
+    "src/server.js": () => import("<PROJECT_ROOT>/src/server.js"),
     "src/setupTests.js": () => import("<PROJECT_ROOT>/src/setupTests.js"),
     "src/styles.css": () => import("<PROJECT_ROOT>/src/styles.css")
   },
