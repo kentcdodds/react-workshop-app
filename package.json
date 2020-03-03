@@ -36,26 +36,36 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
+    "@reach/tabs": "^0.8.5",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.1",
+    "babel-loader": "^8.0.6",
     "chalk": "^3.0.0",
+    "codegen.macro": "^3.0.0",
     "cross-spawn": "^7.0.1",
     "glob": "^7.1.6",
     "history": "^4.10.1",
     "inquirer": "^7.0.4",
     "is-ci": "^2.0.0",
+    "mdx-loader": "^3.0.2",
     "normalize.css": "^8.0.1",
+    "prism-theme-night-owl": "^1.2.0",
+    "raw-loader": "^4.0.0",
     "react-router-dom": "^5.1.2",
     "replace-in-file": "^5.0.2",
     "stop-runaway-react-effects": "^1.2.1"
   },
   "devDependencies": {
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
     "cssnano": "^4.1.10",
+    "eslint-config-react-app": "^5.2.0",
+    "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-flowtype": "^4.6.0",
     "kcd-scripts": "^5.2.0",
     "postcss-cli": "^7.1.0",
     "preval.macro": "^4.0.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "resolve": "^1.15.1"
   },
   "peerDependencies": {
@@ -73,7 +83,8 @@
       "no-console": "off",
       "max-lines-per-function": "off",
       "guard-for-in": "off",
-      "react/display-name": "off"
+      "react/display-name": "off",
+      "react/prop-types": "off"
     }
   }
 }

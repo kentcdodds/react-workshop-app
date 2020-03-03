@@ -10,6 +10,7 @@ install: npm install
 script:
   - npm run validate
   - npx codecov@3
+  - cd example/react-fundamentals && npm run setup
 branches:
   only:
     - master

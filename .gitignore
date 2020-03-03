@@ -1,9 +1,14 @@
 node_modules
 coverage
 dist
+build
 .opt-in
 .opt-out
 .DS_Store
+
+*ignored*
+cypress/screenshots
+cypress/videos
 
 # these cause more harm than good
 # when working with contributors

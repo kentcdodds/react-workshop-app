@@ -1,0 +1,38 @@
+<!-- Intro to raw React APIs -->
+
+<!--
+  Open this file in your browser,
+  or copy/paste this to a new codepen: https://codepen.io/pen
+-->
+
+<body>
+  <div id="root"></div>
+
+  <!-- 💣 remove this line
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  💣 remove this line -->
+
+  <script type="module">
+    const rootElement = document.getElementById('root')
+
+    // You're going to re-implement this code using React!
+    // 💣 So go ahead and delete this implementation (or comment it out for now)
+    // These three lines are similar to React.createElement
+    const element = document.createElement('div')
+    element.textContent = 'Hello World'
+    element.className = 'container'
+    // This is similar to ReactDOM.render
+    rootElement.appendChild(element)
+
+    // 🐨 Please re-implement the regular document.createElement code above
+    // with these React API calls
+    // 💰 The example in the markdown file should be a good hint for you.
+
+    /*
+    🦉 Elaboration & Feedback
+    After the instruction, copy the URL below into your browser and fill out the form:
+    http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Raw%20React&em=
+    */
+  </script>
+</body>

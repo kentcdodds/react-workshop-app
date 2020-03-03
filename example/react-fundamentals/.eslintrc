@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "extends": ["react-app"],
+  "rules": {
+    "react/jsx-key": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "no-unused-vars": "off",
+    "prefer-const": "off"
+  }
+}
