@@ -1,4 +1,5 @@
 {
+  "root": true,
   "rules": {
     "react/jsx-key": "off",
     "jsx-a11y/label-has-associated-control": "off",
