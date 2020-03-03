@@ -162,21 +162,6 @@ function renderReactApp({
   }
   HtmlInIframe.displayName = 'HtmlInIframe'
 
-  function IsolatedPageLink({href, label}) {
-    return (
-      <a
-        style={{textDecoration: 'none', display: 'block', marginTop: 20}}
-        href={href}
-        onClick={handleAnchorClick}
-      >
-        <span role="img" aria-label="Construction worker">
-          👷
-        </span>{' '}
-        {label}
-      </a>
-    )
-  }
-
   function ExerciseContainer() {
     const {exerciseNumber} = useParams()
     const {instruction, exercise, final} = exerciseInfo[exerciseNumber]
@@ -225,18 +210,38 @@ function renderReactApp({
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <IsolatedPageLink
+                  <a
+                    style={{
+                      textDecoration: 'none',
+                      display: 'block',
+                      marginTop: 20,
+                    }}
                     href={exercise.isolatedPath}
-                    label="Open exercise on isolated page"
-                  />
+                    onClick={handleAnchorClick}
+                  >
+                    <span role="img" aria-label="Muscles">
+                      💪
+                    </span>
+                    {' Open exercise on isolated page'}
+                  </a>
                   <hr />
                   <div className="totally-centered">{exerciseElement}</div>
                 </TabPanel>
                 <TabPanel>
-                  <IsolatedPageLink
+                  <a
+                    style={{
+                      textDecoration: 'none',
+                      display: 'block',
+                      marginTop: 20,
+                    }}
                     href={final.isolatedPath}
-                    label="Open final on isolated page"
-                  />
+                    onClick={handleAnchorClick}
+                  >
+                    <span role="img" aria-label="Muscles">
+                      🏁
+                    </span>
+                    {' Open final on isolated page'}
+                  </a>
                   <hr />
                   <div className="totally-centered">{finalElement}</div>
                 </TabPanel>
