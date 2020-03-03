@@ -10,6 +10,9 @@ styleTag.innerHTML = [
   preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`,
   preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`,
   preval`module.exports = require('../other/css-file-to-string')('@reach/tabs/styles.css')`,
+  // TODO: dynamically switch the theme based on dark/light mode
+  // preval`module.exports = require('../other/css-file-to-string')('prism-theme-night-owl/style.min.css')`,
+  preval`module.exports = require('../other/css-file-to-string')('./other/prism-theme-light-owl.css')`,
 ].join('\n')
 document.head.prepend(styleTag)
 
