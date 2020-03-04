@@ -1,12 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-} from 'react-router-dom'
+import {Router, Switch, Route, Link, useParams} from 'react-router-dom'
 import {Tabs, TabList, Tab, TabPanels, TabPanel} from '@reach/tabs'
 import {hijackEffects} from 'stop-runaway-react-effects'
 
@@ -184,16 +178,7 @@ function renderReactApp({
     }
 
     return (
-      <div
-        style={{
-          padding: '20px 20px 40px 20px',
-          minHeight: '100vh',
-          // TODO: remove this?
-          // display: 'grid',
-          // gridGap: '20px',
-          // gridTemplateColumns: '1fr 1fr',
-        }}
-      >
+      <div style={{padding: '20px 20px 40px 20px', minHeight: '100vh'}}>
         <div
           style={{
             display: 'grid',
@@ -207,8 +192,18 @@ function renderReactApp({
           <div>
             <Tabs>
               <TabList>
-                <Tab>Exercise</Tab>
-                <Tab>Final</Tab>
+                <Tab>
+                  <span role="img" aria-label="Muscles">
+                    💪
+                  </span>{' '}
+                  Exercise
+                </Tab>
+                <Tab>
+                  <span role="img" aria-label="Muscles">
+                    🏁
+                  </span>{' '}
+                  Final
+                </Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -386,7 +381,7 @@ function renderReactApp({
         </div>
       }
     >
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route exact path="/">
             <Home />

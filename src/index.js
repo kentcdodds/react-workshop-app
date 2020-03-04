@@ -41,6 +41,7 @@ function makeKCDWorkshopApp({
   window.appHistory = history
 
   let previousLocation = history.location
+  let previousIsIsolated = null
 
   function handleLocationChange(location = history.location) {
     const {pathname} = location
@@ -52,23 +53,38 @@ function makeKCDWorkshopApp({
 
     // set the title to have info for the exercise
     const isIsolated = pathname.startsWith('/isolated')
-    const filePath = pathname.replace('/isolated', 'src')
+    let info
+    if (isIsolated) {
+      const filePath = pathname.replace('/isolated', 'src')
+      info = filesInfo.find(i => i.filePath === filePath)
+    } else {
+      const number = Number(pathname.split('/').slice(-1)[0])
+      info = filesInfo.find(
+        i => i.type === 'instruction' && i.number === number,
+      )
+    }
 
-    document.title = [
-      projectTitle,
-      isIsolated
-        ? pathname.replace('/isolated/', '')
-        : pathname.split('/').slice(-1)[0],
-    ]
-      .filter(Boolean)
-      .join(' | ')
+    // I honestly have no clue why, but there appears to be some kind of
+    // race condition here with the title. It seems to get reset to the
+    // title that's defined in the index.html after we set it :shrugs:
+    setTimeout(() => {
+      document.title = [
+        info ? `${info.number}. ${info.title || info.filename}` : null,
+        projectTitle,
+      ]
+        .filter(Boolean)
+        .join(' | ')
+    }, 20)
 
     if (isIsolated) {
-      renderIsolated(imports[filePath])
-    } else {
+      renderIsolated(imports[info.filePath])
+    } else if (previousIsIsolated !== isIsolated) {
+      // if we aren't going from isolated to the app, then we don't need
+      // to bother rendering react anew. The app will handle that.
       renderReact()
     }
     previousLocation = location
+    previousIsIsolated = isIsolated
   }
 
   let unmount
