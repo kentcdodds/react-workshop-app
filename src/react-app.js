@@ -201,7 +201,9 @@ function renderReactApp({
             gridTemplateColumns: '50% 50%',
           }}
         >
-          <div style={{overflowX: 'scroll'}}>{instructionElement}</div>
+          <div style={{overflow: 'scroll', maxHeight: '88vh'}}>
+            {instructionElement}
+          </div>
           <div>
             <Tabs>
               <TabList>
