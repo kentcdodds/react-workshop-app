@@ -5,14 +5,15 @@ const loadFiles = require('./load-files')
 function getCode({cwd = process.cwd(), ignore, renderOptions} = {}) {
   const filesInfo = loadFiles({cwd, ignore})
 
-  const imports = filesInfo.map(({id, fullFilePath, ext}) => {
+  const imports = filesInfo.map(({id, filePath, ext}) => {
     let loaders = ''
     if (ext === '.html') {
       loaders = '!raw-loader!'
     } else if (ext === '.md' || ext === '.mdx') {
       loaders = '!babel-loader!mdx-loader!'
     }
-    return `"${id}": () => import("${loaders}${fullFilePath}")`
+    const relativePath = filePath.replace('src/', './')
+    return `"${id}": () => import("${loaders}${relativePath}")`
   })
 
   return `
