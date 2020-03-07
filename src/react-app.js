@@ -848,7 +848,16 @@ function renderReactApp({
       <ThemeProvider theme={theme}>
         <React.Suspense
           fallback={
-            <div style={{height: '100vh'}} className="totally-centered">
+            <div
+              style={{height: '100vh'}}
+              css={{
+                padding: '30px',
+                minHeight: '100vh',
+                display: 'grid',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               Loading...
             </div>
           }
@@ -908,9 +917,3 @@ function renderReactApp({
 }
 
 export {renderReactApp}
-
-/*
-eslint
-  react/prop-types: "off",
-  babel/no-unused-expressions: "off",
-*/

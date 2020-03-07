@@ -14,6 +14,8 @@ styleTag.innerHTML = [
 ].join('\n')
 document.head.prepend(styleTag)
 
+const fillScreenCenter = `padding:30px;min-height:100vh;display:grid;align-items:center;justify-content:center;`
+
 const originalDocumentElement = document.documentElement
 
 function makeKCDWorkshopApp({
@@ -36,7 +38,6 @@ function makeKCDWorkshopApp({
   }
 
   const history = createBrowserHistory()
-  window.appHistory = history
 
   let previousLocation = history.location
   let previousIsIsolated = null
@@ -64,7 +65,7 @@ function makeKCDWorkshopApp({
 
     if (isIsolated && !info) {
       document.body.innerHTML = `
-        <div class="fill-screen-center">
+        <div style="${fillScreenCenter}">
           <div>
             Sorry... nothing here. To open one of the exercises, go to
             <code>\`/exerciseNumber\`</code>, for example:
@@ -106,15 +107,27 @@ function makeKCDWorkshopApp({
   let unmount
 
   function renderIsolated(isolatedModuleImport) {
-    flushApp()
+    unmount?.(document.getElementById('root'))
+    const isolatedDocumentElement = document.createElement('html')
+    isolatedDocumentElement.innerHTML = `
+      <head></head>
+      <body></body>
+    `
+    document.documentElement.replaceWith(isolatedDocumentElement)
 
     isolatedModuleImport().then(async ({default: defaultExport}) => {
+      if (history.location !== previousLocation) {
+        // locaiton has changed while we were getting the module
+        // so don't bother doing anything... Let the next event handler
+        // deal with it
+        return
+      }
       if (typeof defaultExport === 'function') {
+        const root = document.createElement('div')
+        root.setAttribute('id', 'root')
+        document.body.appendChild(root)
         // regular react component.
-        ReactDOM.render(
-          React.createElement(defaultExport),
-          document.getElementById('root'),
-        )
+        ReactDOM.render(React.createElement(defaultExport), root)
       } else if (typeof defaultExport === 'string') {
         // HTML file
         const newDocumentElement = document.createElement('html')
@@ -167,7 +180,7 @@ function makeKCDWorkshopApp({
   }
 
   function renderReact() {
-    flushApp()
+    document.documentElement.replaceWith(originalDocumentElement)
     unmount = renderReactApp({
       history,
       projectTitle,
@@ -176,16 +189,6 @@ function makeKCDWorkshopApp({
       imports,
       renderOptions,
     })
-  }
-
-  function flushApp() {
-    document.documentElement.replaceWith(originalDocumentElement)
-    unmount?.(document.getElementById('root'))
-    document.getElementById('root').innerHTML = `
-      <div class="fill-screen-center">
-        Loading...
-      </div>
-    `
   }
 
   history.listen(handleLocationChange)

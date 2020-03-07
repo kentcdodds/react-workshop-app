@@ -23,14 +23,6 @@ body {
   outline: none;
 }
 
-.fill-screen-center {
-  padding: 30px;
-  min-height: 100vh;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-}
-
 .totally-centered {
   min-width: 100%;
   min-height: 100%;
