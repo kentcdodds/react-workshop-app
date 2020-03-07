@@ -251,7 +251,7 @@ function renderReactApp({
             <div
               css={mq({
                 gridRow: [2, 2, 'auto'],
-                maxHeight: ['auto', 'auto', 'calc(100vh - 60px)'],
+                height: ['auto', 'auto', 'calc(100vh - 60px)'],
                 overflowY: ['auto', 'auto', 'scroll'],
                 padding: '1rem 2rem 3rem 2rem',
                 borderTop: `1px solid ${theme.sky}`,
