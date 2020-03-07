@@ -339,93 +339,87 @@ function renderReactApp({
                 <TabPanels>
                   <TabPanel>
                     <div
-                      css={mq({
-                        maxHeight: ['auto', 'auto', 'calc(100vh - 160px)'],
-                        overflowY: ['auto', 'auto', 'scroll'],
-                      })}
+                      css={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        width: '100%',
+                      }}
                     >
-                      <div
+                      <a
                         css={{
                           display: 'flex',
                           justifyContent: 'flex-end',
-                          width: '100%',
+                          padding: '1rem',
+                          textDecoration: 'none',
                         }}
+                        href={exercise.isolatedPath}
                       >
-                        <a
-                          css={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            padding: '1rem',
-                            textDecoration: 'none',
-                          }}
-                          href={exercise.isolatedPath}
-                        >
-                          <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
-                          {'Open exercise on isolated page'}
-                        </a>
-                      </div>
-                      <div
-                        css={{
-                          color: '#19212a',
-                          background: 'white',
-                          padding: '2rem 0',
-                        }}
-                        className="totally-centered"
+                        <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
+                        {'Open exercise on isolated page'}
+                      </a>
+                    </div>
+                    <div
+                      css={mq({
+                        color: '#19212a',
+                        background: 'white',
+                        padding: '2rem 0',
+                        height: ['auto', 'auto', 'calc(100vh - 210px)'],
+                        overflowY: ['auto', 'auto', 'scroll'],
+                      })}
+                      className="totally-centered"
+                    >
+                      <React.Suspense
+                        fallback={
+                          <div className="totally-centered">Loading...</div>
+                        }
                       >
-                        <React.Suspense
-                          fallback={
-                            <div className="totally-centered">Loading...</div>
-                          }
-                        >
+                        <div css={mq({paddingBottom: [0, 0, '2rem']})}>
                           {exerciseElement}
-                        </React.Suspense>
-                      </div>
+                        </div>
+                      </React.Suspense>
                     </div>
                   </TabPanel>
                   <TabPanel>
                     <div
-                      css={mq({
-                        maxHeight: ['auto', 'auto', 'calc(100vh - 160px)'],
-                        overflowY: ['auto', 'auto', 'scroll'],
-                      })}
+                      css={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        width: '100%',
+                      }}
                     >
-                      <div
-                        css={{
+                      <a
+                        style={{
                           display: 'flex',
                           justifyContent: 'flex-end',
-                          width: '100%',
+                          padding: '1rem',
+                          textDecoration: 'none',
                         }}
+                        href={final.isolatedPath}
                       >
-                        <a
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            padding: '1rem',
-                            textDecoration: 'none',
-                          }}
-                          href={final.isolatedPath}
-                        >
-                          <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
-                          {' Open final on isolated page'}
-                        </a>
-                      </div>
+                        <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
+                        {' Open final on isolated page'}
+                      </a>
+                    </div>
 
-                      <div
-                        css={{
-                          color: '#19212a',
-                          background: 'white',
-                          padding: '2rem 0',
-                        }}
-                        className="totally-centered"
+                    <div
+                      css={mq({
+                        color: '#19212a',
+                        background: 'white',
+                        padding: '2rem 0',
+                        height: ['auto', 'auto', 'calc(100vh - 210px)'],
+                        overflowY: ['auto', 'auto', 'scroll'],
+                      })}
+                      className="totally-centered"
+                    >
+                      <React.Suspense
+                        fallback={
+                          <div className="totally-centered">Loading...</div>
+                        }
                       >
-                        <React.Suspense
-                          fallback={
-                            <div className="totally-centered">Loading...</div>
-                          }
-                        >
+                        <div css={mq({paddingBottom: [0, 0, '2rem']})}>
                           {finalElement}
-                        </React.Suspense>
-                      </div>
+                        </div>
+                      </React.Suspense>
                     </div>
                   </TabPanel>
                 </TabPanels>
@@ -883,11 +877,10 @@ function renderReactApp({
 
   function useDarkMode() {
     const preferDarkQuery = '(prefers-color-scheme: dark)'
-    const [mode, setMode] = React.useState(() =>
-      window.localStorage.getItem('colorMode') ||
-      window.matchMedia(preferDarkQuery).matches
-        ? 'dark'
-        : 'light',
+    const [mode, setMode] = React.useState(
+      () =>
+        window.localStorage.getItem('colorMode') ||
+        (window.matchMedia(preferDarkQuery).matches ? 'dark' : 'light'),
     )
 
     React.useEffect(() => {
@@ -906,6 +899,29 @@ function renderReactApp({
     // we're doing it this way instead of as an effect so we only
     // set the localStorage value if they explicitly change the default
     return [mode, setMode]
+  }
+
+  function DelayedTransition() {
+    // we have it this way so dark mode is rendered immediately rather than
+    // transitioning to it on initial page load.
+    const [render, setRender] = React.useState(false)
+    React.useEffect(() => {
+      const timeout = setTimeout(() => {
+        setRender(true)
+      }, 450)
+      return () => clearTimeout(timeout)
+    }, [])
+
+    return render ? (
+      <Global
+        styles={{
+          '*, *::before, *::after': {
+            // for the theme change
+            transition: `background 0.4s, background-color 0.4s, border-color 0.4s`,
+          },
+        }}
+      />
+    ) : null
   }
 
   function App() {
@@ -956,6 +972,7 @@ function renderReactApp({
               ${mode === 'light' ? prismThemeLight : prismThemeDark}
             `}
         />
+        <DelayedTransition />
       </ThemeProvider>
     )
   }
