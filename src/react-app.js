@@ -363,6 +363,7 @@ function renderReactApp({
                         color: '#19212a',
                         background: 'white',
                         padding: '2rem 0',
+                        minHeight: 500,
                         height: ['auto', 'auto', 'calc(100vh - 210px)'],
                         overflowY: ['auto', 'auto', 'scroll'],
                       })}
@@ -370,7 +371,14 @@ function renderReactApp({
                     >
                       <React.Suspense
                         fallback={
-                          <div className="totally-centered">Loading...</div>
+                          <div
+                            className="totally-centered"
+                            // this centers the loading with the loading
+                            // for the instructions
+                            css={mq({marginBottom: ['auto', 'auto', 80]})}
+                          >
+                            Loading...
+                          </div>
                         }
                       >
                         <div css={mq({paddingBottom: [0, 0, '2rem']})}>
@@ -406,6 +414,7 @@ function renderReactApp({
                         color: '#19212a',
                         background: 'white',
                         padding: '2rem 0',
+                        minHeight: 500,
                         height: ['auto', 'auto', 'calc(100vh - 210px)'],
                         overflowY: ['auto', 'auto', 'scroll'],
                       })}
@@ -413,7 +422,14 @@ function renderReactApp({
                     >
                       <React.Suspense
                         fallback={
-                          <div className="totally-centered">Loading...</div>
+                          <div
+                            className="totally-centered"
+                            // this centers the loading with the loading
+                            // for the instructions
+                            css={mq({marginBottom: ['auto', 'auto', 80]})}
+                          >
+                            Loading...
+                          </div>
                         }
                       >
                         <div css={mq({paddingBottom: [0, 0, '2rem']})}>
