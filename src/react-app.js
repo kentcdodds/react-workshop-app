@@ -835,13 +835,35 @@ function renderReactApp({
   }
   NotFound.displayName = 'NotFound'
 
-  function App() {
-    const [mode, setMode] = React.useState(
-      () => window.localStorage.getItem('colorMode') || 'light',
+  function useDarkMode() {
+    const preferDarkQuery = '(prefers-color-scheme: dark)'
+    const [mode, setMode] = React.useState(() =>
+      window.localStorage.getItem('colorMode') ||
+      window.matchMedia(preferDarkQuery).matches
+        ? 'dark'
+        : 'light',
     )
+
+    React.useEffect(() => {
+      const mediaQuery = window.matchMedia(preferDarkQuery)
+      const handleChange = () => {
+        setMode(mediaQuery.matches ? 'dark' : 'light')
+      }
+      mediaQuery.addListener(handleChange)
+      return () => mediaQuery.removeListener(handleChange)
+    }, [])
+
     React.useEffect(() => {
       window.localStorage.setItem('colorMode', mode)
     }, [mode])
+
+    // we're doing it this way instead of as an effect so we only
+    // set the localStorage value if they explicitly change the default
+    return [mode, setMode]
+  }
+
+  function App() {
+    const [mode, setMode] = useDarkMode()
     const theme = getTheme(mode)
 
     return (
@@ -917,3 +939,8 @@ function renderReactApp({
 }
 
 export {renderReactApp}
+
+/*
+eslint
+  max-statements: "off"
+*/

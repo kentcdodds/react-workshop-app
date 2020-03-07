@@ -13,6 +13,8 @@ body {
 *::before,
 *::after {
   box-sizing: border-box;
+  /* for the theme change */
+  transition: background 0.4s, background-color 0.4s, border-color 0.4s;
 }
 
 /*
