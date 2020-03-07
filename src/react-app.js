@@ -67,14 +67,6 @@ function renderReactApp({
     }
   }
 
-  function handleAnchorClick(event) {
-    if (event.metaKey || event.shiftKey) {
-      return
-    }
-    event.preventDefault()
-    history.push(event.target.closest('a').getAttribute('href'))
-  }
-
   const mq = facepaint([
     '@media(min-width: 576px)',
     '@media(min-width: 768px)',
@@ -135,9 +127,7 @@ function renderReactApp({
             array,
           ) => (
             <span key={extraCreditNumber}>
-              <a href={isolatedPath} onClick={handleAnchorClick}>
-                {extraCreditTitle}
-              </a>
+              <a href={isolatedPath}>{extraCreditTitle}</a>
               {array.length - 1 === index ? null : (
                 <span css={{marginRight: 5}}>,</span>
               )}
@@ -339,7 +329,6 @@ function renderReactApp({
                           textDecoration: 'none',
                         }}
                         href={exercise.isolatedPath}
-                        onClick={handleAnchorClick}
                       >
                         <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
                         {'Open exercise on isolated page'}
@@ -373,7 +362,6 @@ function renderReactApp({
                           textDecoration: 'none',
                         }}
                         href={final.isolatedPath}
-                        onClick={handleAnchorClick}
                       >
                         <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
                         {' Open final on isolated page'}
@@ -725,7 +713,6 @@ function renderReactApp({
                     >
                       <a
                         href={exercise.isolatedPath}
-                        onClick={handleAnchorClick}
                         title="exercise"
                         css={mq({
                           width: '100%',
@@ -753,7 +740,6 @@ function renderReactApp({
                       </a>
                       <a
                         href={final.isolatedPath}
-                        onClick={handleAnchorClick}
                         title="final version"
                         css={mq({
                           width: '100%',
@@ -813,7 +799,7 @@ function renderReactApp({
           {`To open one of the exercises, go to `}
           <code>{`/exerciseNumber`}</code>
           {`, for example: `}
-          <Link to="/">
+          <Link to="/1">
             <code>{`/1`}</code>
           </Link>
           <div css={{marginTop: '2rem', a: {textDecoration: 'none'}}}>
