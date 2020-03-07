@@ -7,9 +7,10 @@ import hackFetch from './hack-fetch'
 import {renderReactApp} from './react-app'
 
 const styleTag = document.createElement('style')
+const normalize = preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`
 styleTag.innerHTML = [
   preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`,
-  preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`,
+  normalize,
   preval`module.exports = require('../other/css-file-to-string')('@reach/tabs/styles.css')`,
 ].join('\n')
 document.head.prepend(styleTag)
@@ -110,7 +111,12 @@ function makeKCDWorkshopApp({
     unmount?.(document.getElementById('root'))
     const isolatedDocumentElement = document.createElement('html')
     isolatedDocumentElement.innerHTML = `
-      <head></head>
+      <head>
+        <style>
+          *, *::before, *::after { box-sizing: border-box; }
+          ${normalize}
+        </style>
+      </head>
       <body></body>
     `
     document.documentElement.replaceWith(isolatedDocumentElement)
