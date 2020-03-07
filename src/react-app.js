@@ -1,9 +1,7 @@
 /** @jsx jsx */
 import {jsx, Global} from '@emotion/core'
 import facepaint from 'facepaint'
-import {IoMdStar} from 'react-icons/io'
-import {ThemeProvider} from 'emotion-theming'
-import {useLocalStorage} from 'react-use'
+import {ThemeProvider, useTheme} from 'emotion-theming'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Router, Switch, Route, Link, useParams} from 'react-router-dom'
@@ -20,7 +18,7 @@ import {
 } from 'react-icons/ri'
 
 import Logo from './assets/logo'
-import theme, {prismThemeLight, prismThemeDark} from './theme'
+import getTheme, {prismThemeLight, prismThemeDark} from './theme'
 
 const originalUseEffect = React.useEffect
 
@@ -117,11 +115,9 @@ function renderReactApp({
         }}
         {...props}
       >
-        <IoMdStar
-          color="#EEC200"
-          size={20}
-          css={{marginRight: 3, marginBottom: 2}}
-        />
+        <span role="img" aria-label="Hannah Hundred">
+          💯
+        </span>
         <span
           css={{
             fontSize: 14,
@@ -206,6 +202,7 @@ function renderReactApp({
   HtmlInIframe.displayName = 'HtmlInIframe'
 
   function ExerciseContainer(props) {
+    const theme = useTheme()
     const {exerciseNumber} = useParams()
     const {instruction, exercise, final} = exerciseInfo[exerciseNumber]
     let exerciseElement, finalElement, instructionElement
@@ -416,6 +413,7 @@ function renderReactApp({
   ExerciseContainer.displayName = 'ExerciseContainer'
 
   function Navigation({exerciseNumber, mode, setMode}) {
+    const theme = useTheme()
     const info = exerciseInfo[exerciseNumber]
 
     return (
@@ -555,6 +553,7 @@ function renderReactApp({
   Navigation.displayName = 'Navigation'
 
   function Home(props) {
+    const theme = useTheme()
     return (
       <>
         <Navigation mode={props.mode} setMode={props.setMode} />
@@ -792,6 +791,7 @@ function renderReactApp({
   Home.displayName = 'Home'
 
   function NotFound() {
+    const theme = useTheme()
     return (
       <div
         css={{
@@ -836,10 +836,16 @@ function renderReactApp({
   NotFound.displayName = 'NotFound'
 
   function App() {
-    const [mode, setMode] = useLocalStorage('colorMode', 'light')
+    const [mode, setMode] = React.useState(
+      () => window.localStorage.getItem('colorMode') || 'light',
+    )
+    React.useEffect(() => {
+      window.localStorage.setItem('colorMode', mode)
+    }, [mode])
+    const theme = getTheme(mode)
 
     return (
-      <ThemeProvider theme={theme(mode)}>
+      <ThemeProvider theme={theme}>
         <React.Suspense
           fallback={
             <div style={{height: '100vh'}} className="totally-centered">
@@ -863,21 +869,21 @@ function renderReactApp({
           <Global
             styles={{
               'html, body, #root': {
-                background: theme(mode).background,
-                color: theme(mode).text,
+                background: theme.background,
+                color: theme.text,
               },
               '::selection': {
-                background: theme(mode).primary,
+                background: theme.primary,
                 color: 'white',
               },
               a: {
-                color: theme(mode).primary,
+                color: theme.primary,
               },
               hr: {
                 opacity: 0.5,
                 border: 'none',
                 height: 1,
-                background: theme(mode).textLightest,
+                background: theme.textLightest,
                 maxWidth: '100%',
                 marginTop: 30,
                 marginBottom: 30,
@@ -886,7 +892,7 @@ function renderReactApp({
           />
           <Global
             styles={`
-            ${mode === 'light' ? prismThemeLight : prismThemeDark}
+              ${mode === 'light' ? prismThemeLight : prismThemeDark}
             `}
           />
         </React.Suspense>
@@ -894,10 +900,10 @@ function renderReactApp({
     )
   }
 
-  ReactDOM.render(<App />, document.getElementById('⚛'))
+  ReactDOM.render(<App />, document.getElementById('root'))
 
   return function unmount() {
-    ReactDOM.unmountComponentAtNode(document.getElementById('⚛'))
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'))
   }
 }
 

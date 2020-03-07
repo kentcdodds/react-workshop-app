@@ -14,7 +14,7 @@ styleTag.innerHTML = [
 ].join('\n')
 document.head.prepend(styleTag)
 
-const originalHTML = document.documentElement.innerHTML
+const originalDocumentElement = document.documentElement
 
 function makeKCDWorkshopApp({
   imports,
@@ -62,12 +62,30 @@ function makeKCDWorkshopApp({
       )
     }
 
+    if (isIsolated && !info) {
+      document.body.innerHTML = `
+        <div class="fill-screen-center">
+          <div>
+            Sorry... nothing here. To open one of the exercises, go to
+            <code>\`/exerciseNumber\`</code>, for example:
+            <a href="/1"><code>/1</code></a>
+          </div>
+        </div>
+      `
+      return
+    }
+
     // I honestly have no clue why, but there appears to be some kind of
     // race condition here with the title. It seems to get reset to the
     // title that's defined in the index.html after we set it :shrugs:
     setTimeout(() => {
       document.title = [
-        info ? `${info.number}. ${info.title || info.filename}` : null,
+        info
+          ? [
+              info.number ? `${info.number}. ` : '',
+              info.title || info.filename,
+            ].join('')
+          : null,
         projectTitle,
       ]
         .filter(Boolean)
@@ -89,29 +107,19 @@ function makeKCDWorkshopApp({
 
   function renderIsolated(isolatedModuleImport) {
     flushApp()
-    if (!isolatedModuleImport) {
-      document.body.innerHTML = `
-        <div class="fill-screen-center">
-          <div>
-            Sorry... nothing here. To open one of the exercises, go to
-            <code>\`/exerciseNumber\`</code>, for example:
-            <a href="/1"><code>/1</code></a>
-          </div>
-        </div>
-      `
-      return
-    }
 
     isolatedModuleImport().then(async ({default: defaultExport}) => {
       if (typeof defaultExport === 'function') {
+        // regular react component.
         ReactDOM.render(
-          <div className="fill-screen-center">
-            {React.createElement(defaultExport)}
-          </div>,
-          document.getElementById('⚛'),
+          React.createElement(defaultExport),
+          document.getElementById('root'),
         )
       } else if (typeof defaultExport === 'string') {
-        document.documentElement.innerHTML = defaultExport
+        // HTML file
+        const newDocumentElement = document.createElement('html')
+        newDocumentElement.innerHTML = defaultExport
+        document.documentElement.replaceWith(newDocumentElement)
 
         // to get all the scripts to actually run, you have to create new script
         // elements, and no, cloneElement doesn't work unfortunately.
@@ -152,6 +160,9 @@ function makeKCDWorkshopApp({
           window.Babel.transformScriptTags()
         }
       }
+
+      // otherwise we'll just expect that the file ran the thing it was supposed
+      // to run and doesn't need any help.
     })
   }
 
@@ -168,9 +179,9 @@ function makeKCDWorkshopApp({
   }
 
   function flushApp() {
-    document.documentElement.innerHTML = originalHTML
-    unmount?.(document.getElementById('⚛'))
-    document.getElementById('⚛').innerHTML = `
+    document.documentElement.replaceWith(originalDocumentElement)
+    unmount?.(document.getElementById('root'))
+    document.getElementById('root').innerHTML = `
       <div class="fill-screen-center">
         Loading...
       </div>

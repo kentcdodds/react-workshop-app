@@ -9,7 +9,7 @@ describe('the example app', () => {
     cy.findByText(/final.*isolated/i).click()
     cy.findByText('Hello World').should('exist')
     cy.go('back')
-    cy.findByText(/home/i).click()
+    cy.findByText(/react fundamentals/i, {selector: 'h1'}).click()
     cy.location().should(loc => expect(loc.pathname).to.eq('/'))
 
     cy.findByText(/intro to raw react apis/i).click()
