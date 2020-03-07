@@ -268,7 +268,11 @@ function renderReactApp({
                 },
               })}
             >
-              {instructionElement}
+              <React.Suspense
+                fallback={<div className="totally-centered">Loading...</div>}
+              >
+                {instructionElement}
+              </React.Suspense>
             </div>
             <div css={{background: theme.background}}>
               <Tabs
@@ -343,7 +347,13 @@ function renderReactApp({
                       }}
                       className="totally-centered"
                     >
-                      {exerciseElement}
+                      <React.Suspense
+                        fallback={
+                          <div className="totally-centered">Loading...</div>
+                        }
+                      >
+                        {exerciseElement}
+                      </React.Suspense>
                     </div>
                   </TabPanel>
                   <TabPanel>
@@ -377,7 +387,13 @@ function renderReactApp({
                       }}
                       className="totally-centered"
                     >
-                      {finalElement}
+                      <React.Suspense
+                        fallback={
+                          <div className="totally-centered">Loading...</div>
+                        }
+                      >
+                        {finalElement}
+                      </React.Suspense>
                     </div>
                   </TabPanel>
                 </TabPanels>
@@ -477,20 +493,32 @@ function renderReactApp({
                   justifyContent: 'center',
                 }}
               >
-                {exerciseInfo.map((e, id) => (
-                  <Link
-                    to={`/${e.number}`}
-                    aria-current={id === info.number}
-                    key={e.id}
-                    css={{
-                      background:
-                        id === info.number ? theme.primary : theme.skyDark,
-                      borderRadius: 3,
-                      height: 6,
-                      margin: '0 3px',
-                      width: 6,
-                    }}
-                  />
+                {exerciseInfo.map(e => (
+                  <React.Fragment key={e.id}>
+                    <input
+                      id={`exercise-dot-${e.id}`}
+                      type="radio"
+                      name="exercise-dots"
+                      checked={e.id === info.id}
+                      onChange={() => history.push(`/${e.number}`)}
+                      className="visually-hidden"
+                    />
+                    <label htmlFor={`exercise-dot-${e.id}`} title={e.title}>
+                      <span className="visually-hidden">{e.title}</span>
+                      <span
+                        css={{
+                          cursor: 'pointer',
+                          display: 'block',
+                          background:
+                            e.id === info.id ? theme.primary : theme.skyDark,
+                          borderRadius: '50%',
+                          height: 12,
+                          width: 12,
+                          margin: '0 6px',
+                        }}
+                      />
+                    </label>
+                  </React.Fragment>
                 ))}
               </div>
               <div css={{textAlign: 'right'}}>
@@ -854,65 +882,48 @@ function renderReactApp({
 
     return (
       <ThemeProvider theme={theme}>
-        <React.Suspense
-          fallback={
-            <div
-              style={{height: '100vh'}}
-              css={{
-                padding: '30px',
-                minHeight: '100vh',
-                display: 'grid',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              Loading...
-            </div>
-          }
-        >
-          <Router history={history}>
-            <Switch>
-              <Route exact path="/">
-                <Home mode={mode} setMode={setMode} />
-              </Route>
-              <Route exact path="/:exerciseNumber">
-                <ExerciseContainer mode={mode} setMode={setMode} />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
-          </Router>
-          <Global
-            styles={{
-              'html, body, #root': {
-                background: theme.background,
-                color: theme.text,
-              },
-              '::selection': {
-                background: theme.primary,
-                color: 'white',
-              },
-              a: {
-                color: theme.primary,
-              },
-              hr: {
-                opacity: 0.5,
-                border: 'none',
-                height: 1,
-                background: theme.textLightest,
-                maxWidth: '100%',
-                marginTop: 30,
-                marginBottom: 30,
-              },
-            }}
-          />
-          <Global
-            styles={`
+        <Router history={history}>
+          <Switch>
+            <Route exact path="/">
+              <Home mode={mode} setMode={setMode} />
+            </Route>
+            <Route exact path="/:exerciseNumber">
+              <ExerciseContainer mode={mode} setMode={setMode} />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </Router>
+        <Global
+          styles={{
+            'html, body, #root': {
+              background: theme.background,
+              color: theme.text,
+            },
+            '::selection': {
+              background: theme.primary,
+              color: 'white',
+            },
+            a: {
+              color: theme.primary,
+            },
+            hr: {
+              opacity: 0.5,
+              border: 'none',
+              height: 1,
+              background: theme.textLightest,
+              maxWidth: '100%',
+              marginTop: 30,
+              marginBottom: 30,
+            },
+          }}
+        />
+        <Global
+          styles={`
               ${mode === 'light' ? prismThemeLight : prismThemeDark}
             `}
-          />
-        </React.Suspense>
+        />
       </ThemeProvider>
     )
   }
