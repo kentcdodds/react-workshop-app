@@ -43,8 +43,6 @@ function loadFiles({
         } else if (ext === '.md' || ext === '.mdx') {
           const titleMatch = firstLine.match(/# (?<title>.*)$/) || fallbackMatch
           title = titleMatch.groups.title.trim()
-        } else {
-          throw new Error(`Unsupported file type: ${fullFilePath}`)
         }
       }
       return {
