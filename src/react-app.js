@@ -194,6 +194,26 @@ function renderReactApp({
   function ExerciseContainer(props) {
     const theme = useTheme()
     const {exerciseNumber} = useParams()
+
+    // allow the user to continue to the next exercise with the left/right keys
+    React.useEffect(() => {
+      const handleKeyup = e => {
+        if (e.target !== document.body) return
+        if (e.key === 'ArrowRight') {
+          const {number} =
+            exerciseInfo[Number(exerciseNumber) + 1] || exerciseInfo[1]
+          history.push(`/${number}`)
+        } else if (e.key === 'ArrowLeft') {
+          const {number} =
+            exerciseInfo[Number(exerciseNumber) - 1] ||
+            exerciseInfo[exerciseInfo.length - 1]
+          history.push(`/${number}`)
+        }
+      }
+      document.body.addEventListener('keyup', handleKeyup)
+      return () => document.body.removeEventListener('keyup', handleKeyup)
+    }, [exerciseNumber])
+
     const {instruction, exercise, final} = exerciseInfo[exerciseNumber]
     let exerciseElement, finalElement, instructionElement
 
