@@ -59,6 +59,9 @@
   "babel": {
     "presets": [
       "babel-preset-react-app"
+    ],
+    "plugins": [
+      "emotion"
     ]
   },
   "jest": {

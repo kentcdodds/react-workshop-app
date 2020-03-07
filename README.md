@@ -57,24 +57,14 @@ npm install --save @kentcdodds/react-workshop-app
 This is intended to be used with create-react-app (but it doesn't have to be).
 
 ```javascript
-import React from 'react'
-import ReactDOM from 'react-dom'
-import preval from 'preval.macro'
-import createWorkshopApp from '@kentcdodds/react-workshop-app'
-import pkg from '../package.json'
+// src/index.js
+import codegen from 'codegen.macro'
 
-const exerciseInfo = preval`module.exports = require('@kentcdodds/react-workshop-app/load-exercises')`
+// eslint-disable-next-line
+codegen`module.exports = require('@kentcdodds/react-workshop-app/codegen')`
 
-const WorkshopApp = createWorkshopApp({
-  getExerciseImport: id => () => import(`./exercises/${id}.js`),
-  getFinalImport: id => () => import(`./exercises-final/${id}.js`),
-  getExampleImport: id => () => import(`./examples/${id}.js`),
-  exerciseInfo,
-  projectTitle: pkg.title,
-})
-
-const rootEl = document.getElementById('⚛')
-ReactDOM.render(<WorkshopApp />, rootEl)
+// src/setupTests.js
+import '@kentcdodds/react-workshop-app/setup-tests'
 ```
 
 Then you'll need to have those directories set up. Probably easiest to look at
