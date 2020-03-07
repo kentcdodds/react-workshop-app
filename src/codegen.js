@@ -2,7 +2,7 @@
 
 const loadFiles = require('./load-files')
 
-function getCode({cwd = process.cwd(), ignore, renderOptions} = {}) {
+function getCode({cwd = process.cwd(), ignore, options} = {}) {
   const filesInfo = loadFiles({cwd, ignore})
 
   const imports = filesInfo.map(({id, filePath, ext}) => {
@@ -28,7 +28,7 @@ makeWorkshopApp({
   },
   filesInfo,
   projectTitle: pkg.title,
-  ${renderOptions ? `renderOptions: ${JSON.stringify(renderOptions)}` : ''}
+  ${options ? `options: ${JSON.stringify(options)}` : ''}
 })`.trim()
 }
 

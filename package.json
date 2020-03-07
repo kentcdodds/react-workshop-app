@@ -69,8 +69,8 @@
     "kcd-scripts": "^5.2.0",
     "postcss-cli": "^7.1.0",
     "preval.macro": "^4.0.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
+    "react": "0.0.0-experimental-235a6c4af",
+    "react-dom": "0.0.0-experimental-235a6c4af",
     "resolve": "^1.15.1"
   },
   "peerDependencies": {

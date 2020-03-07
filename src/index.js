@@ -24,7 +24,7 @@ function makeKCDWorkshopApp({
   filesInfo,
   projectTitle,
   fakeFetchResponses,
-  renderOptions,
+  options,
 }) {
   if (fakeFetchResponses) {
     hackFetch(fakeFetchResponses)
@@ -193,7 +193,7 @@ function makeKCDWorkshopApp({
       filesInfo,
       lazyComponents,
       imports,
-      renderOptions,
+      options,
     })
   }
 

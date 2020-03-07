@@ -28,7 +28,7 @@ function renderReactApp({
   filesInfo,
   lazyComponents,
   imports,
-  renderOptions: {stopRunawayEffects = true} = {},
+  options: {stopRunawayEffects = true, concurrentMode = false} = {},
 }) {
   if (
     process.env.NODE_ENV !== 'production' &&
@@ -960,10 +960,18 @@ function renderReactApp({
     )
   }
 
-  ReactDOM.render(<App />, document.getElementById('root'))
+  if (concurrentMode) {
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(<App />)
+    return function unmount() {
+      root.unmount()
+    }
+  } else {
+    ReactDOM.render(<App />, document.getElementById('root'))
 
-  return function unmount() {
-    ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+    return function unmount() {
+      ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+    }
   }
 }
 
