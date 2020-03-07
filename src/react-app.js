@@ -339,81 +339,93 @@ function renderReactApp({
                 <TabPanels>
                   <TabPanel>
                     <div
-                      css={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        width: '100%',
-                      }}
+                      css={mq({
+                        maxHeight: ['auto', 'auto', 'calc(100vh - 160px)'],
+                        overflowY: ['auto', 'auto', 'scroll'],
+                      })}
                     >
-                      <a
+                      <div
                         css={{
                           display: 'flex',
                           justifyContent: 'flex-end',
-                          padding: '1rem',
-                          textDecoration: 'none',
+                          width: '100%',
                         }}
-                        href={exercise.isolatedPath}
                       >
-                        <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
-                        {'Open exercise on isolated page'}
-                      </a>
-                    </div>
-                    <div
-                      css={{
-                        margin: '50px 0',
-                        color: '#19212a',
-                        background: 'white',
-                        padding: '2rem 0',
-                      }}
-                      className="totally-centered"
-                    >
-                      <React.Suspense
-                        fallback={
-                          <div className="totally-centered">Loading...</div>
-                        }
+                        <a
+                          css={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            padding: '1rem',
+                            textDecoration: 'none',
+                          }}
+                          href={exercise.isolatedPath}
+                        >
+                          <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
+                          {'Open exercise on isolated page'}
+                        </a>
+                      </div>
+                      <div
+                        css={{
+                          color: '#19212a',
+                          background: 'white',
+                          padding: '2rem 0',
+                        }}
+                        className="totally-centered"
                       >
-                        {exerciseElement}
-                      </React.Suspense>
+                        <React.Suspense
+                          fallback={
+                            <div className="totally-centered">Loading...</div>
+                          }
+                        >
+                          {exerciseElement}
+                        </React.Suspense>
+                      </div>
                     </div>
                   </TabPanel>
                   <TabPanel>
                     <div
-                      css={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        width: '100%',
-                      }}
+                      css={mq({
+                        maxHeight: ['auto', 'auto', 'calc(100vh - 160px)'],
+                        overflowY: ['auto', 'auto', 'scroll'],
+                      })}
                     >
-                      <a
-                        style={{
+                      <div
+                        css={{
                           display: 'flex',
                           justifyContent: 'flex-end',
-                          padding: '1rem',
-                          textDecoration: 'none',
+                          width: '100%',
                         }}
-                        href={final.isolatedPath}
                       >
-                        <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
-                        {' Open final on isolated page'}
-                      </a>
-                    </div>
+                        <a
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            padding: '1rem',
+                            textDecoration: 'none',
+                          }}
+                          href={final.isolatedPath}
+                        >
+                          <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
+                          {' Open final on isolated page'}
+                        </a>
+                      </div>
 
-                    <div
-                      css={{
-                        margin: '50px 0',
-                        color: '#19212a',
-                        background: 'white',
-                        padding: '2rem 0',
-                      }}
-                      className="totally-centered"
-                    >
-                      <React.Suspense
-                        fallback={
-                          <div className="totally-centered">Loading...</div>
-                        }
+                      <div
+                        css={{
+                          color: '#19212a',
+                          background: 'white',
+                          padding: '2rem 0',
+                        }}
+                        className="totally-centered"
                       >
-                        {finalElement}
-                      </React.Suspense>
+                        <React.Suspense
+                          fallback={
+                            <div className="totally-centered">Loading...</div>
+                          }
+                        >
+                          {finalElement}
+                        </React.Suspense>
+                      </div>
                     </div>
                   </TabPanel>
                 </TabPanels>
