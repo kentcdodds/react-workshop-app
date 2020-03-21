@@ -26,7 +26,6 @@
     "@testing-library/cypress": "^6.0.0",
     "cypress": "^4.2.0",
     "eslint-plugin-cypress": "^2.10.3",
-    "husky": "^4.2.3",
     "npm-run-all": "^4.1.5",
     "react-scripts": "^3.4.1",
     "serve": "^11.3.0",
@@ -50,11 +49,6 @@
     "// postinstall": "to avoid multiple copies of react on the page. /me shrugs",
     "postinstall": "rm -rf node_modules/react node_modules/react-dom",
     "validate": "npm-run-all --parallel build test:coverage lint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run validate"
-    }
   },
   "babel": {
     "presets": [
