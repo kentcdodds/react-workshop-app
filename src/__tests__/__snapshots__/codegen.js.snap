@@ -6,6 +6,17 @@ import pkg from '../package.json'
 
 const filesInfo = [
   {
+    "id": "src/box-styles.css",
+    "fullFilePath": "<PROJECT_ROOT>/src/box-styles.css",
+    "filePath": "src/box-styles.css",
+    "isolatedPath": "/isolated/box-styles.css",
+    "ext": ".css",
+    "filename": "box-styles",
+    "type": "src",
+    "number": 0,
+    "extraCreditNumber": 0
+  },
+  {
     "id": "src/examples/example.js",
     "fullFilePath": "<PROJECT_ROOT>/src/examples/example.js",
     "filePath": "src/examples/example.js",
@@ -534,6 +545,7 @@ const filesInfo = [
 
 makeWorkshopApp({
   imports: {
+    "src/box-styles.css": () => import("./box-styles.css"),
     "src/examples/example.js": () => import("./examples/example.js"),
     "src/examples/non-exported-example.js": () => import("./examples/non-exported-example.js"),
     "src/exercise/01.html": () => import("!raw-loader!./exercise/01.html"),
