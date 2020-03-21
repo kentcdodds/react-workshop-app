@@ -18,6 +18,7 @@
     "chalk": "^3.0.0",
     "codegen.macro": "^3.0.0",
     "is-ci-cli": "^2.0.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "msw": "^0.10.0",
     "react": "0.0.0-experimental-aae83a4b9",
     "react-dom": "0.0.0-experimental-aae83a4b9"
@@ -35,8 +36,8 @@
     "start": "react-scripts start",
     "serve": "serve --no-clipboard --single --listen 8080 build",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "test:coverage": "npm run test -- --watchAll=false --coverage",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
+    "test:coverage": "npm run test -- --watchAll=false",
     "test:exercises": "npm run test -- testing.*exercises\\/ --onlyChanged",
     "cy:run": "cypress run",
     "cy:open": "cypress open",

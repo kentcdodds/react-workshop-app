@@ -1,5 +1,5 @@
 import React from 'react'
-import {render, fireEvent, wait} from '@testing-library/react'
+import {render, fireEvent, waitFor} from '@testing-library/react'
 import Usage from '../final/08'
 // import Usage from '../exercise/08'
 
@@ -26,7 +26,7 @@ test('calls the onSubmitUsername handler when the submit is fired', async () => 
   expect(input.value).toBe('a')
   fireEvent.click(submit)
 
-  await wait(() => {
+  await waitFor(() => {
     expect(console.info).toHaveBeenCalledWith('username', input.value)
     expect(console.info).toHaveBeenCalledTimes(1)
   })
