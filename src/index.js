@@ -14,7 +14,7 @@ document.head.prepend(styleTag)
 
 const fillScreenCenter = `padding:30px;min-height:100vh;display:grid;align-items:center;justify-content:center;`
 
-const originalDocumentElement = document.documentElement.innerHTML
+const originalDocumentElement = document.documentElement
 
 function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options}) {
   const lazyComponents = {}
