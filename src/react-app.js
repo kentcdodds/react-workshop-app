@@ -1,9 +1,12 @@
 /** @jsx jsx */
+
+import 'focus-visible' // polyfill for :focus-visible (https://github.com/WICG/focus-visible)
 import {jsx, Global} from '@emotion/core'
-import facepaint from 'facepaint'
-import {ThemeProvider, useTheme} from 'emotion-theming'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import facepaint from 'facepaint'
+import {ThemeProvider, useTheme} from 'emotion-theming'
+import preval from 'preval.macro'
 import {Router, Switch, Route, Link, useParams} from 'react-router-dom'
 import {Tabs, TabList, Tab, TabPanels, TabPanel} from '@reach/tabs'
 import {hijackEffects} from 'stop-runaway-react-effects'
@@ -21,6 +24,31 @@ import Logo from './assets/logo'
 import getTheme, {prismThemeLight, prismThemeDark} from './theme'
 
 const originalUseEffect = React.useEffect
+
+const styleTag = document.createElement('style')
+styleTag.innerHTML = [
+  preval`module.exports = require('../other/css-file-to-string')('@reach/tabs/styles.css')`,
+].join('\n')
+document.head.prepend(styleTag)
+
+const totallyCenteredStyles = {
+  minWidth: '100%',
+  minHeight: '100%',
+  display: 'grid',
+  alignItems: 'center',
+  justifyContent: 'center',
+}
+
+const visuallyHiddenStyles = {
+  border: '0',
+  clip: 'rect(0 0 0 0)',
+  height: '1px',
+  margin: '-1px',
+  overflow: 'hidden',
+  padding: '0',
+  position: 'absolute',
+  width: '1px',
+}
 
 function renderReactApp({
   history,
@@ -159,9 +187,9 @@ function renderReactApp({
     return (
       <div style={{minHeight: 300, width: '100%'}}>
         {status === 'idle' || status === 'loading' ? (
-          <div className="totally-centered">Loading...</div>
+          <div css={totallyCenteredStyles}>Loading...</div>
         ) : status === 'error' ? (
-          <div className="totally-centered">
+          <div css={totallyCenteredStyles}>
             <div>Error loading</div>
             <pre>{error.message}</pre>
           </div>
@@ -289,7 +317,7 @@ function renderReactApp({
               })}
             >
               <React.Suspense
-                fallback={<div className="totally-centered">Loading...</div>}
+                fallback={<div css={totallyCenteredStyles}>Loading...</div>}
               >
                 {instructionElement}
               </React.Suspense>
@@ -359,23 +387,27 @@ function renderReactApp({
                       </a>
                     </div>
                     <div
-                      css={mq({
-                        color: '#19212a',
-                        background: 'white',
-                        padding: '2rem 0',
-                        minHeight: 500,
-                        height: ['auto', 'auto', 'calc(100vh - 210px)'],
-                        overflowY: ['auto', 'auto', 'scroll'],
-                      })}
-                      className="totally-centered"
+                      css={[
+                        totallyCenteredStyles,
+                        mq({
+                          color: '#19212a',
+                          background: 'white',
+                          padding: '2rem 0',
+                          minHeight: 500,
+                          height: ['auto', 'auto', 'calc(100vh - 210px)'],
+                          overflowY: ['auto', 'auto', 'scroll'],
+                        }),
+                      ]}
                     >
                       <React.Suspense
                         fallback={
                           <div
-                            className="totally-centered"
                             // this centers the loading with the loading
                             // for the instructions
-                            css={mq({marginBottom: ['auto', 'auto', 80]})}
+                            css={[
+                              totallyCenteredStyles,
+                              mq({marginBottom: ['auto', 'auto', 80]}),
+                            ]}
                           >
                             Loading...
                           </div>
@@ -410,23 +442,27 @@ function renderReactApp({
                     </div>
 
                     <div
-                      css={mq({
-                        color: '#19212a',
-                        background: 'white',
-                        padding: '2rem 0',
-                        minHeight: 500,
-                        height: ['auto', 'auto', 'calc(100vh - 210px)'],
-                        overflowY: ['auto', 'auto', 'scroll'],
-                      })}
-                      className="totally-centered"
+                      css={[
+                        totallyCenteredStyles,
+                        mq({
+                          color: '#19212a',
+                          background: 'white',
+                          padding: '2rem 0',
+                          minHeight: 500,
+                          height: ['auto', 'auto', 'calc(100vh - 210px)'],
+                          overflowY: ['auto', 'auto', 'scroll'],
+                        }),
+                      ]}
                     >
                       <React.Suspense
                         fallback={
                           <div
-                            className="totally-centered"
                             // this centers the loading with the loading
                             // for the instructions
-                            css={mq({marginBottom: ['auto', 'auto', 80]})}
+                            css={[
+                              totallyCenteredStyles,
+                              mq({marginBottom: ['auto', 'auto', 80]}),
+                            ]}
                           >
                             Loading...
                           </div>
@@ -543,10 +579,10 @@ function renderReactApp({
                       name="exercise-dots"
                       checked={e.id === info.id}
                       onChange={() => history.push(`/${e.number}`)}
-                      className="visually-hidden"
+                      css={visuallyHiddenStyles}
                     />
                     <label htmlFor={`exercise-dot-${e.id}`} title={e.title}>
-                      <span className="visually-hidden">{e.title}</span>
+                      <span css={visuallyHiddenStyles}>{e.title}</span>
                       <span
                         css={{
                           cursor: 'pointer',
@@ -969,8 +1005,18 @@ function renderReactApp({
               background: theme.primary,
               color: 'white',
             },
+            '[data-reach-tab]': {
+              cursor: 'pointer',
+            },
             a: {
               color: theme.primary,
+            },
+            /*
+              This will hide the focus indicator if the element receives focus via the mouse,
+              but it will still show up on keyboard focus.
+            */
+            '.js-focus-visible :focus:not(.focus-visible)': {
+              outline: 'none',
             },
             hr: {
               opacity: 0.5,

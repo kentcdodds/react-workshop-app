@@ -1,5 +1,6 @@
 // Styling
 
+import '../box-styles.css'
 import React from 'react'
 
 const smallBox = (

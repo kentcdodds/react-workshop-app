@@ -1,35 +1,22 @@
-import 'focus-visible' // polyfill for :focus-visible (https://github.com/WICG/focus-visible)
 import preval from 'preval.macro'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {createBrowserHistory} from 'history'
-import hackFetch from './hack-fetch'
 import {renderReactApp} from './react-app'
 
 const styleTag = document.createElement('style')
-const normalize = preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`
-styleTag.innerHTML = [
+const requiredStyles = [
+  preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`,
   preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`,
-  normalize,
-  preval`module.exports = require('../other/css-file-to-string')('@reach/tabs/styles.css')`,
 ].join('\n')
+styleTag.appendChild(document.createTextNode(requiredStyles))
 document.head.prepend(styleTag)
 
 const fillScreenCenter = `padding:30px;min-height:100vh;display:grid;align-items:center;justify-content:center;`
 
-const originalDocumentElement = document.documentElement
+const originalDocumentElement = document.documentElement.innerHTML
 
-function makeKCDWorkshopApp({
-  imports,
-  filesInfo,
-  projectTitle,
-  fakeFetchResponses,
-  options,
-}) {
-  if (fakeFetchResponses) {
-    hackFetch(fakeFetchResponses)
-  }
-
+function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options}) {
   const lazyComponents = {}
 
   for (const {ext, filePath} of filesInfo) {
@@ -109,17 +96,6 @@ function makeKCDWorkshopApp({
 
   function renderIsolated(isolatedModuleImport) {
     unmount?.(document.getElementById('root'))
-    const isolatedDocumentElement = document.createElement('html')
-    isolatedDocumentElement.innerHTML = `
-      <head>
-        <style>
-          *, *::before, *::after { box-sizing: border-box; }
-          ${normalize}
-        </style>
-      </head>
-      <body></body>
-    `
-    document.documentElement.replaceWith(isolatedDocumentElement)
 
     isolatedModuleImport().then(async ({default: defaultExport}) => {
       if (history.location !== previousLocation) {
@@ -129,16 +105,19 @@ function makeKCDWorkshopApp({
         return
       }
       if (typeof defaultExport === 'function') {
-        const root = document.createElement('div')
-        root.setAttribute('id', 'root')
-        document.body.appendChild(root)
         // regular react component.
-        ReactDOM.render(React.createElement(defaultExport), root)
+        ReactDOM.render(
+          React.createElement(defaultExport),
+          document.getElementById('root'),
+        )
       } else if (typeof defaultExport === 'string') {
         // HTML file
-        const newDocumentElement = document.createElement('html')
-        newDocumentElement.innerHTML = defaultExport
-        document.documentElement.replaceWith(newDocumentElement)
+        const domParser = new DOMParser()
+        const newDocument = domParser.parseFromString(
+          defaultExport,
+          'text/html',
+        )
+        document.documentElement.replaceWith(newDocument.documentElement)
 
         // to get all the scripts to actually run, you have to create new script
         // elements, and no, cloneElement doesn't work unfortunately.
@@ -186,7 +165,9 @@ function makeKCDWorkshopApp({
   }
 
   function renderReact() {
-    document.documentElement.replaceWith(originalDocumentElement)
+    if (document.documentElement !== originalDocumentElement) {
+      document.documentElement.replaceWith(originalDocumentElement)
+    }
     unmount = renderReactApp({
       history,
       projectTitle,
