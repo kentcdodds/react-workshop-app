@@ -19,8 +19,8 @@
     "codegen.macro": "^3.0.0",
     "is-ci-cli": "^2.0.0",
     "msw": "^0.10.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react": "0.0.0-experimental-aae83a4b9",
+    "react-dom": "0.0.0-experimental-aae83a4b9"
   },
   "devDependencies": {
     "@testing-library/cypress": "^6.0.0",
