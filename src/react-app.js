@@ -414,7 +414,7 @@ function renderReactApp({
                         }
                       >
                         <div
-                          className="exercise-container"
+                          className="exercise-container render-container"
                           css={mq({paddingBottom: [0, 0, '2rem']})}
                         >
                           {exerciseElement}
@@ -472,7 +472,7 @@ function renderReactApp({
                         }
                       >
                         <div
-                          className="final-container"
+                          className="final-container render-container"
                           css={mq({paddingBottom: [0, 0, '2rem']})}
                         >
                           {finalElement}
