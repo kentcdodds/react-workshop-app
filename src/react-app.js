@@ -986,64 +986,66 @@ function renderReactApp({
     const [mode, setMode] = useDarkMode()
     const theme = getTheme(mode)
 
+    React.useLayoutEffect(() => {
+      document.body.getElementById('root').classList.add('react-workshop-app')
+    })
+
     return (
-      <div className="react-workshop-app">
-        <ThemeProvider theme={theme}>
-          <Router history={history}>
-            <Switch>
-              <Route exact path="/">
-                <Home mode={mode} setMode={setMode} />
-              </Route>
-              <Route exact path="/:exerciseNumber">
-                <ExerciseContainer mode={mode} setMode={setMode} />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
-          </Router>
-          <Global
-            styles={{
-              'html, body, #root': {
-                background: theme.background,
-                color: theme.text,
-              },
-              '::selection': {
-                background: theme.primary,
-                color: 'white',
-              },
-              '[data-reach-tab]': {
-                cursor: 'pointer',
-              },
-              a: {
-                color: theme.primary,
-              },
-              /*
+      <ThemeProvider theme={theme}>
+        <Router history={history}>
+          <Switch>
+            <Route exact path="/">
+              <Home mode={mode} setMode={setMode} />
+            </Route>
+            <Route exact path="/:exerciseNumber">
+              <ExerciseContainer mode={mode} setMode={setMode} />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </Router>
+        <Global
+          styles={{
+            'html, body, #root': {
+              background: theme.background,
+              color: theme.text,
+            },
+            '::selection': {
+              background: theme.primary,
+              color: 'white',
+            },
+            '[data-reach-tab]': {
+              cursor: 'pointer',
+            },
+            a: {
+              color: theme.primary,
+            },
+            /*
               This will hide the focus indicator if the element receives focus via the mouse,
               but it will still show up on keyboard focus.
             */
-              '.js-focus-visible :focus:not(.focus-visible)': {
-                outline: 'none',
-              },
-              hr: {
-                opacity: 0.5,
-                border: 'none',
-                height: 1,
-                background: theme.textLightest,
-                maxWidth: '100%',
-                marginTop: 30,
-                marginBottom: 30,
-              },
-            }}
-          />
-          <Global
-            styles={`
+            '.js-focus-visible :focus:not(.focus-visible)': {
+              outline: 'none',
+            },
+            hr: {
+              opacity: 0.5,
+              border: 'none',
+              height: 1,
+              background: theme.textLightest,
+              maxWidth: '100%',
+              marginTop: 30,
+              marginBottom: 30,
+            },
+          }}
+        />
+        <Global
+          styles={`
               ${mode === 'light' ? prismThemeLight : prismThemeDark}
             `}
-          />
-          <DelayedTransition />
-        </ThemeProvider>
-      </div>
+        />
+        <DelayedTransition />
+      </ThemeProvider>
     )
   }
 
