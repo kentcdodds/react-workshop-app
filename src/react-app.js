@@ -987,7 +987,7 @@ function renderReactApp({
     const theme = getTheme(mode)
 
     React.useLayoutEffect(() => {
-      document.body.getElementById('root').classList.add('react-workshop-app')
+      document.getElementById('root').classList.add('react-workshop-app')
     })
 
     return (
