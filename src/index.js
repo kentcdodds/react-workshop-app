@@ -30,6 +30,22 @@ function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options}) {
   let previousLocation = history.location
   let previousIsIsolated = null
 
+  function render(ui, el) {
+    if (options.concurrentMode) {
+      const root = ReactDOM.createRoot(el)
+      root.render(ui)
+      return function unmount() {
+        root.unmount()
+      }
+    } else {
+      ReactDOM.render(ui, el)
+
+      return function unmount() {
+        ReactDOM.unmountComponentAtNode(el)
+      }
+    }
+  }
+
   function handleLocationChange(location = history.location) {
     const {pathname} = location
     // add location pathname to classList of the body
@@ -106,7 +122,7 @@ function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options}) {
       }
       if (typeof defaultExport === 'function') {
         // regular react component.
-        ReactDOM.render(
+        unmount = render(
           React.createElement(defaultExport),
           document.getElementById('root'),
         )
@@ -175,6 +191,7 @@ function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options}) {
       lazyComponents,
       imports,
       options,
+      render,
     })
   }
 

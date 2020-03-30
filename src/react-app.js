@@ -3,7 +3,6 @@
 import 'focus-visible' // polyfill for :focus-visible (https://github.com/WICG/focus-visible)
 import {jsx, Global} from '@emotion/core'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import facepaint from 'facepaint'
 import {ThemeProvider, useTheme} from 'emotion-theming'
 import preval from 'preval.macro'
@@ -56,7 +55,8 @@ function renderReactApp({
   filesInfo,
   lazyComponents,
   imports,
-  options: {stopRunawayEffects = true, concurrentMode = false} = {},
+  render,
+  options: {stopRunawayEffects = true} = {},
 }) {
   if (
     process.env.NODE_ENV !== 'production' &&
@@ -962,7 +962,7 @@ function renderReactApp({
   function DelayedTransition() {
     // we have it this way so dark mode is rendered immediately rather than
     // transitioning to it on initial page load.
-    const [render, setRender] = React.useState(false)
+    const [renderStyles, setRender] = React.useState(false)
     React.useEffect(() => {
       const timeout = setTimeout(() => {
         setRender(true)
@@ -970,7 +970,7 @@ function renderReactApp({
       return () => clearTimeout(timeout)
     }, [])
 
-    return render ? (
+    return renderStyles ? (
       <Global
         styles={{
           '*, *::before, *::after': {
@@ -1049,19 +1049,7 @@ function renderReactApp({
     )
   }
 
-  if (concurrentMode) {
-    const root = ReactDOM.createRoot(document.getElementById('root'))
-    root.render(<App />)
-    return function unmount() {
-      root.unmount()
-    }
-  } else {
-    ReactDOM.render(<App />, document.getElementById('root'))
-
-    return function unmount() {
-      ReactDOM.unmountComponentAtNode(document.getElementById('root'))
-    }
-  }
+  return render(<App />, document.getElementById('root'))
 }
 
 export {renderReactApp}
