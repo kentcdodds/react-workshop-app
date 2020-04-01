@@ -16,7 +16,7 @@ const fillScreenCenter = `padding:30px;min-height:100vh;display:grid;align-items
 
 const originalDocumentElement = document.documentElement
 
-function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options}) {
+function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options = {}}) {
   const lazyComponents = {}
 
   for (const {ext, filePath} of filesInfo) {
