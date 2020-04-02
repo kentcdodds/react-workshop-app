@@ -11,7 +11,7 @@ body {
 hr {
   opacity: 0.5;
   border: none;
-  height: 1;
+  height: 1px;
   max-width: 100%;
   margin-top: 30px;
   margin-bottom: 30px;
