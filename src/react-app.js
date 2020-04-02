@@ -149,12 +149,8 @@ function renderReactApp({
           Extra Credits:
         </span>
         {extraCredit.map(
-          (
-            {extraCreditTitle, extraCreditNumber, isolatedPath},
-            index,
-            array,
-          ) => (
-            <span key={extraCreditNumber}>
+          ({extraCreditTitle, isolatedPath, id}, index, array) => (
+            <span key={id}>
               <a href={isolatedPath}>{extraCreditTitle}</a>
               {array.length - 1 === index ? null : (
                 <span css={{marginRight: 5}}>,</span>
@@ -488,7 +484,7 @@ function renderReactApp({
                     bottom: 0,
                     padding: '1rem',
                     position: ['static', 'static', 'fixed'],
-                    width: '100%',
+                    width: ['100%', '100%', '50%'],
                   })}
                 />
               </Tabs>
