@@ -1024,15 +1024,7 @@ function renderReactApp({
             '.js-focus-visible :focus:not(.focus-visible)': {
               outline: 'none',
             },
-            hr: {
-              opacity: 0.5,
-              border: 'none',
-              height: 1,
-              background: theme.textLightest,
-              maxWidth: '100%',
-              marginTop: 30,
-              marginBottom: 30,
-            },
+            hr: {background: theme.textLightest},
           }}
         />
         <Global
