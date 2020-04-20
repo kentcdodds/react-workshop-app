@@ -304,6 +304,7 @@ function renderReactApp({
                   padding: '2rem',
                 },
                 ul: {padding: 0, listStylePosition: 'inside'},
+                'ul ul': {paddingLeft: '2rem'},
                 'p > code': {
                   background: theme.sky,
                   color: theme.text,
