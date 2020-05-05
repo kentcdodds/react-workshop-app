@@ -3,21 +3,22 @@ cache: npm
 notifications:
   email: false
 node_js:
-  - 10.13
+  - 10
   - 12
+  - 14
   - node
 install: npm install
 script:
   - npm run validate
   - npx codecov@3
-  - cd example/react-fundamentals && npm run setup
 branches:
   only:
     - master
-    - next
+    - beta
 
 jobs:
   include:
     - stage: release
-      node_js: 12
+      node_js: 14
       script: kcd-scripts travis-release
+      if: fork = false
