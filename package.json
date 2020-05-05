@@ -65,7 +65,7 @@
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-flowtype": "^4.7.0",
-    "kcd-scripts": "^5.11.1",
+    "kcd-scripts": "^6.0.0",
     "postcss-cli": "^7.1.1",
     "preval.macro": "^5.0.0",
     "react": "0.0.0-experimental-e5d06e34b",
