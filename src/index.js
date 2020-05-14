@@ -32,7 +32,7 @@ function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options = {}}) {
 
   function render(ui, el) {
     if (options.concurrentMode) {
-      const root = ReactDOM.createRoot(el)
+      const root = (ReactDOM.unstable_createRoot || ReactDOM.createRoot)(el)
       root.render(ui)
       return function unmount() {
         root.unmount()
