@@ -48,7 +48,7 @@
     "facepaint": "^1.2.1",
     "focus-visible": "^5.1.0",
     "glob": "^7.1.6",
-    "history": "^5.0.0",
+    "history": "^4.10.1",
     "inquirer": "^7.2.0",
     "is-ci": "^2.0.0",
     "mdx-loader": "^3.0.2",
