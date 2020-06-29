@@ -19,7 +19,7 @@ const originalDocumentElement = document.documentElement
 function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options = {}}) {
   const lazyComponents = {}
 
-  const componentExtensions = ['.js', '.md', '.mdx', '.tsx']
+  const componentExtensions = ['.js', '.md', '.mdx', '.tsx', '.ts']
 
   for (const {ext, filePath} of filesInfo) {
     if (componentExtensions.includes(ext)) {
