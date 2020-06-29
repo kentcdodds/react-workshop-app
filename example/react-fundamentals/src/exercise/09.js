@@ -42,7 +42,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Rendering%20Lists&em=
+http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Rendering%20Lists&em=dupa@dupa.pl
 */
 
 ////////////////////////////////////////////////////////////////////

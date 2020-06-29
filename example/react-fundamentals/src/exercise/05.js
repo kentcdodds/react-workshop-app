@@ -23,7 +23,7 @@ const largeBox = <div>large orange box</div>
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Styling&em=
+http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Styling&em=dupa@dupa.pl
 */
 
 ////////////////////////////////////////////////////////////////////

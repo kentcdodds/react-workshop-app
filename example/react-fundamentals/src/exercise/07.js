@@ -42,7 +42,7 @@ function UsernameForm({onSubmitUsername}) {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Dynamic%20Forms&em=
+http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Dynamic%20Forms&em=dupa@dupa.pl
 */
 
 ////////////////////////////////////////////////////////////////////
