@@ -19,8 +19,10 @@ const originalDocumentElement = document.documentElement
 function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options = {}}) {
   const lazyComponents = {}
 
+  const componentExtensions = ['.js', '.md', '.mdx', '.tsx']
+
   for (const {ext, filePath} of filesInfo) {
-    if (ext === '.js' || ext === '.md' || ext === '.mdx') {
+    if (componentExtensions.includes(ext)) {
       lazyComponents[filePath] = React.lazy(imports[filePath])
     }
   }

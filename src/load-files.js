@@ -26,7 +26,7 @@ function loadFiles({
       let title, extraCreditTitle
       const fallbackMatch = {groups: {title: ''}}
       if (parentDir === 'final' || parentDir === 'exercise') {
-        if (ext === '.js') {
+        if (ext === '.js' || ext === '.tsx') {
           const titleMatch =
             firstLine.match(/\/\/ (?<title>.*)$/) || fallbackMatch
           title = titleMatch.groups.title.trim()
