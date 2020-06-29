@@ -13,11 +13,11 @@ function App() {
   const [items, setItems] = React.useState(allItems)
 
   function addItem() {
-    setItems([...items, allItems.find(i => !items.includes(i))])
+    setItems([...items, allItems.find((i) => !items.includes(i))])
   }
 
   function removeItem(item) {
-    setItems(items.filter(i => i !== item))
+    setItems(items.filter((i) => i !== item))
   }
 
   return (
@@ -26,7 +26,7 @@ function App() {
         add item
       </button>
       <ul style={{listStyle: 'none', paddingLeft: 0}}>
-        {items.map(item => (
+        {items.map((item) => (
           // 🐨 this needs a key. Set it to i.id
           <li>
             <button onClick={() => removeItem(item)}>remove</button>{' '}
@@ -42,7 +42,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Rendering%20Lists&em=dupa@dupa.pl
+http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Raw%20DOM&em=
 */
 
 ////////////////////////////////////////////////////////////////////

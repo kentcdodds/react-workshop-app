@@ -30,7 +30,7 @@ function UsernameForm({onSubmitUsername}) {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Basic%20Forms&em=dupa@dupa.pl
+http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Raw%20DOM&em=
 */
 
 ////////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Basic%20Forms&em=dupa@dupa.pl
 ////////////////////////////////////////////////////////////////////
 
 function Usage() {
-  const onSubmitUsername = username => console.info('username', username)
+  const onSubmitUsername = (username) => console.info('username', username)
   return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
 
