@@ -16,3 +16,13 @@ hr {
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+/* 
+This hides the Create-React-App ErrorOverlay that will overlay the whole application when React fails to compile. The problem here is that it also overlays the workshop instructions with the example
+
+Reference: https://github.com/kentcdodds/react-workshop-app/issues/4
+
+*/
+iframe {
+  display: none;
+}
