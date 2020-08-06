@@ -1,7 +1,7 @@
-import {composeMocks, rest} from 'msw'
+import {setupWorker, rest} from 'msw'
 
 // Configure mocking routes
-const {start} = composeMocks(
+const worker = setupWorker(
   rest.post('*/user', (req, res, {status, set, delay, json}) => {
     // access request's params
     const {username} = req.body
@@ -19,4 +19,9 @@ const {start} = composeMocks(
   }),
 )
 
-start('/mockServiceWorker.js')
+worker.start({
+  quiet: true,
+  serviceWorker: {
+    url: '/mockServiceWorker.js',
+  },
+})

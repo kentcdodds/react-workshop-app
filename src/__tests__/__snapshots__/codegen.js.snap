@@ -520,6 +520,17 @@ const filesInfo = [
     "extraCreditNumber": 0
   },
   {
+    "id": "src/react-app-env.d.ts",
+    "fullFilePath": "<PROJECT_ROOT>/src/react-app-env.d.ts",
+    "filePath": "src/react-app-env.d.ts",
+    "isolatedPath": "/isolated/react-app-env.d.ts",
+    "ext": ".ts",
+    "filename": "react-app-env.d",
+    "type": "src",
+    "number": 0,
+    "extraCreditNumber": 0
+  },
+  {
     "id": "src/server.js",
     "fullFilePath": "<PROJECT_ROOT>/src/server.js",
     "filePath": "src/server.js",
@@ -597,6 +608,7 @@ makeWorkshopApp({
     "src/final/09.extra-1.js": () => import("./final/09.extra-1.js"),
     "src/final/09.js": () => import("./final/09.js"),
     "src/index.js": () => import("./index.js"),
+    "src/react-app-env.d.ts": () => import("./react-app-env.d.ts"),
     "src/server.js": () => import("./server.js"),
     "src/setupTests.js": () => import("./setupTests.js"),
     "src/styles.css": () => import("./styles.css")

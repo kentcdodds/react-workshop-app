@@ -13,11 +13,11 @@ function App() {
   const [items, setItems] = React.useState(allItems)
 
   function addItem() {
-    setItems([...items, allItems.find(i => !items.includes(i))])
+    setItems([...items, allItems.find((i) => !items.includes(i))])
   }
 
   function removeItem(item) {
-    setItems(items.filter(i => i !== item))
+    setItems(items.filter((i) => i !== item))
   }
 
   return (
@@ -26,7 +26,7 @@ function App() {
         add item
       </button>
       <ul style={{listStyle: 'none', paddingLeft: 0}}>
-        {items.map(item => (
+        {items.map((item) => (
           // 🐨 this needs a key. Set it to i.id
           <li>
             <button onClick={() => removeItem(item)}>remove</button>{' '}

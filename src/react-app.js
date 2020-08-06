@@ -6,6 +6,7 @@ import React from 'react'
 import facepaint from 'facepaint'
 import {ThemeProvider, useTheme} from 'emotion-theming'
 import preval from 'preval.macro'
+import {ErrorBoundary} from 'react-error-boundary'
 import {Router, Switch, Route, Link, useParams} from 'react-router-dom'
 import {Tabs, TabList, Tab, TabPanels, TabPanel} from '@reach/tabs'
 import {hijackEffects} from 'stop-runaway-react-effects'
@@ -215,6 +216,95 @@ function renderReactApp({
   }
   HtmlInIframe.displayName = 'HtmlInIframe'
 
+  function SandboxErrorFallback({componentStack, ...props}) {
+    const relevantStackLines = []
+    const componentStackLines = componentStack.split('\n').filter(Boolean)
+    console.log(componentStack)
+    for (const line of componentStackLines) {
+      if (line.includes('ExerciseContainer')) {
+        relevantStackLines.push(
+          line.trim().replace(' (created by ExerciseContainer)', ''),
+        )
+        break
+      } else {
+        relevantStackLines.push(line.trim())
+      }
+    }
+    return (
+      <ErrorFallback
+        {...props}
+        componentStack={relevantStackLines.join('\n')}
+      />
+    )
+  }
+  SandboxErrorFallback.displayName = 'SandboxErrorFallback'
+
+  function Sandbox({isolatedPath, isolatedPathLinkContent, children}) {
+    return (
+      <>
+        <div
+          css={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '100%',
+          }}
+        >
+          <a
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              padding: '1rem',
+              textDecoration: 'none',
+            }}
+            href={isolatedPath}
+          >
+            <RiExternalLinkLine css={{marginRight: '0.25rem'}} />{' '}
+            {isolatedPathLinkContent}
+          </a>
+        </div>
+
+        <div
+          css={[
+            totallyCenteredStyles,
+            mq({
+              color: '#19212a',
+              background: 'white',
+              padding: '2rem 0',
+              minHeight: 500,
+              height: ['auto', 'auto', 'calc(100vh - 210px)'],
+              overflowY: ['auto', 'auto', 'scroll'],
+            }),
+          ]}
+        >
+          <ErrorBoundary FallbackComponent={SandboxErrorFallback}>
+            <React.Suspense
+              fallback={
+                <div
+                  // this centers the loading with the loading
+                  // for the instructions
+                  css={[
+                    totallyCenteredStyles,
+                    mq({marginBottom: ['auto', 'auto', 80]}),
+                  ]}
+                >
+                  Loading...
+                </div>
+              }
+            >
+              <div
+                className="final-container render-container"
+                css={mq({paddingBottom: [0, 0, '2rem']})}
+              >
+                {children}
+              </div>
+            </React.Suspense>
+          </ErrorBoundary>
+        </div>
+      </>
+    )
+  }
+  Sandbox.displayName = 'Sandbox'
+
   function ExerciseContainer(props) {
     const theme = useTheme()
     const {exerciseNumber} = useParams()
@@ -363,119 +453,20 @@ function renderReactApp({
                 </TabList>
                 <TabPanels>
                   <TabPanel>
-                    <div
-                      css={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        width: '100%',
-                      }}
+                    <Sandbox
+                      isolatedPath={exercise.isolatedPath}
+                      isolatedPathLinkContent="Open exercise on isolated page"
                     >
-                      <a
-                        css={{
-                          display: 'flex',
-                          justifyContent: 'flex-end',
-                          padding: '1rem',
-                          textDecoration: 'none',
-                        }}
-                        href={exercise.isolatedPath}
-                      >
-                        <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
-                        {'Open exercise on isolated page'}
-                      </a>
-                    </div>
-                    <div
-                      css={[
-                        totallyCenteredStyles,
-                        mq({
-                          color: '#19212a',
-                          background: 'white',
-                          padding: '2rem 0',
-                          minHeight: 500,
-                          height: ['auto', 'auto', 'calc(100vh - 210px)'],
-                          overflowY: ['auto', 'auto', 'scroll'],
-                        }),
-                      ]}
-                    >
-                      <React.Suspense
-                        fallback={
-                          <div
-                            // this centers the loading with the loading
-                            // for the instructions
-                            css={[
-                              totallyCenteredStyles,
-                              mq({marginBottom: ['auto', 'auto', 80]}),
-                            ]}
-                          >
-                            Loading...
-                          </div>
-                        }
-                      >
-                        <div
-                          className="exercise-container render-container"
-                          css={mq({paddingBottom: [0, 0, '2rem']})}
-                        >
-                          {exerciseElement}
-                        </div>
-                      </React.Suspense>
-                    </div>
+                      {exerciseElement}
+                    </Sandbox>
                   </TabPanel>
                   <TabPanel>
-                    <div
-                      css={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        width: '100%',
-                      }}
+                    <Sandbox
+                      isolatedPath={final.isolatedPath}
+                      isolatedPathLinkContent="Open final on isolated page"
                     >
-                      <a
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'flex-end',
-                          padding: '1rem',
-                          textDecoration: 'none',
-                        }}
-                        href={final.isolatedPath}
-                      >
-                        <RiExternalLinkLine css={{marginRight: '0.25rem'}} />
-                        {' Open final on isolated page'}
-                      </a>
-                    </div>
-
-                    <div
-                      css={[
-                        totallyCenteredStyles,
-                        mq({
-                          color: '#19212a',
-                          background: 'white',
-                          padding: '2rem 0',
-                          minHeight: 500,
-                          height: ['auto', 'auto', 'calc(100vh - 210px)'],
-                          overflowY: ['auto', 'auto', 'scroll'],
-                        }),
-                      ]}
-                    >
-                      <React.Suspense
-                        fallback={
-                          <div
-                            // this centers the loading with the loading
-                            // for the instructions
-                            css={[
-                              totallyCenteredStyles,
-                              mq({marginBottom: ['auto', 'auto', 80]}),
-                            ]}
-                          >
-                            Loading...
-                          </div>
-                        }
-                      >
-                        <div
-                          className="final-container render-container"
-                          css={mq({paddingBottom: [0, 0, '2rem']})}
-                        >
-                          {finalElement}
-                        </div>
-                      </React.Suspense>
-                    </div>
+                      {finalElement}
+                    </Sandbox>
                   </TabPanel>
                 </TabPanels>
                 <ExtraCreditLinks
@@ -1038,7 +1029,65 @@ function renderReactApp({
     )
   }
 
-  return render(<App />, document.getElementById('root'))
+  const style = document.createElement('style')
+  style.innerText = `body:not([class*=isolated]) iframe {display: block;}`
+  const displayOverlay = () => document.head.append(style)
+  const hideOverlay = () => style.remove()
+
+  function ErrorFallback({error, componentStack, resetErrorBoundary}) {
+    return (
+      <div
+        css={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          marginTop: '50px',
+        }}
+      >
+        <p>Oh no! Something went wrong!</p>
+        <div>
+          <p>{`Here's the error:`}</p>
+          <pre css={{color: 'red', overflowY: 'scroll'}}>{error.message}</pre>
+        </div>
+        <div>
+          <p>{`Here's a component stack trace:`}</p>
+          <pre css={{color: 'red', overflowY: 'scroll'}}>{componentStack}</pre>
+        </div>
+        <div>
+          <p>Try doing one of these things to fix this:</p>
+          <ol>
+            <li>
+              <button onClick={resetErrorBoundary}>Rerender the app</button>
+            </li>
+            <li>
+              <button onClick={() => window.location.reload()}>
+                Refresh the page
+              </button>
+            </li>
+            <li>Update your code to fix the problem</li>
+          </ol>
+        </div>
+        <div>
+          <button onClick={() => displayOverlay()}>Display more info</button>
+        </div>
+      </div>
+    )
+  }
+
+  function AppErrorFallback(props) {
+    React.useLayoutEffect(() => {
+      displayOverlay()
+      return () => hideOverlay()
+    })
+    return <ErrorFallback {...props} />
+  }
+
+  return render(
+    <ErrorBoundary FallbackComponent={AppErrorFallback}>
+      <App />
+    </ErrorBoundary>,
+    document.getElementById('root'),
+  )
 }
 
 export {renderReactApp}
