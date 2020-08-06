@@ -219,7 +219,6 @@ function renderReactApp({
   function SandboxErrorFallback({componentStack, ...props}) {
     const relevantStackLines = []
     const componentStackLines = componentStack.split('\n').filter(Boolean)
-    console.log(componentStack)
     for (const line of componentStackLines) {
       if (line.includes('ExerciseContainer')) {
         relevantStackLines.push(
