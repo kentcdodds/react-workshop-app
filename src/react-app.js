@@ -923,11 +923,6 @@ function renderReactApp({
     )
   }
 
-  const style = document.createElement('style')
-  style.innerText = `body:not([class*=isolated]) iframe {display: block;}`
-  const displayOverlay = () => document.head.append(style)
-  const hideOverlay = () => style.remove()
-
   function ErrorFallback({error, componentStack, resetErrorBoundary}) {
     return (
       <div
@@ -941,27 +936,11 @@ function renderReactApp({
         <p>Oh no! Something went wrong!</p>
         <div>
           <p>{`Here's the error:`}</p>
-          <pre
-            css={mq({
-              color: 'red',
-              overflowY: 'scroll',
-              maxWidth: ['100vw', '100vw', '50vw', '50vw'],
-            })}
-          >
-            {error.message}
-          </pre>
+          <pre css={{color: 'red', overflowY: 'scroll'}}>{error.message}</pre>
         </div>
         <div>
           <p>{`Here's a component stack trace:`}</p>
-          <pre
-            css={mq({
-              color: 'red',
-              overflowY: 'scroll',
-              maxWidth: ['100vw', '100vw', '50vw', '50vw'],
-            })}
-          >
-            {componentStack}
-          </pre>
+          <pre css={{color: 'red', overflowY: 'scroll'}}>{componentStack}</pre>
         </div>
         <div>
           <p>Try doing one of these things to fix this:</p>
@@ -977,23 +956,12 @@ function renderReactApp({
             <li>Update your code to fix the problem</li>
           </ol>
         </div>
-        <div>
-          <button onClick={() => displayOverlay()}>Display more info</button>
-        </div>
       </div>
     )
   }
 
-  function AppErrorFallback(props) {
-    React.useLayoutEffect(() => {
-      displayOverlay()
-      return () => hideOverlay()
-    })
-    return <ErrorFallback {...props} />
-  }
-
   return render(
-    <ErrorBoundary FallbackComponent={AppErrorFallback}>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       <App />
     </ErrorBoundary>,
     document.getElementById('root'),
