@@ -8,6 +8,11 @@ const styleTag = document.createElement('style')
 const requiredStyles = [
   preval`module.exports = require('../other/css-file-to-string')('normalize.css/normalize.css')`,
   preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`,
+  // this will happen when running the regular app and embedding the example
+  // in an iframe.
+  window.frameElement
+    ? `#root{display:grid;place-items:center;height:100vh;}`
+    : '',
 ].join('\n')
 styleTag.appendChild(document.createTextNode(requiredStyles))
 document.head.prepend(styleTag)

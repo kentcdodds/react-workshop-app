@@ -35,8 +35,6 @@ const totallyCenteredStyles = {
   minWidth: '100%',
   minHeight: '100%',
   display: 'grid',
-  alignItems: 'center',
-  justifyContent: 'center',
 }
 
 const visuallyHiddenStyles = {
@@ -55,7 +53,6 @@ function renderReactApp({
   projectTitle,
   filesInfo,
   lazyComponents,
-  imports,
   render,
   options: {stopRunawayEffects = true} = {},
 }) {
@@ -103,23 +100,6 @@ function renderReactApp({
     '@media(min-width: 1200px)',
   ])
 
-  function ComponentContainer({label, ...props}) {
-    return (
-      <div
-        style={{
-          flex: 1,
-          padding: 20,
-          border: '1px solid',
-          display: 'grid',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        {...props}
-      />
-    )
-  }
-  ComponentContainer.displayName = 'ComponentContainer'
-
   function ExtraCreditLinks({exerciseNumber, ...props}) {
     const {extraCredit} = exerciseInfo[exerciseNumber]
     if (!extraCredit.length) {
@@ -164,80 +144,6 @@ function renderReactApp({
   }
   ExtraCreditLinks.displayName = 'ExtraCreditLinks'
 
-  function IsolatedHtml({importHtml}) {
-    const [{status, html, error}, setState] = React.useState({
-      status: 'idle',
-      html: null,
-    })
-
-    React.useEffect(() => {
-      importHtml().then(
-        ({default: htmlString}) => {
-          setState({html: htmlString, error: null, status: 'success'})
-        },
-        e => {
-          setState({html: null, error: e, status: 'success'})
-        },
-      )
-    }, [importHtml])
-
-    return (
-      <div style={{minHeight: 300, width: '100%'}}>
-        {status === 'idle' || status === 'loading' ? (
-          <div css={totallyCenteredStyles}>Loading...</div>
-        ) : status === 'error' ? (
-          <div css={totallyCenteredStyles}>
-            <div>Error loading</div>
-            <pre>{error.message}</pre>
-          </div>
-        ) : (
-          <HtmlInIframe html={html} />
-        )}
-      </div>
-    )
-  }
-  IsolatedHtml.displayName = 'IsolatedHtml'
-
-  function HtmlInIframe({html}) {
-    const iframeRef = React.useRef(null)
-    React.useEffect(() => {
-      if (!iframeRef.current.contentDocument) {
-        // if they're navigating around quickly this can happen
-        return
-      }
-      iframeRef.current.contentDocument.open()
-      iframeRef.current.contentDocument.write(html)
-      iframeRef.current.contentDocument.close()
-    }, [html])
-    return (
-      // eslint-disable-next-line jsx-a11y/iframe-has-title
-      <iframe style={{border: 'none'}} ref={iframeRef} />
-    )
-  }
-  HtmlInIframe.displayName = 'HtmlInIframe'
-
-  function SandboxErrorFallback({componentStack, ...props}) {
-    const relevantStackLines = []
-    const componentStackLines = componentStack.split('\n').filter(Boolean)
-    for (const line of componentStackLines) {
-      if (line.includes('ExerciseContainer')) {
-        relevantStackLines.push(
-          line.trim().replace(' (created by ExerciseContainer)', ''),
-        )
-        break
-      } else {
-        relevantStackLines.push(line.trim())
-      }
-    }
-    return (
-      <ErrorFallback
-        {...props}
-        componentStack={relevantStackLines.join('\n')}
-      />
-    )
-  }
-  SandboxErrorFallback.displayName = 'SandboxErrorFallback'
-
   function Sandbox({isolatedPath, isolatedPathLinkContent, children}) {
     return (
       <>
@@ -268,36 +174,13 @@ function renderReactApp({
             mq({
               color: '#19212a',
               background: 'white',
-              padding: '2rem 0',
               minHeight: 500,
               height: ['auto', 'auto', 'calc(100vh - 210px)'],
               overflowY: ['auto', 'auto', 'scroll'],
             }),
           ]}
         >
-          <ErrorBoundary FallbackComponent={SandboxErrorFallback}>
-            <React.Suspense
-              fallback={
-                <div
-                  // this centers the loading with the loading
-                  // for the instructions
-                  css={[
-                    totallyCenteredStyles,
-                    mq({marginBottom: ['auto', 'auto', 80]}),
-                  ]}
-                >
-                  Loading...
-                </div>
-              }
-            >
-              <div
-                className="final-container render-container"
-                css={mq({paddingBottom: [0, 0, '2rem']})}
-              >
-                {children}
-              </div>
-            </React.Suspense>
-          </ErrorBoundary>
+          <div className="final-container render-container">{children}</div>
         </div>
       </>
     )
@@ -307,6 +190,16 @@ function renderReactApp({
   function ExerciseContainer(props) {
     const theme = useTheme()
     const {exerciseNumber} = useParams()
+    const [tabIndex, setTabIndex] = React.useState(0)
+    const renderedTabs = React.useRef()
+
+    if (!renderedTabs.current) {
+      renderedTabs.current = new Set([0])
+    }
+    function handleTabChange(index) {
+      setTabIndex(index)
+      renderedTabs.current.add(index)
+    }
 
     // allow the user to continue to the next exercise with the left/right keys
     React.useEffect(() => {
@@ -328,22 +221,10 @@ function renderReactApp({
     }, [exerciseNumber])
 
     const {instruction, exercise, final} = exerciseInfo[exerciseNumber]
-    let exerciseElement, finalElement, instructionElement
+    let instructionElement
 
-    if (lazyComponents[exercise.id]) {
-      exerciseElement = React.createElement(lazyComponents[exercise.id])
-    }
-    if (lazyComponents[final.id]) {
-      finalElement = React.createElement(lazyComponents[final.id])
-    }
     if (lazyComponents[instruction.id]) {
       instructionElement = React.createElement(lazyComponents[instruction.id])
-    }
-    if (exercise.ext === '.html') {
-      exerciseElement = <IsolatedHtml importHtml={imports[exercise.id]} />
-    }
-    if (final.ext === '.html') {
-      finalElement = <IsolatedHtml importHtml={imports[final.id]} />
     }
 
     return (
@@ -410,6 +291,8 @@ function renderReactApp({
             </div>
             <div css={{background: theme.background}}>
               <Tabs
+                index={tabIndex}
+                onChange={handleTabChange}
                 css={{
                   background: theme.backgroundLight,
                   borderTop: `1px solid ${theme.sky}`,
@@ -456,7 +339,13 @@ function renderReactApp({
                       isolatedPath={exercise.isolatedPath}
                       isolatedPathLinkContent="Open exercise on isolated page"
                     >
-                      {exerciseElement}
+                      {renderedTabs.current.has(0) ? (
+                        <iframe
+                          title="Exercise"
+                          src={exercise.isolatedPath}
+                          css={{border: 'none', width: '100%', height: '100%'}}
+                        />
+                      ) : null}
                     </Sandbox>
                   </TabPanel>
                   <TabPanel>
@@ -464,7 +353,13 @@ function renderReactApp({
                       isolatedPath={final.isolatedPath}
                       isolatedPathLinkContent="Open final on isolated page"
                     >
-                      {finalElement}
+                      {renderedTabs.current.has(1) ? (
+                        <iframe
+                          title="Final"
+                          src={final.isolatedPath}
+                          css={{border: 'none', width: '100%', height: '100%'}}
+                        />
+                      ) : null}
                     </Sandbox>
                   </TabPanel>
                 </TabPanels>
@@ -1046,13 +941,27 @@ function renderReactApp({
         <p>Oh no! Something went wrong!</p>
         <div>
           <p>{`Here's the error:`}</p>
-          <pre css={{color: 'red', overflowY: 'scroll', whiteSpace: 'normal'}}>
+          <pre
+            css={mq({
+              color: 'red',
+              overflowY: 'scroll',
+              maxWidth: ['100vw', '100vw', '50vw', '50vw'],
+            })}
+          >
             {error.message}
           </pre>
         </div>
         <div>
           <p>{`Here's a component stack trace:`}</p>
-          <pre css={{color: 'red', overflowY: 'scroll'}}>{componentStack}</pre>
+          <pre
+            css={mq({
+              color: 'red',
+              overflowY: 'scroll',
+              maxWidth: ['100vw', '100vw', '50vw', '50vw'],
+            })}
+          >
+            {componentStack}
+          </pre>
         </div>
         <div>
           <p>Try doing one of these things to fix this:</p>
