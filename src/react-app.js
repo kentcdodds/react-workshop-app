@@ -1046,7 +1046,9 @@ function renderReactApp({
         <p>Oh no! Something went wrong!</p>
         <div>
           <p>{`Here's the error:`}</p>
-          <pre css={{color: 'red', overflowY: 'scroll'}}>{error.message}</pre>
+          <pre css={{color: 'red', overflowY: 'scroll', whiteSpace: 'normal'}}>
+            {error.message}
+          </pre>
         </div>
         <div>
           <p>{`Here's a component stack trace:`}</p>
