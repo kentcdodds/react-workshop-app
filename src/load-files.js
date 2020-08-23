@@ -28,10 +28,10 @@ function loadFiles({
       if (parentDir === 'final' || parentDir === 'exercise') {
         if (ext === '.js' || ext === '.tsx' || ext === '.ts') {
           const titleMatch =
-            firstLine.match(/\/\/ (?<title>.*)$/) || fallbackMatch
+            firstLine.match(/\/\/ (?<title>.*)[\r]{0,1}$/) || fallbackMatch
           title = titleMatch.groups.title.trim()
           const extraCreditTitleMatch =
-            secondLine.match(/\/\/ 💯 (?<title>.*)$/) || fallbackMatch
+            secondLine.match(/\/\/ 💯 (?<title>.*)[\r]{0,1}$/) || fallbackMatch
           extraCreditTitle = extraCreditTitleMatch.groups.title.trim()
         } else if (ext === '.html') {
           const titleMatch =
@@ -41,7 +41,8 @@ function loadFiles({
             secondLine.match(/<!-- 💯 (?<title>.*) -->/) || fallbackMatch
           extraCreditTitle = extraCreditTitleMatch.groups.title.trim()
         } else if (ext === '.md' || ext === '.mdx') {
-          const titleMatch = firstLine.match(/# (?<title>.*)$/) || fallbackMatch
+          const titleMatch =
+            firstLine.match(/# (?<title>.*)[\r]{0,1}$/) || fallbackMatch
           title = titleMatch.groups.title.trim()
         }
       }
