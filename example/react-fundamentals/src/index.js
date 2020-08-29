@@ -1,6 +1,5 @@
 import './styles.css'
-// test the backend mocks stuff by uncommenting this:
-// import './server'
+import './test/server'
 import codegen from 'codegen.macro'
 
 // eslint-disable-next-line

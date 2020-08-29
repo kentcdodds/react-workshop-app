@@ -4,7 +4,7 @@ const glob = require('glob')
 
 function loadFiles({
   cwd = process.cwd(),
-  ignore = '**/__tests__/**',
+  ignore = ['**/__tests__/**', '**/test/**'],
   ...rest
 } = {}) {
   const fileInfo = glob

@@ -7,20 +7,3 @@ beforeAll(() => {
 })
 afterAll(() => console.info.mockRestore())
 beforeEach(() => console.info.mockClear())
-
-window.fetch = window.fetch || (async () => {})
-jest.spyOn(window, 'fetch')
-afterAll(() => {
-  window.fetch.mockRestore()
-})
-
-beforeEach(() => {
-  window.fetch.mockImplementation((...args) => {
-    console.warn('window.fetch is not mocked for this call', ...args)
-    return Promise.reject(new Error('This must be mocked!'))
-  })
-})
-
-afterEach(() => {
-  window.fetch.mockClear()
-})

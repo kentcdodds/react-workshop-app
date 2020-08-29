@@ -19,7 +19,7 @@
     "codegen.macro": "^4.0.0",
     "is-ci-cli": "^2.1.2",
     "jest-environment-jsdom-sixteen": "^1.0.3",
-    "msw": "^0.20.3",
+    "msw": "^0.20.5",
     "react": "0.0.0-experimental-3d0895557",
     "react-dom": "0.0.0-experimental-3d0895557",
     "typescript": "^3.9.7"
