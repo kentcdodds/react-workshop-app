@@ -12,11 +12,6 @@ beforeEach(() => {
 })
 
 test('calls the onSubmitUsername handler when the submit is fired', async () => {
-  window.fetch.mockImplementationOnce((url, config) =>
-    Promise.resolve({
-      json: () => Promise.resolve({username: JSON.parse(config.body).username}),
-    }),
-  )
   const {getByLabelText, getByText} = render(<Usage />)
   const input = getByLabelText(/username/i)
   const submit = getByText(/submit/i)
@@ -29,5 +24,7 @@ test('calls the onSubmitUsername handler when the submit is fired', async () => 
   await waitFor(() => {
     expect(console.info).toHaveBeenCalledWith('username', input.value)
     expect(console.info).toHaveBeenCalledTimes(1)
+  },{
+    timeout: 2000
   })
 })
