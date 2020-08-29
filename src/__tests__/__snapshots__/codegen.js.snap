@@ -531,17 +531,6 @@ const filesInfo = [
     "extraCreditNumber": 0
   },
   {
-    "id": "src/server.js",
-    "fullFilePath": "<PROJECT_ROOT>/src/server.js",
-    "filePath": "src/server.js",
-    "isolatedPath": "/isolated/server.js",
-    "ext": ".js",
-    "filename": "server",
-    "type": "src",
-    "number": 0,
-    "extraCreditNumber": 0
-  },
-  {
     "id": "src/setupTests.js",
     "fullFilePath": "<PROJECT_ROOT>/src/setupTests.js",
     "filePath": "src/setupTests.js",
@@ -560,6 +549,50 @@ const filesInfo = [
     "ext": ".css",
     "filename": "styles",
     "type": "src",
+    "number": 0,
+    "extraCreditNumber": 0
+  },
+  {
+    "id": "src/test/server/dev-server.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/test/server/dev-server.js",
+    "filePath": "src/test/server/dev-server.js",
+    "isolatedPath": "/isolated/test/server/dev-server.js",
+    "ext": ".js",
+    "filename": "dev-server",
+    "type": "server",
+    "number": 0,
+    "extraCreditNumber": 0
+  },
+  {
+    "id": "src/test/server/handlers.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/test/server/handlers.js",
+    "filePath": "src/test/server/handlers.js",
+    "isolatedPath": "/isolated/test/server/handlers.js",
+    "ext": ".js",
+    "filename": "handlers",
+    "type": "server",
+    "number": 0,
+    "extraCreditNumber": 0
+  },
+  {
+    "id": "src/test/server/index.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/test/server/index.js",
+    "filePath": "src/test/server/index.js",
+    "isolatedPath": "/isolated/test/server/index.js",
+    "ext": ".js",
+    "filename": "index",
+    "type": "server",
+    "number": 0,
+    "extraCreditNumber": 0
+  },
+  {
+    "id": "src/test/server/test-server.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/test/server/test-server.js",
+    "filePath": "src/test/server/test-server.js",
+    "isolatedPath": "/isolated/test/server/test-server.js",
+    "ext": ".js",
+    "filename": "test-server",
+    "type": "server",
     "number": 0,
     "extraCreditNumber": 0
   }
@@ -609,9 +642,12 @@ makeWorkshopApp({
     "src/final/09.js": () => import("./final/09.js"),
     "src/index.js": () => import("./index.js"),
     "src/react-app-env.d.ts": () => import("./react-app-env.d.ts"),
-    "src/server.js": () => import("./server.js"),
     "src/setupTests.js": () => import("./setupTests.js"),
-    "src/styles.css": () => import("./styles.css")
+    "src/styles.css": () => import("./styles.css"),
+    "src/test/server/dev-server.js": () => import("./test/server/dev-server.js"),
+    "src/test/server/handlers.js": () => import("./test/server/handlers.js"),
+    "src/test/server/index.js": () => import("./test/server/index.js"),
+    "src/test/server/test-server.js": () => import("./test/server/test-server.js")
   },
   filesInfo,
   projectTitle: pkg.title,
