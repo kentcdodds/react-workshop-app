@@ -551,50 +551,6 @@ const filesInfo = [
     "type": "src",
     "number": 0,
     "extraCreditNumber": 0
-  },
-  {
-    "id": "src/test/server/dev-server.js",
-    "fullFilePath": "<PROJECT_ROOT>/src/test/server/dev-server.js",
-    "filePath": "src/test/server/dev-server.js",
-    "isolatedPath": "/isolated/test/server/dev-server.js",
-    "ext": ".js",
-    "filename": "dev-server",
-    "type": "server",
-    "number": 0,
-    "extraCreditNumber": 0
-  },
-  {
-    "id": "src/test/server/handlers.js",
-    "fullFilePath": "<PROJECT_ROOT>/src/test/server/handlers.js",
-    "filePath": "src/test/server/handlers.js",
-    "isolatedPath": "/isolated/test/server/handlers.js",
-    "ext": ".js",
-    "filename": "handlers",
-    "type": "server",
-    "number": 0,
-    "extraCreditNumber": 0
-  },
-  {
-    "id": "src/test/server/index.js",
-    "fullFilePath": "<PROJECT_ROOT>/src/test/server/index.js",
-    "filePath": "src/test/server/index.js",
-    "isolatedPath": "/isolated/test/server/index.js",
-    "ext": ".js",
-    "filename": "index",
-    "type": "server",
-    "number": 0,
-    "extraCreditNumber": 0
-  },
-  {
-    "id": "src/test/server/test-server.js",
-    "fullFilePath": "<PROJECT_ROOT>/src/test/server/test-server.js",
-    "filePath": "src/test/server/test-server.js",
-    "isolatedPath": "/isolated/test/server/test-server.js",
-    "ext": ".js",
-    "filename": "test-server",
-    "type": "server",
-    "number": 0,
-    "extraCreditNumber": 0
   }
 ]
 
@@ -643,11 +599,7 @@ makeWorkshopApp({
     "src/index.js": () => import("./index.js"),
     "src/react-app-env.d.ts": () => import("./react-app-env.d.ts"),
     "src/setupTests.js": () => import("./setupTests.js"),
-    "src/styles.css": () => import("./styles.css"),
-    "src/test/server/dev-server.js": () => import("./test/server/dev-server.js"),
-    "src/test/server/handlers.js": () => import("./test/server/handlers.js"),
-    "src/test/server/index.js": () => import("./test/server/index.js"),
-    "src/test/server/test-server.js": () => import("./test/server/test-server.js")
+    "src/styles.css": () => import("./styles.css")
   },
   filesInfo,
   projectTitle: pkg.title,
