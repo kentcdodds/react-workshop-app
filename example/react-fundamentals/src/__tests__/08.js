@@ -24,7 +24,5 @@ test('calls the onSubmitUsername handler when the submit is fired', async () => 
   await waitFor(() => {
     expect(console.info).toHaveBeenCalledWith('username', input.value)
     expect(console.info).toHaveBeenCalledTimes(1)
-  },{
-    timeout: 2000
   })
 })
