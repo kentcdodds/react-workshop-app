@@ -5,6 +5,7 @@ const server = setupWorker(...handlers)
 
 server.start({
   quiet: true,
+  onUnhandledRequest: 'error',
 })
 
 export {server}
