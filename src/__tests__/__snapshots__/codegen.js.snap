@@ -4,6 +4,8 @@ exports[`review the snapshot please 1`] = `
 import makeWorkshopApp from '@kentcdodds/react-workshop-app'
 import pkg from '../package.json'
 
+if (module.hot) module.hot.accept()
+
 const filesInfo = [
   {
     "id": "src/box-styles.css",

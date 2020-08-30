@@ -20,6 +20,8 @@ function getCode({cwd = process.cwd(), ignore, options} = {}) {
 import makeWorkshopApp from '@kentcdodds/react-workshop-app'
 import pkg from '../package.json'
 
+if (module.hot) module.hot.accept()
+
 const filesInfo = ${JSON.stringify(filesInfo, null, 2)}
 
 makeWorkshopApp({
