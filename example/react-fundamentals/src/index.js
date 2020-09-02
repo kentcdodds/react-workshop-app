@@ -1,5 +1,4 @@
 import './styles.css'
-import './test/server'
 import codegen from 'codegen.macro'
 
 // eslint-disable-next-line

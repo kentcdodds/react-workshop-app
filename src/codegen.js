@@ -1,5 +1,6 @@
 // this generates the code to use in the entry file
-
+const fs = require('fs')
+const path = require('path')
 const loadFiles = require('./load-files')
 
 function getCode({cwd = process.cwd(), ignore, options} = {}) {
@@ -16,21 +17,29 @@ function getCode({cwd = process.cwd(), ignore, options} = {}) {
     return `"${id}": () => import("${loaders}${relativePath}")`
   })
 
+  const hasBackend = fs.existsSync(path.join(cwd, 'src/backend.js'))
+
   return `
+import 'stop-runaway-react-effects/hijack'
 import makeWorkshopApp from '@kentcdodds/react-workshop-app'
+import {loadDevTools} from '@kentcdodds/react-workshop-app/dev-tools'
 import pkg from '../package.json'
+${hasBackend ? `import * as backend from './backend'` : ''}
 
 if (module.hot) module.hot.accept()
 
 const filesInfo = ${JSON.stringify(filesInfo, null, 2)}
 
-makeWorkshopApp({
-  imports: {
-    ${imports.join(',\n    ')}
-  },
-  filesInfo,
-  projectTitle: pkg.title,
-  ${options ? `options: ${JSON.stringify(options)}` : ''}
+loadDevTools(() => {
+  makeWorkshopApp({
+    imports: {
+      ${imports.join(',\n      ')}
+    },
+    filesInfo,
+    projectTitle: pkg.title,
+    ${hasBackend ? `backend,` : ''}
+    ${options ? `options: ${JSON.stringify(options)},` : ''}
+  })
 })`.trim()
 }
 

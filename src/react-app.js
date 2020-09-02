@@ -9,7 +9,6 @@ import preval from 'preval.macro'
 import {ErrorBoundary} from 'react-error-boundary'
 import {Router, Switch, Route, Link, useParams} from 'react-router-dom'
 import {Tabs, TabList, Tab, TabPanels, TabPanel} from '@reach/tabs'
-import {hijackEffects} from 'stop-runaway-react-effects'
 import {
   RiToolsLine,
   RiFlagLine,
@@ -22,8 +21,6 @@ import {
 
 import Logo from './assets/logo'
 import getTheme, {prismThemeLight, prismThemeDark} from './theme'
-
-const originalUseEffect = React.useEffect
 
 const styleTag = document.createElement('style')
 styleTag.innerHTML = [
@@ -54,16 +51,7 @@ function renderReactApp({
   filesInfo,
   lazyComponents,
   render,
-  options: {stopRunawayEffects = true} = {},
 }) {
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    stopRunawayEffects &&
-    React.useEffect === originalUseEffect
-  ) {
-    hijackEffects()
-  }
-
   const exerciseInfo = []
   const exerciseTypes = ['final', 'exercise', 'extraCredit', 'instruction']
   for (const fileInfo of filesInfo) {

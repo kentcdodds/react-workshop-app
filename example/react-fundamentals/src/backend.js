@@ -1,4 +1,4 @@
-import {rest} from 'msw'
+import {rest} from '@kentcdodds/react-workshop-app/server'
 
 export const handlers = [
   rest.post('*/user', (req, res, {status, json}) => {

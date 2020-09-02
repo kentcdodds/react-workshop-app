@@ -2,6 +2,7 @@ import preval from 'preval.macro'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {createBrowserHistory} from 'history'
+import {setup as setupServer} from './server'
 import {renderReactApp} from './react-app'
 
 const styleTag = document.createElement('style')
@@ -21,7 +22,13 @@ const fillScreenCenter = `padding:30px;min-height:100vh;display:grid;align-items
 
 const originalDocumentElement = document.documentElement
 
-function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options = {}}) {
+function makeKCDWorkshopApp({
+  imports,
+  filesInfo,
+  projectTitle,
+  backend,
+  options = {},
+}) {
   const lazyComponents = {}
 
   const componentExtensions = ['.js', '.md', '.mdx', '.tsx', '.ts']
@@ -30,6 +37,21 @@ function makeKCDWorkshopApp({imports, filesInfo, projectTitle, options = {}}) {
     if (componentExtensions.includes(ext)) {
       lazyComponents[filePath] = React.lazy(imports[filePath])
     }
+  }
+
+  if (backend) {
+    const {
+      handlers,
+      quiet = true,
+      serviceWorker = {url: '/mockServiceWorker.js'},
+      ...rest
+    } = backend
+    const server = setupServer({handlers})
+    server.start({
+      quiet,
+      serviceWorker,
+      ...rest,
+    })
   }
 
   const history = createBrowserHistory()

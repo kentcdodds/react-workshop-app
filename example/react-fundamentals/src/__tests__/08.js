@@ -3,14 +3,6 @@ import {render, fireEvent, waitFor} from '@testing-library/react'
 import Usage from '../final/08'
 // import Usage from '../exercise/08'
 
-beforeAll(() => {
-  jest.spyOn(console, 'info').mockImplementation(() => {})
-})
-
-beforeEach(() => {
-  console.info.mockClear()
-})
-
 test('calls the onSubmitUsername handler when the submit is fired', async () => {
   const {getByLabelText, getByText} = render(<Usage />)
   const input = getByLabelText(/username/i)
