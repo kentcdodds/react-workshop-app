@@ -4,15 +4,18 @@ import {match} from 'node-match-path'
 
 const getKey = name => `__react_workshop_app_${name}__`
 
-let sleep
-if (process.env.NODE_ENV === 'test') {
-  sleep = () => Promise.resolve()
-} else {
-  sleep = (
-    t = Math.random() * ls(getKey('variable_request_time'), 400) +
-      ls(getKey('min_request_time'), 400),
-  ) => new Promise(resolve => setTimeout(resolve, t))
+function getDefaultDelay() {
+  if (process.env.NODE_ENV === 'test') {
+    return 0
+  } else {
+    const variableTime = ls(getKey('variable_request_time'), 400)
+    const minTime = ls(getKey('min_request_time'), 400)
+    return Math.random() * variableTime + minTime
+  }
 }
+
+const sleep = (t = getDefaultDelay()) =>
+  new Promise(resolve => setTimeout(resolve, t))
 
 function ls(key, defaultVal) {
   const lsVal = window.localStorage.getItem(key)
@@ -44,7 +47,7 @@ function setup({handlers}) {
         } finally {
           let delay
           if (req.headers.has('delay')) {
-            delay = Number(req.headers.has('delay'))
+            delay = Number(req.headers.get('delay'))
           }
           await sleep(delay)
         }
@@ -63,7 +66,6 @@ function setup({handlers}) {
 function shouldFail(req) {
   if (JSON.stringify(req.body)?.includes('FAIL')) return true
   if (req.url.searchParams.toString()?.includes('FAIL')) return true
-  if (process.env.NODE_ENV === 'test') return false
   const failureRate = Number(
     window.localStorage.getItem(getKey('failure_rate')) || 0,
   )
@@ -84,7 +86,7 @@ function requestMatchesFailConfig(req) {
     const failConfig = JSON.parse(
       window.localStorage.getItem(getKey('request_fail_config')) || '[]',
     )
-    if (failConfig.some(configMatches)) return true
+    return failConfig.some(configMatches)
   } catch (error) {
     window.localStorage.removeItem(getKey('request_fail_config'))
   }
