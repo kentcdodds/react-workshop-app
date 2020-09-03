@@ -12,7 +12,7 @@ import {Tabs, TabList, TabPanels, TabPanel, Tab} from '@reach/tabs'
 import * as colors from '../styles/colors'
 
 const isLsKey = name => name.startsWith(`__react_workshop_app`)
-const key = name => `__react_workshop_app_${name}__`
+const getKey = name => `__react_workshop_app_${name}__`
 
 function install() {
   const requireDevToolsLocal = require.context(
@@ -29,11 +29,11 @@ function install() {
     const rootRef = React.useRef()
     const [hovering, setHovering] = React.useState(false)
     const [persist, setPersist] = useLocalStorageState(
-      key('devtools_persist'),
+      getKey('devtools_persist'),
       false,
     )
     const [tabIndex, setTabIndex] = useLocalStorageState(
-      key('devtools_tab_index'),
+      getKey('devtools_tab_index'),
       0,
     )
 
@@ -228,8 +228,8 @@ function ClearLocalStorage() {
   function clear() {
     const keysToRemove = []
     for (let i = 0; i < window.localStorage.length; i++) {
-      const lsKey = window.localStorage.key(i)
-      if (isLsKey(lsKey)) keysToRemove.push(lsKey)
+      const key = window.localStorage.key(i)
+      if (isLsKey(key)) keysToRemove.push(key)
     }
     for (const lsKey of keysToRemove) {
       window.localStorage.removeItem(lsKey)
@@ -243,7 +243,7 @@ ClearLocalStorage.displayName = 'ClearLocalStorage'
 
 function FailureRate() {
   const [failureRate, setFailureRate] = useLocalStorageState(
-    key('failure_rate'),
+    getKey('failure_rate'),
     0,
   )
 
@@ -276,7 +276,7 @@ FailureRate.displayName = 'FailureRate'
 
 function EnableDevTools() {
   const [enableDevTools, setEnableDevTools] = useLocalStorageState(
-    key('dev-tools'),
+    getKey('dev-tools'),
     process.env.NODE_ENV === 'development',
   )
 
@@ -305,7 +305,7 @@ EnableDevTools.displayName = 'EnableDevTools'
 
 function RequestMinTime() {
   const [minTime, setMinTime] = useLocalStorageState(
-    key('min_request_time'),
+    getKey('min_request_time'),
     400,
   )
 
@@ -338,7 +338,7 @@ RequestMinTime.displayName = 'RequestMinTime'
 
 function RequestVarTime() {
   const [varTime, setVarTime] = useLocalStorageState(
-    key('variable_request_time'),
+    getKey('variable_request_time'),
     400,
   )
 
@@ -371,7 +371,7 @@ RequestVarTime.displayName = 'RequestVarTime'
 
 function RequestFailUI() {
   const [failConfig, setFailConfig] = useLocalStorageState(
-    key('request_fail_config'),
+    getKey('request_fail_config'),
     [],
   )
 
