@@ -24,7 +24,9 @@
   "files": [
     "dist",
     "codegen.js",
-    "setup-tests.js"
+    "setup-tests.js",
+    "dev-tools.js",
+    "server.js"
   ],
   "scripts": {
     "build": "kcd-scripts build",
