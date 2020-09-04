@@ -154,7 +154,14 @@ function renderReactApp({
         onChange={handleTabChange}
         css={tabStyles({theme})}
       >
-        <TabList css={{height: 50, background: theme.skyLight}}>
+        <TabList
+          css={{
+            height: 50,
+            background: theme.skyLight,
+            overflowX: 'scroll',
+            whiteSpace: 'nowrap',
+          }}
+        >
           {extraCredit.map(({extraCreditTitle, id}, index) => (
             <Tab key={id} css={{display: 'flex', alignItems: 'center'}}>
               {React.createElement(getExtraIcon(index), {
