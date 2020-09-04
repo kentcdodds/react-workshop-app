@@ -358,6 +358,19 @@ const filesInfo = [
     "extraCreditTitle": "spread props"
   },
   {
+    "id": "src/final/03.extra-3.html",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/03.extra-3.html",
+    "filePath": "src/final/03.extra-3.html",
+    "isolatedPath": "/isolated/final/03.extra-3.html",
+    "ext": ".html",
+    "filename": "03.extra-3",
+    "type": "extraCredit",
+    "number": 3,
+    "extraCreditNumber": 3,
+    "title": "Using JSX",
+    "extraCreditTitle": "really long extra credit title. Like really long."
+  },
+  {
     "id": "src/final/03.html",
     "fullFilePath": "<PROJECT_ROOT>/src/final/03.html",
     "filePath": "src/final/03.html",
@@ -590,6 +603,7 @@ loadDevTools(() => {
       "src/final/02.html": () => import("!raw-loader!./final/02.html"),
       "src/final/03.extra-1.html": () => import("!raw-loader!./final/03.extra-1.html"),
       "src/final/03.extra-2.html": () => import("!raw-loader!./final/03.extra-2.html"),
+      "src/final/03.extra-3.html": () => import("!raw-loader!./final/03.extra-3.html"),
       "src/final/03.html": () => import("!raw-loader!./final/03.html"),
       "src/final/04.extra-1.html": () => import("!raw-loader!./final/04.extra-1.html"),
       "src/final/04.extra-2.html": () => import("!raw-loader!./final/04.extra-2.html"),
