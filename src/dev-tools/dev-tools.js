@@ -43,10 +43,27 @@ function install() {
       function updateHoverState(event) {
         setHovering(rootRef.current?.contains(event.target) ?? false)
       }
-      document.body.addEventListener('mousemove', updateHoverState)
-      return () =>
-        document.body.removeEventListener('mousemove', updateHoverState)
+      document.addEventListener('mousemove', updateHoverState)
+      return () => {
+        document.removeEventListener('mousemove', updateHoverState)
+      }
     }, [])
+
+    // eslint-disable-next-line consistent-return
+    React.useEffect(() => {
+      if (hovering) {
+        const iframes = document.querySelectorAll('iframe')
+        for (const iframe of iframes) {
+          iframe.style.pointerEvents = 'none'
+        }
+        return () => {
+          for (const iframe of iframes) {
+            iframe.style.pointerEvents = ''
+          }
+        }
+      }
+    }, [hovering])
+
     return (
       <div
         css={{
@@ -105,11 +122,11 @@ function install() {
           css={[
             {
               background: 'rgb(11, 21, 33)',
-              opacity: '0',
+              opacity: '0.6',
               color: 'white',
               boxSizing: 'content-box',
               height: '60px',
-              width: '100%',
+              width: '68px',
               transition: 'all 0.3s',
               overflow: 'scroll',
             },
@@ -131,8 +148,8 @@ function install() {
                 border: 'none',
                 padding: '10px 20px',
                 background: 'none',
-                marginTop: -40,
-                marginLeft: 20,
+                marginTop: show ? -40 : 0,
+                marginLeft: show ? 20 : 0,
                 position: 'absolute',
                 backgroundColor: 'rgb(11,21,33) !important',
                 overflow: 'hidden',
@@ -154,7 +171,7 @@ function install() {
               onClick={toggleShow}
             >
               <FaTools />
-              Workshop DevTools
+              {show ? 'Workshop DevTools' : null}
             </button>
           </Tooltip>
           {show ? (
@@ -198,8 +215,16 @@ function install() {
   }
   DevTools.displayName = 'DevTools'
   // add dev tools UI to the page
-  const devToolsRoot = document.createElement('div')
-  document.body.appendChild(devToolsRoot)
+  let devToolsRoot = document.getElementById('dev-tools')
+  if (devToolsRoot) {
+    ReactDOM.unmountComponentAtNode(devToolsRoot)
+    // right
+  }
+  if (!devToolsRoot) {
+    devToolsRoot = document.createElement('div')
+    devToolsRoot.id = 'dev-tools'
+    document.body.appendChild(devToolsRoot)
+  }
   ReactDOM.render(<DevTools />, devToolsRoot)
 }
 

@@ -29,6 +29,9 @@
     "server.js"
   ],
   "scripts": {
+    "dev": "concurrently \"npm:dev:*\"",
+    "dev:build": "npm run build -- --watch",
+    "dev:examples": "cd ./example/react-fundamentals && npm start",
     "build": "kcd-scripts build",
     "lint": "kcd-scripts lint",
     "setup": "npm install && npm run validate -s",
@@ -42,7 +45,7 @@
     "@reach/tabs": "^0.11.2",
     "@reach/tooltip": "^0.11.2",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.0.0",
+    "@testing-library/react": "^11.0.2",
     "babel-loader": "^8.1.0",
     "chalk": "^4.1.0",
     "codegen.macro": "^4.0.0",
@@ -67,6 +70,7 @@
   },
   "devDependencies": {
     "babel-plugin-dynamic-import-node": "^2.3.3",
+    "concurrently": "^5.3.0",
     "cssnano": "^4.1.10",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-cypress": "^2.11.1",

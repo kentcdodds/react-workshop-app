@@ -29,6 +29,11 @@ function makeKCDWorkshopApp({
   backend,
   options = {},
 }) {
+  // if I we don't do this then HMR can sometimes call this function again
+  // which would result in the app getting mounted multiple times.
+  const rootEl = document.getElementById('root')
+  if (rootEl) rootEl.innerHTML = ''
+
   const lazyComponents = {}
 
   const componentExtensions = ['.js', '.md', '.mdx', '.tsx', '.ts']
