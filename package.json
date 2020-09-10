@@ -58,7 +58,7 @@
     "inquirer": "^7.3.3",
     "is-ci": "^2.0.0",
     "mdx-loader": "^3.0.2",
-    "msw": "^0.20.5",
+    "msw": "^0.21.0",
     "node-match-path": "^0.4.4",
     "normalize.css": "^8.0.1",
     "raw-loader": "^4.0.1",
@@ -80,7 +80,7 @@
     "react": "0.0.0-experimental-e5d06e34b",
     "react-dom": "0.0.0-experimental-e5d06e34b",
     "resolve": "^1.17.0",
-    "whatwg-fetch": "^3.4.0"
+    "whatwg-fetch": "^3.4.1"
   },
   "peerDependencies": {
     "react": "*",
