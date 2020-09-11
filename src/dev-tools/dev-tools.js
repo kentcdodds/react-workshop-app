@@ -128,7 +128,7 @@ function install() {
               height: '60px',
               width: '68px',
               transition: 'all 0.3s',
-              overflow: 'scroll',
+              overflow: 'auto',
             },
             show
               ? {
