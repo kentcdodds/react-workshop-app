@@ -101,6 +101,7 @@ Thanks goes to these people ([emoji key][emojis]):
     <td align="center"><a href="https://github.com/WojciechMatuszewski"><img src="https://avatars0.githubusercontent.com/u/26322927?v=4" width="100px;" alt=""/><br /><sub><b>Wojciech Matuszewski</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=WojciechMatuszewski" title="Code">💻</a> <a href="https://github.com/kentcdodds/react-workshop-app/commits?author=WojciechMatuszewski" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://zacjones.io"><img src="https://avatars2.githubusercontent.com/u/6188161?v=4" width="100px;" alt=""/><br /><sub><b>Zac Jones</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=zacjones93" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/marcosvega91"><img src="https://avatars2.githubusercontent.com/u/5365582?v=4" width="100px;" alt=""/><br /><sub><b>Marco Moretti</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=marcosvega91" title="Code">💻</a> <a href="https://github.com/kentcdodds/react-workshop-app/commits?author=marcosvega91" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/merodiro"><img src="https://avatars1.githubusercontent.com/u/17033502?v=4" width="100px;" alt=""/><br /><sub><b>Amr A.Mohammed</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=merodiro" title="Code">💻</a></td>
   </tr>
 </table>
 
