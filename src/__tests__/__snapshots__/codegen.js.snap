@@ -180,6 +180,19 @@ const filesInfo = [
     "title": "Styling"
   },
   {
+    "id": "src/exercise/06.extra-2.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/06.extra-2.js",
+    "filePath": "src/exercise/06.extra-2.js",
+    "isolatedPath": "/isolated/exercise/06.extra-2.js",
+    "ext": ".js",
+    "filename": "06.extra-2",
+    "type": "extraCredit",
+    "number": 6,
+    "extraCreditNumber": 2,
+    "title": "Basic Forms",
+    "extraCreditTitle": "another example extra (exercise)"
+  },
+  {
     "id": "src/exercise/06.js",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/06.js",
     "filePath": "src/exercise/06.js",
@@ -462,6 +475,19 @@ const filesInfo = [
     "extraCreditTitle": "using refs"
   },
   {
+    "id": "src/final/06.extra-2.js",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/06.extra-2.js",
+    "filePath": "src/final/06.extra-2.js",
+    "isolatedPath": "/isolated/final/06.extra-2.js",
+    "ext": ".js",
+    "filename": "06.extra-2",
+    "type": "extraCredit",
+    "number": 6,
+    "extraCreditNumber": 2,
+    "title": "Basic Forms",
+    "extraCreditTitle": "another example extra (final)"
+  },
+  {
     "id": "src/final/06.js",
     "fullFilePath": "<PROJECT_ROOT>/src/final/06.js",
     "filePath": "src/final/06.js",
@@ -589,6 +615,7 @@ loadDevTools(() => {
       "src/exercise/04.md": () => import("!babel-loader!mdx-loader!./exercise/04.md"),
       "src/exercise/05.js": () => import("./exercise/05.js"),
       "src/exercise/05.md": () => import("!babel-loader!mdx-loader!./exercise/05.md"),
+      "src/exercise/06.extra-2.js": () => import("./exercise/06.extra-2.js"),
       "src/exercise/06.js": () => import("./exercise/06.js"),
       "src/exercise/06.md": () => import("!babel-loader!mdx-loader!./exercise/06.md"),
       "src/exercise/07.js": () => import("./exercise/07.js"),
@@ -611,6 +638,7 @@ loadDevTools(() => {
       "src/final/05.extra-1.js": () => import("./final/05.extra-1.js"),
       "src/final/05.js": () => import("./final/05.js"),
       "src/final/06.extra-1.js": () => import("./final/06.extra-1.js"),
+      "src/final/06.extra-2.js": () => import("./final/06.extra-2.js"),
       "src/final/06.js": () => import("./final/06.js"),
       "src/final/07.js": () => import("./final/07.js"),
       "src/final/08.js": () => import("./final/08.js"),
