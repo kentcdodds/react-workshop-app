@@ -15,7 +15,9 @@ function getDefaultDelay() {
 }
 
 const sleep = (t = getDefaultDelay()) =>
-  new Promise(resolve => setTimeout(resolve, t))
+  new Promise(resolve => {
+    setTimeout(resolve, t)
+  })
 
 function ls(key, defaultVal) {
   const lsVal = window.localStorage.getItem(key)

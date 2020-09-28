@@ -193,7 +193,9 @@ function makeKCDWorkshopApp({
           // if the new script has a src, add it to the queue
           if (script.hasAttribute('src')) {
             loadingScriptsQueue.push(
-              new Promise(resolve => (newScript.onload = resolve)),
+              new Promise(resolve => {
+                newScript.onload = resolve
+              }),
             )
           }
         }
