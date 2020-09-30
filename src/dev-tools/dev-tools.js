@@ -72,6 +72,8 @@ function install() {
           bottom: -15,
           left: 0,
           right: 0,
+          width: show ? '100%' : 0,
+          transition: 'all 0.3s',
           label: {
             margin: 0,
             color: 'rgb(216, 221, 227)',
