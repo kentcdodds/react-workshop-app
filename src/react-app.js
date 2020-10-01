@@ -158,7 +158,7 @@ function renderReactApp({
           css={{
             height: 50,
             background: theme.skyLight,
-            overflowX: 'scroll',
+            overflowX: 'auto',
             whiteSpace: 'nowrap',
           }}
         >
