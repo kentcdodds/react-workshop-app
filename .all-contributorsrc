@@ -60,6 +60,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "gustavobmichel",
+      "name": "Gustavo Borges Michel",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/14951413?v=4",
+      "profile": "https://github.com/gustavobmichel",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
