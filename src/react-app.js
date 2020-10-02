@@ -223,6 +223,8 @@ function renderReactApp({
               textDecoration: 'none',
             }}
             href={isolatedPath}
+            target="_blank"
+            rel="noreferrer"
           >
             <RiExternalLinkLine css={{marginRight: '0.25rem'}} />{' '}
             {isolatedPathLinkContent}
