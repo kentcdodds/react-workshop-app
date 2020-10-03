@@ -5,6 +5,7 @@ build
 .opt-in
 .opt-out
 .DS_Store
+.idea
 
 *ignored*
 cypress/screenshots
