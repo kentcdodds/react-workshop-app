@@ -105,6 +105,9 @@ Thanks goes to these people ([emoji key][emojis]):
     <td align="center"><a href="https://github.com/gustavobmichel"><img src="https://avatars0.githubusercontent.com/u/14951413?v=4" width="100px;" alt=""/><br /><sub><b>Gustavo Borges Michel</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/issues?q=author%3Agustavobmichel" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/Joyancefa"><img src="https://avatars2.githubusercontent.com/u/64249481?v=4" width="100px;" alt=""/><br /><sub><b>Joyancefa</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=Joyancefa" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Snaptags"><img src="https://avatars1.githubusercontent.com/u/1249745?v=4" width="100px;" alt=""/><br /><sub><b>Markus Lasermann</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=Snaptags" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
