@@ -3,7 +3,9 @@ const resolve = require('resolve')
 
 module.exports = filePath =>
   execSync(
-    `postcss "${resolve.sync(filePath, {
-      basedir: process.cwd(),
-    })}" --use cssnano --no-map`,
+    `postcss "${resolve
+      .sync(filePath, {
+        basedir: process.cwd(),
+      })
+      .replace(/\\/g, '/')}" --use cssnano --no-map`,
   ).toString()
