@@ -1,4 +1,5 @@
 const {execSync} = require('child_process')
+const path = require('path')
 const resolve = require('resolve')
 
 module.exports = filePath =>
@@ -7,5 +8,6 @@ module.exports = filePath =>
       .sync(filePath, {
         basedir: process.cwd(),
       })
-      .replace(/\\/g, '/')}" --use cssnano --no-map`,
+      .split(path.sep)
+      .join('/')}" --use cssnano --no-map`,
   ).toString()
