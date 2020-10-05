@@ -127,7 +127,7 @@ function renderReactApp({
     '[data-reach-tab][data-selected]': {
       background: theme.backgroundLight,
       border: 'none',
-      svg: {fill: theme.primary},
+      svg: {fill: theme.primary, color: theme.primary},
       ':hover': {
         color: 'inherit',
       },
@@ -166,7 +166,6 @@ function renderReactApp({
             <Tab key={id} css={{display: 'flex', alignItems: 'center'}}>
               {React.createElement(getExtraIcon(index), {
                 size: 20,
-                color: theme.textLightest,
                 style: {marginRight: 5},
               })}
               <span>{extraCreditTitle}</span>
