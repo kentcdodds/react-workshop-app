@@ -88,6 +88,15 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "maferland",
+      "name": "Marc-Antoine Ferland",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5889721?v=4",
+      "profile": "https://www.maferland.com",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
