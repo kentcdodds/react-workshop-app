@@ -107,6 +107,7 @@ Thanks goes to these people ([emoji key][emojis]):
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/Snaptags"><img src="https://avatars1.githubusercontent.com/u/1249745?v=4" width="100px;" alt=""/><br /><sub><b>Markus Lasermann</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=Snaptags" title="Code">💻</a> <a href="https://github.com/kentcdodds/react-workshop-app/commits?author=Snaptags" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://www.maferland.com"><img src="https://avatars3.githubusercontent.com/u/5889721?v=4" width="100px;" alt=""/><br /><sub><b>Marc-Antoine Ferland</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=maferland" title="Code">💻</a></td>
   </tr>
 </table>
 
