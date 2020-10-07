@@ -22,7 +22,7 @@ const fillScreenCenter = `padding:30px;min-height:100vh;display:grid;align-items
 
 const originalDocumentElement = document.documentElement
 
-export function makeKCDWorkshopApp({
+function makeKCDWorkshopApp({
   imports,
   filesInfo,
   projectTitle,
@@ -235,6 +235,8 @@ export function makeKCDWorkshopApp({
   // kick it off to get us started
   handleLocationChange()
 }
+
+export {makeKCDWorkshopApp}
 
 /*
 eslint
