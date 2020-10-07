@@ -150,22 +150,22 @@ function renderReactApp({
       renderedTabs.current.add(index)
     }
     if (files.length == 1) {
-      const {title, extraCreditTitle, isolatedPath} = files[0]
+      const { title, extraCreditTitle, isolatedPath } = files[0]
       return (
         <Sandbox
-        isOpen={isOpen}
-        isolatedPath={isolatedPath}
-        isolatedPathLinkContent="Open on isolated page"
-        title={extraCreditTitle || title}
-      >
-        {renderedTabs.current.has(0) ? (
-          <iframe
-            title={extraCreditTitle || title}
-            src={isolatedPath}
-            css={{border: 'none', width: '100%', height: '100%'}}
-          />
-        ) : null}
-      </Sandbox>
+          isOpen={isOpen}
+          isolatedPath={isolatedPath}
+          isolatedPathLinkContent="Open on isolated page"
+          title={extraCreditTitle || title}
+        >
+          {renderedTabs.current.has(0) ? (
+            <iframe
+              title={extraCreditTitle || title}
+              src={isolatedPath}
+              css={{ border: 'none', width: '100%', height: '100%' }}
+            />
+          ) : null}
+        </Sandbox>
       )
     }
 
