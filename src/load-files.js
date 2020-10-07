@@ -55,6 +55,12 @@ function loadFiles({
         title,
         extraCreditTitle,
       }
+    }).sort((a, b) => {
+      // change order so that shorter file names (01) are before longer (01.extra-01)
+      if (a.filename.includes(b.filename)) return 1
+      if (b.filename.includes(a.filename)) return -1
+      // otherwise preserve existing order from glob
+      return 0
     })
 
   return fileInfo
