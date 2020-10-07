@@ -2,7 +2,7 @@
 
 exports[`review the snapshot please 1`] = `
 import 'stop-runaway-react-effects/hijack'
-import makeWorkshopApp from '@kentcdodds/react-workshop-app'
+import {makeKCDWorkshopApp} from '@kentcdodds/react-workshop-app'
 import {loadDevTools} from '@kentcdodds/react-workshop-app/dev-tools'
 import pkg from '../package.json'
 import * as backend from './backend'
@@ -186,7 +186,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/exercise/06.extra-2.js",
     "ext": ".js",
     "filename": "06.extra-2",
-    "type": "extraCredit",
+    "type": "exercise",
     "number": 6,
     "extraCreditNumber": 2,
     "title": "Basic Forms",
@@ -299,7 +299,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/01.extra-1.html",
     "ext": ".html",
     "filename": "01.extra-1",
-    "type": "extraCredit",
+    "type": "final",
     "number": 1,
     "extraCreditNumber": 1,
     "title": "Basic JavaScript-rendered Hello World",
@@ -325,7 +325,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/02.extra-1.html",
     "ext": ".html",
     "filename": "02.extra-1",
-    "type": "extraCredit",
+    "type": "final",
     "number": 2,
     "extraCreditNumber": 1,
     "title": "Intro to raw React APIs",
@@ -351,7 +351,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/03.extra-1.html",
     "ext": ".html",
     "filename": "03.extra-1",
-    "type": "extraCredit",
+    "type": "final",
     "number": 3,
     "extraCreditNumber": 1,
     "title": "Using JSX",
@@ -364,7 +364,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/03.extra-2.html",
     "ext": ".html",
     "filename": "03.extra-2",
-    "type": "extraCredit",
+    "type": "final",
     "number": 3,
     "extraCreditNumber": 2,
     "title": "Using JSX",
@@ -377,7 +377,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/03.extra-3.html",
     "ext": ".html",
     "filename": "03.extra-3",
-    "type": "extraCredit",
+    "type": "final",
     "number": 3,
     "extraCreditNumber": 3,
     "title": "Using JSX",
@@ -403,7 +403,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/04.extra-1.html",
     "ext": ".html",
     "filename": "04.extra-1",
-    "type": "extraCredit",
+    "type": "final",
     "number": 4,
     "extraCreditNumber": 1,
     "title": "Creating custom components",
@@ -416,7 +416,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/04.extra-2.html",
     "ext": ".html",
     "filename": "04.extra-2",
-    "type": "extraCredit",
+    "type": "final",
     "number": 4,
     "extraCreditNumber": 2,
     "title": "Creating custom components",
@@ -442,7 +442,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/05.extra-1.js",
     "ext": ".js",
     "filename": "05.extra-1",
-    "type": "extraCredit",
+    "type": "final",
     "number": 5,
     "extraCreditNumber": 1,
     "title": "Styling",
@@ -468,7 +468,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/06.extra-1.js",
     "ext": ".js",
     "filename": "06.extra-1",
-    "type": "extraCredit",
+    "type": "final",
     "number": 6,
     "extraCreditNumber": 1,
     "title": "Basic Forms",
@@ -481,7 +481,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/06.extra-2.js",
     "ext": ".js",
     "filename": "06.extra-2",
-    "type": "extraCredit",
+    "type": "final",
     "number": 6,
     "extraCreditNumber": 2,
     "title": "Basic Forms",
@@ -533,7 +533,7 @@ const filesInfo = [
     "isolatedPath": "/isolated/final/09.extra-1.js",
     "ext": ".js",
     "filename": "09.extra-1",
-    "type": "extraCredit",
+    "type": "final",
     "number": 9,
     "extraCreditNumber": 1,
     "title": "Rendering Lists",
@@ -599,7 +599,7 @@ const filesInfo = [
 ]
 
 loadDevTools(() => {
-  makeWorkshopApp({
+  makeKCDWorkshopApp({
     imports: {
       "src/box-styles.css": () => import("./box-styles.css"),
       "src/examples/example.js": () => import("./examples/example.js"),

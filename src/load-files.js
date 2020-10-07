@@ -16,9 +16,6 @@ function loadFiles({
       const parentDir = path.basename(dir)
       const contents = String(fs.readFileSync(fullFilePath))
       let type = parentDir
-      if (name.includes('.extra-')) {
-        type = 'extraCredit'
-      }
       if (ext === '.md' || ext === '.mdx') {
         type = 'instruction'
       }
@@ -31,14 +28,14 @@ function loadFiles({
             firstLine.match(/\/\/ (?<title>.*)$/) || fallbackMatch
           title = titleMatch.groups.title.trim()
           const extraCreditTitleMatch =
-            secondLine.match(/\/\/ 💯 (?<title>.*)$/) || fallbackMatch
+            secondLine?.match(/\/\/ 💯 (?<title>.*)$/) || fallbackMatch
           extraCreditTitle = extraCreditTitleMatch.groups.title.trim()
         } else if (ext === '.html') {
           const titleMatch =
             firstLine.match(/<!-- (?<title>.*) -->/) || fallbackMatch
           title = titleMatch.groups.title.trim()
           const extraCreditTitleMatch =
-            secondLine.match(/<!-- 💯 (?<title>.*) -->/) || fallbackMatch
+            secondLine?.match(/<!-- 💯 (?<title>.*) -->/) || fallbackMatch
           extraCreditTitle = extraCreditTitleMatch.groups.title.trim()
         } else if (ext === '.md' || ext === '.mdx') {
           const titleMatch = firstLine.match(/# (?<title>.*)$/) || fallbackMatch
