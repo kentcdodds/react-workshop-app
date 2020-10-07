@@ -17,7 +17,6 @@ import {
   RiArrowLeftSLine,
   RiMoonClearLine,
   RiSunLine,
-  RiTrophyLine,
 } from 'react-icons/ri'
 import {
   CgDice1,
@@ -38,8 +37,8 @@ styleTag.innerHTML = [
 ].join('\n')
 document.head.prepend(styleTag)
 
-const extrIcons = [CgDice1, CgDice2, CgDice3, CgDice4, CgDice5, CgDice6]
-const getExtraIcon = index => extrIcons[index] ?? FaDiceD20
+const extrIcons = [null, CgDice1, CgDice2, CgDice3, CgDice4, CgDice5, CgDice6]
+const getExtraIcon = filename => extrIcons[filename.match(/\d+$/g)?.[0]] ?? FaDiceD20
 
 function getDistanceFromTopOfPage(element) {
   let distance = 0
@@ -77,23 +76,20 @@ function renderReactApp({
   render,
 }) {
   const exerciseInfo = []
-  const exerciseTypes = ['final', 'exercise', 'extraCredit', 'instruction']
+  const exerciseTypes = ['final', 'exercise', 'instruction']
   for (const fileInfo of filesInfo) {
     if (exerciseTypes.includes(fileInfo.type)) {
       exerciseInfo[fileInfo.number] = exerciseInfo[fileInfo.number] ?? {
-        extraCredit: [],
+        exercise: [],
+        final: [],
       }
       const info = exerciseInfo[fileInfo.number]
-      if (fileInfo.type === 'extraCredit') {
-        info.extraCredit.push(fileInfo)
-      } else if (fileInfo.type === 'instruction') {
+      if (fileInfo.type === 'instruction') {
         info.instruction = fileInfo
         const {title, number, id} = fileInfo
         Object.assign(info, {title, number, id})
       } else {
-        Object.assign(info, {
-          [fileInfo.type]: fileInfo,
-        })
+        info[fileInfo.type].push(fileInfo)
       }
     }
   }
@@ -134,9 +130,8 @@ function renderReactApp({
     },
   })
 
-  function ExtraCreditTabs({isOpen, exerciseNumber}) {
+  function FileTabs({isOpen, files}) {
     const theme = useTheme()
-    const {extraCredit} = exerciseInfo[exerciseNumber]
     const [tabIndex, setTabIndex] = React.useState(0)
     const renderedTabs = React.useRef()
 
@@ -146,6 +141,25 @@ function renderReactApp({
     function handleTabChange(index) {
       setTabIndex(index)
       renderedTabs.current.add(index)
+    }
+    if (files.length == 1) {
+      const { title, extraCreditTitle, isolatedPath } = files[0]
+      return (
+        <Sandbox
+          isOpen={isOpen}
+          isolatedPath={isolatedPath}
+          isolatedPathLinkContent="Open on isolated page"
+          title={extraCreditTitle || title}
+        >
+          {renderedTabs.current.has(0) ? (
+            <iframe
+              title={extraCreditTitle || title}
+              src={isolatedPath}
+              css={{ border: 'none', width: '100%', height: '100%' }}
+            />
+          ) : null}
+        </Sandbox>
+      )
     }
 
     return isOpen ? (
@@ -162,27 +176,28 @@ function renderReactApp({
             whiteSpace: 'nowrap',
           }}
         >
-          {extraCredit.map(({extraCreditTitle, id}, index) => (
+          {files.map(({id, filename}) => (
             <Tab key={id} css={{display: 'flex', alignItems: 'center'}}>
-              {React.createElement(getExtraIcon(index), {
+              {React.createElement(getExtraIcon(filename), {
                 size: 20,
                 style: {marginRight: 5},
               })}
-              <span>{extraCreditTitle}</span>
+              <span>{filename}</span>
             </Tab>
           ))}
         </TabList>
         <TabPanels>
-          {extraCredit.map(({extraCreditTitle, isolatedPath, id}, index) => (
+          {files.map(({title, extraCreditTitle, isolatedPath, id}, index) => (
             <TabPanel key={id}>
               <Sandbox
                 isOpen={isOpen && tabIndex === index}
                 isolatedPath={isolatedPath}
-                isolatedPathLinkContent="Open extra credit on isolated page"
+                isolatedPathLinkContent="Open on isolated page"
+                title={extraCreditTitle || title}
               >
                 {renderedTabs.current.has(0) ? (
                   <iframe
-                    title={`Extra Credit: ${extraCreditTitle}`}
+                    title={extraCreditTitle || title}
                     src={isolatedPath}
                     css={{border: 'none', width: '100%', height: '100%'}}
                   />
@@ -194,9 +209,9 @@ function renderReactApp({
       </Tabs>
     ) : null
   }
-  ExtraCreditTabs.displayName = 'ExtraCreditTabs'
+  FileTabs.displayName = 'FileTabs'
 
-  function Sandbox({isOpen, isolatedPath, isolatedPathLinkContent, children}) {
+  function Sandbox({isOpen, isolatedPath, isolatedPathLinkContent, title, children}) {
     const renderContainerRef = React.useRef(null)
     const [height, setHeight] = React.useState(0)
     React.useLayoutEffect(() => {
@@ -210,15 +225,16 @@ function renderReactApp({
         <div
           css={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             width: '100%',
+            padding: '1rem',
           }}
         >
+          <div>{title}</div>
           <a
-            style={{
+            css={{
               display: 'flex',
               justifyContent: 'flex-end',
-              padding: '1rem',
               textDecoration: 'none',
             }}
             href={isolatedPath}
@@ -283,17 +299,9 @@ function renderReactApp({
       return () => document.body.removeEventListener('keyup', handleKeyup)
     }, [exerciseNumber])
 
-    const {instruction, exercise, final, extraCredit} = exerciseInfo[
+    const {instruction, exercise, final} = exerciseInfo[
       exerciseNumber
     ]
-
-    // handle this case:
-    // 1. Select extra credit tab
-    // 2. navigate to exercise with no extra credit
-    // we want to set the tab index to 0 so they're not looking at nothing.
-    React.useEffect(() => {
-      if (!extraCredit.length && tabIndex === 2) setTabIndex(0)
-    }, [extraCredit.length, tabIndex])
 
     let instructionElement
 
@@ -376,7 +384,7 @@ function renderReactApp({
                       color={theme.textLightest}
                       css={{marginRight: 5}}
                     />
-                    <span>Exercise</span>
+                    <span>Exercise {exerciseNumber}</span>
                   </Tab>
                   <Tab css={{display: 'flex', alignItems: 'center'}}>
                     <RiFlagLine
@@ -386,56 +394,22 @@ function renderReactApp({
                     />
                     Final
                   </Tab>
-                  {extraCredit.length ? (
-                    <Tab css={{display: 'flex', alignItems: 'center'}}>
-                      <RiTrophyLine
-                        size="18"
-                        color={theme.textLightest}
-                        css={{marginRight: 5}}
-                      />
-                      <span>Extra Credit</span>
-                    </Tab>
-                  ) : null}
                 </TabList>
                 <TabPanels>
                   <TabPanel>
-                    <Sandbox
+                    <FileTabs
+                      key={exerciseNumber}
                       isOpen={tabIndex === 0}
-                      isolatedPath={exercise.isolatedPath}
-                      isolatedPathLinkContent="Open exercise on isolated page"
-                    >
-                      {renderedTabs.current.has(0) ? (
-                        <iframe
-                          title="Exercise"
-                          src={exercise.isolatedPath}
-                          css={{border: 'none', width: '100%', height: '100%'}}
-                        />
-                      ) : null}
-                    </Sandbox>
+                      files={exercise}
+                    />
                   </TabPanel>
                   <TabPanel>
-                    <Sandbox
+                    <FileTabs
+                      key={exerciseNumber}
                       isOpen={tabIndex === 1}
-                      isolatedPath={final.isolatedPath}
-                      isolatedPathLinkContent="Open final on isolated page"
-                    >
-                      {renderedTabs.current.has(1) ? (
-                        <iframe
-                          title="Final"
-                          src={final.isolatedPath}
-                          css={{border: 'none', width: '100%', height: '100%'}}
-                        />
-                      ) : null}
-                    </Sandbox>
+                      files={final}
+                    />
                   </TabPanel>
-                  {extraCredit.length ? (
-                    <TabPanel>
-                      <ExtraCreditTabs
-                        isOpen={tabIndex === 2}
-                        exerciseNumber={exerciseNumber}
-                      />
-                    </TabPanel>
-                  ) : null}
                 </TabPanels>
               </Tabs>
             </div>
