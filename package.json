@@ -32,9 +32,11 @@
     "dev": "concurrently \"npm:dev:*\"",
     "dev:build": "npm run build -- --watch",
     "dev:examples": "cd ./example/react-fundamentals && npm start",
+    "setup": "concurrently \"npm:setup:*\"",
+    "setup:main": "npm install && npm run validate -s",
+    "setup:examples": "cd ./example/react-fundamentals && npm run setup",
     "build": "kcd-scripts build",
     "lint": "kcd-scripts lint",
-    "setup": "npm install && npm run validate -s",
     "test": "kcd-scripts test",
     "test:debug": "node --inspect-brk node_modules/kcd-scripts/dist/scripts/test.js --runInBand --no-cache",
     "validate": "kcd-scripts validate"

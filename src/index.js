@@ -236,7 +236,7 @@ function makeKCDWorkshopApp({
   handleLocationChange()
 }
 
-export default makeKCDWorkshopApp
+export {makeKCDWorkshopApp}
 
 /*
 eslint
