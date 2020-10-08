@@ -5,6 +5,17 @@ const loadFiles = require('./load-files')
 
 function getCode({cwd = process.cwd(), ignore, options} = {}) {
   const filesInfo = loadFiles({cwd, ignore})
+  let gitHubRepoUrl
+  try {
+    const {
+      repository: {url: repoUrl},
+    } = require('../package.json')
+    gitHubRepoUrl = repoUrl.replace('git+', '').replace('.git', '')
+  } catch (error) {
+    throw new Error(
+      'Cannot find a repository URL for this workshop. Check that the package.json has {"repository": {"url": "this should be set to a github URL"}}',
+    )
+  }
 
   const imports = filesInfo.map(({id, filePath, ext}) => {
     let loaders = ''
@@ -37,6 +48,7 @@ loadDevTools(() => {
     },
     filesInfo,
     projectTitle: pkg.title,
+    gitHubRepoUrl: \`${gitHubRepoUrl}\`,
     ${hasBackend ? `backend,` : ''}
     ${options ? `options: ${JSON.stringify(options)},` : ''}
   })

@@ -17,6 +17,7 @@ import {
   RiArrowLeftSLine,
   RiMoonClearLine,
   RiSunLine,
+  RiEdit2Fill,
 } from 'react-icons/ri'
 import {
   CgDice1,
@@ -73,6 +74,7 @@ function renderReactApp({
   projectTitle,
   filesInfo,
   lazyComponents,
+  gitHubRepoUrl,
   render,
 }) {
   const exerciseInfo = []
@@ -342,6 +344,7 @@ function renderReactApp({
           >
             <div
               css={mq({
+                position: 'relative',
                 gridRow: [2, 2, 'auto'],
                 height: ['auto', 'auto', 'calc(100vh - 60px)'],
                 overflowY: ['auto', 'auto', 'scroll'],
@@ -384,6 +387,26 @@ function renderReactApp({
               <React.Suspense
                 fallback={<div css={totallyCenteredStyles}>Loading...</div>}
               >
+                <div
+                  css={{
+                    position: 'absolute',
+                    top: 20,
+                    right: 20,
+                    fontSize: '1.2rem',
+                    color: theme.textLightest,
+                  }}
+                >
+                  <a
+                    href={`${gitHubRepoUrl}/edit/main/${instruction.filePath}`}
+                    title="edit docs"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    <span aria-label="edit">
+                      <RiEdit2Fill />
+                    </span>
+                  </a>
+                </div>
                 {instructionElement}
               </React.Suspense>
             </div>

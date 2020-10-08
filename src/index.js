@@ -28,6 +28,7 @@ function makeKCDWorkshopApp({
   projectTitle,
   backend,
   options = {},
+  ...otherWorkshopOptions
 }) {
   // if I we don't do this then HMR can sometimes call this function again
   // which would result in the app getting mounted multiple times.
@@ -228,6 +229,7 @@ function makeKCDWorkshopApp({
       imports,
       options,
       render,
+      ...otherWorkshopOptions,
     })
   }
 
