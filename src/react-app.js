@@ -38,7 +38,7 @@ styleTag.innerHTML = [
 document.head.prepend(styleTag)
 
 const extrIcons = [null, CgDice1, CgDice2, CgDice3, CgDice4, CgDice5, CgDice6]
-const getExtraIcon = filename => extrIcons[filename.match(/\d+$/g)?.[0]] ?? FaDiceD20
+const getDiceIcon = number => extrIcons[number] ?? FaDiceD20
 
 function getDistanceFromTopOfPage(element) {
   let distance = 0
@@ -143,7 +143,7 @@ function renderReactApp({
       renderedTabs.current.add(index)
     }
     if (files.length == 1) {
-      const { title, extraCreditTitle, isolatedPath } = files[0]
+      const {title, extraCreditTitle, isolatedPath} = files[0]
       return (
         <Sandbox
           isOpen={isOpen}
@@ -155,7 +155,7 @@ function renderReactApp({
             <iframe
               title={extraCreditTitle || title}
               src={isolatedPath}
-              css={{ border: 'none', width: '100%', height: '100%' }}
+              css={{border: 'none', width: '100%', height: '100%'}}
             />
           ) : null}
         </Sandbox>
@@ -176,15 +176,27 @@ function renderReactApp({
             whiteSpace: 'nowrap',
           }}
         >
-          {files.map(({id, filename}) => (
-            <Tab key={id} css={{display: 'flex', alignItems: 'center'}}>
-              {React.createElement(getExtraIcon(filename), {
-                size: 20,
-                style: {marginRight: 5},
-              })}
-              <span>{filename}</span>
-            </Tab>
-          ))}
+          {files.map(
+            ({id, filename, extraCreditNumber = -1, isExtraCredit, type}) => (
+              <Tab key={id} css={{display: 'flex', alignItems: 'center'}}>
+                {isExtraCredit ? (
+                  <>
+                    {React.createElement(getDiceIcon(extraCreditNumber), {
+                      size: 20,
+                      style: {marginRight: 5},
+                    })}
+                    <span>Extra Credit</span>
+                  </>
+                ) : type === 'final' ? (
+                  'Solution'
+                ) : type === 'exercise' ? (
+                  'Exercise'
+                ) : (
+                  filename
+                )}
+              </Tab>
+            ),
+          )}
         </TabList>
         <TabPanels>
           {files.map(({title, extraCreditTitle, isolatedPath, id}, index) => (
@@ -211,7 +223,13 @@ function renderReactApp({
   }
   FileTabs.displayName = 'FileTabs'
 
-  function Sandbox({isOpen, isolatedPath, isolatedPathLinkContent, title, children}) {
+  function Sandbox({
+    isOpen,
+    isolatedPath,
+    isolatedPathLinkContent,
+    title,
+    children,
+  }) {
     const renderContainerRef = React.useRef(null)
     const [height, setHeight] = React.useState(0)
     React.useLayoutEffect(() => {
@@ -299,9 +317,7 @@ function renderReactApp({
       return () => document.body.removeEventListener('keyup', handleKeyup)
     }, [exerciseNumber])
 
-    const {instruction, exercise, final} = exerciseInfo[
-      exerciseNumber
-    ]
+    const {instruction, exercise, final} = exerciseInfo[exerciseNumber]
 
     let instructionElement
 
