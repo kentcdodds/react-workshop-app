@@ -19,6 +19,7 @@ const filesInfo = [
     "filename": "box-styles",
     "type": "src",
     "number": 0,
+    "isExtraCredit": false,
     "extraCreditNumber": 0
   },
   {
@@ -30,6 +31,7 @@ const filesInfo = [
     "filename": "example",
     "type": "examples",
     "number": 0,
+    "isExtraCredit": false,
     "extraCreditNumber": 0
   },
   {
@@ -41,6 +43,7 @@ const filesInfo = [
     "filename": "example",
     "type": "examples",
     "number": 0,
+    "isExtraCredit": false,
     "extraCreditNumber": 0
   },
   {
@@ -52,10 +55,12 @@ const filesInfo = [
     "filename": "non-exported-example",
     "type": "examples",
     "number": 0,
+    "isExtraCredit": false,
     "extraCreditNumber": 0
   },
   {
     "id": "src/exercise/01.html",
+    "title": "Basic JavaScript-rendered Hello World",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/01.html",
     "filePath": "src/exercise/01.html",
     "isolatedPath": "/isolated/exercise/01.html",
@@ -63,12 +68,13 @@ const filesInfo = [
     "filename": "01",
     "type": "exercise",
     "number": 1,
+    "isExtraCredit": false,
     "extraCreditNumber": 1,
-    "title": "Basic JavaScript-rendered Hello World",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/01.md",
+    "title": "Basic JavaScript-rendered Hello World",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/01.md",
     "filePath": "src/exercise/01.md",
     "isolatedPath": "/isolated/exercise/01.md",
@@ -76,11 +82,12 @@ const filesInfo = [
     "filename": "01",
     "type": "instruction",
     "number": 1,
-    "extraCreditNumber": 1,
-    "title": "Basic JavaScript-rendered Hello World"
+    "isExtraCredit": false,
+    "extraCreditNumber": 1
   },
   {
     "id": "src/exercise/02.html",
+    "title": "Intro to raw React APIs",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/02.html",
     "filePath": "src/exercise/02.html",
     "isolatedPath": "/isolated/exercise/02.html",
@@ -88,12 +95,13 @@ const filesInfo = [
     "filename": "02",
     "type": "exercise",
     "number": 2,
+    "isExtraCredit": false,
     "extraCreditNumber": 2,
-    "title": "Intro to raw React APIs",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/02.md",
+    "title": "Intro to raw React APIs",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/02.md",
     "filePath": "src/exercise/02.md",
     "isolatedPath": "/isolated/exercise/02.md",
@@ -101,11 +109,12 @@ const filesInfo = [
     "filename": "02",
     "type": "instruction",
     "number": 2,
-    "extraCreditNumber": 2,
-    "title": "Intro to raw React APIs"
+    "isExtraCredit": false,
+    "extraCreditNumber": 2
   },
   {
     "id": "src/exercise/03.html",
+    "title": "Using JSX",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/03.html",
     "filePath": "src/exercise/03.html",
     "isolatedPath": "/isolated/exercise/03.html",
@@ -113,12 +122,13 @@ const filesInfo = [
     "filename": "03",
     "type": "exercise",
     "number": 3,
+    "isExtraCredit": false,
     "extraCreditNumber": 3,
-    "title": "Using JSX",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/03.md",
+    "title": "Using JSX",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/03.md",
     "filePath": "src/exercise/03.md",
     "isolatedPath": "/isolated/exercise/03.md",
@@ -126,11 +136,12 @@ const filesInfo = [
     "filename": "03",
     "type": "instruction",
     "number": 3,
-    "extraCreditNumber": 3,
-    "title": "Using JSX"
+    "isExtraCredit": false,
+    "extraCreditNumber": 3
   },
   {
     "id": "src/exercise/04.html",
+    "title": "Creating custom components",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/04.html",
     "filePath": "src/exercise/04.html",
     "isolatedPath": "/isolated/exercise/04.html",
@@ -138,12 +149,13 @@ const filesInfo = [
     "filename": "04",
     "type": "exercise",
     "number": 4,
+    "isExtraCredit": false,
     "extraCreditNumber": 4,
-    "title": "Creating custom components",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/04.md",
+    "title": "Creating custom components",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/04.md",
     "filePath": "src/exercise/04.md",
     "isolatedPath": "/isolated/exercise/04.md",
@@ -151,11 +163,12 @@ const filesInfo = [
     "filename": "04",
     "type": "instruction",
     "number": 4,
-    "extraCreditNumber": 4,
-    "title": "Creating custom components"
+    "isExtraCredit": false,
+    "extraCreditNumber": 4
   },
   {
     "id": "src/exercise/05.js",
+    "title": "Styling",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/05.js",
     "filePath": "src/exercise/05.js",
     "isolatedPath": "/isolated/exercise/05.js",
@@ -163,12 +176,13 @@ const filesInfo = [
     "filename": "05",
     "type": "exercise",
     "number": 5,
+    "isExtraCredit": false,
     "extraCreditNumber": 5,
-    "title": "Styling",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/05.md",
+    "title": "Styling",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/05.md",
     "filePath": "src/exercise/05.md",
     "isolatedPath": "/isolated/exercise/05.md",
@@ -176,11 +190,12 @@ const filesInfo = [
     "filename": "05",
     "type": "instruction",
     "number": 5,
-    "extraCreditNumber": 5,
-    "title": "Styling"
+    "isExtraCredit": false,
+    "extraCreditNumber": 5
   },
   {
     "id": "src/exercise/06.js",
+    "title": "Basic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/06.js",
     "filePath": "src/exercise/06.js",
     "isolatedPath": "/isolated/exercise/06.js",
@@ -188,12 +203,13 @@ const filesInfo = [
     "filename": "06",
     "type": "exercise",
     "number": 6,
+    "isExtraCredit": false,
     "extraCreditNumber": 6,
-    "title": "Basic Forms",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/06.md",
+    "title": "Basic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/06.md",
     "filePath": "src/exercise/06.md",
     "isolatedPath": "/isolated/exercise/06.md",
@@ -201,11 +217,12 @@ const filesInfo = [
     "filename": "06",
     "type": "instruction",
     "number": 6,
-    "extraCreditNumber": 6,
-    "title": "Basic Forms"
+    "isExtraCredit": false,
+    "extraCreditNumber": 6
   },
   {
     "id": "src/exercise/06.extra-2.js",
+    "title": "Basic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/06.extra-2.js",
     "filePath": "src/exercise/06.extra-2.js",
     "isolatedPath": "/isolated/exercise/06.extra-2.js",
@@ -213,12 +230,13 @@ const filesInfo = [
     "filename": "06.extra-2",
     "type": "exercise",
     "number": 6,
+    "isExtraCredit": true,
     "extraCreditNumber": 2,
-    "title": "Basic Forms",
     "extraCreditTitle": "another example extra (exercise)"
   },
   {
     "id": "src/exercise/07.js",
+    "title": "Dynamic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/07.js",
     "filePath": "src/exercise/07.js",
     "isolatedPath": "/isolated/exercise/07.js",
@@ -226,12 +244,13 @@ const filesInfo = [
     "filename": "07",
     "type": "exercise",
     "number": 7,
+    "isExtraCredit": false,
     "extraCreditNumber": 7,
-    "title": "Dynamic Forms",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/07.md",
+    "title": "Dynamic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/07.md",
     "filePath": "src/exercise/07.md",
     "isolatedPath": "/isolated/exercise/07.md",
@@ -239,11 +258,12 @@ const filesInfo = [
     "filename": "07",
     "type": "instruction",
     "number": 7,
-    "extraCreditNumber": 7,
-    "title": "Dynamic Forms"
+    "isExtraCredit": false,
+    "extraCreditNumber": 7
   },
   {
     "id": "src/exercise/08.js",
+    "title": "Controlled Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/08.js",
     "filePath": "src/exercise/08.js",
     "isolatedPath": "/isolated/exercise/08.js",
@@ -251,12 +271,13 @@ const filesInfo = [
     "filename": "08",
     "type": "exercise",
     "number": 8,
+    "isExtraCredit": false,
     "extraCreditNumber": 8,
-    "title": "Controlled Forms",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/08.md",
+    "title": "Controlled Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/08.md",
     "filePath": "src/exercise/08.md",
     "isolatedPath": "/isolated/exercise/08.md",
@@ -264,11 +285,12 @@ const filesInfo = [
     "filename": "08",
     "type": "instruction",
     "number": 8,
-    "extraCreditNumber": 8,
-    "title": "Controlled Forms"
+    "isExtraCredit": false,
+    "extraCreditNumber": 8
   },
   {
     "id": "src/exercise/09.js",
+    "title": "Rendering Lists",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/09.js",
     "filePath": "src/exercise/09.js",
     "isolatedPath": "/isolated/exercise/09.js",
@@ -276,12 +298,13 @@ const filesInfo = [
     "filename": "09",
     "type": "exercise",
     "number": 9,
+    "isExtraCredit": false,
     "extraCreditNumber": 9,
-    "title": "Rendering Lists",
     "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/09.md",
+    "title": "Rendering Arrays",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/09.md",
     "filePath": "src/exercise/09.md",
     "isolatedPath": "/isolated/exercise/09.md",
@@ -289,11 +312,12 @@ const filesInfo = [
     "filename": "09",
     "type": "instruction",
     "number": 9,
-    "extraCreditNumber": 9,
-    "title": "Rendering Arrays"
+    "isExtraCredit": false,
+    "extraCreditNumber": 9
   },
   {
     "id": "src/final/01.html",
+    "title": "Basic JavaScript-rendered Hello World",
     "fullFilePath": "<PROJECT_ROOT>/src/final/01.html",
     "filePath": "src/final/01.html",
     "isolatedPath": "/isolated/final/01.html",
@@ -301,12 +325,13 @@ const filesInfo = [
     "filename": "01",
     "type": "final",
     "number": 1,
+    "isExtraCredit": false,
     "extraCreditNumber": 1,
-    "title": "Basic JavaScript-rendered Hello World",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/01.extra-1.html",
+    "title": "Basic JavaScript-rendered Hello World",
     "fullFilePath": "<PROJECT_ROOT>/src/final/01.extra-1.html",
     "filePath": "src/final/01.extra-1.html",
     "isolatedPath": "/isolated/final/01.extra-1.html",
@@ -314,12 +339,13 @@ const filesInfo = [
     "filename": "01.extra-1",
     "type": "final",
     "number": 1,
+    "isExtraCredit": true,
     "extraCreditNumber": 1,
-    "title": "Basic JavaScript-rendered Hello World",
     "extraCreditTitle": "generate the root node"
   },
   {
     "id": "src/final/02.html",
+    "title": "Intro to raw React APIs",
     "fullFilePath": "<PROJECT_ROOT>/src/final/02.html",
     "filePath": "src/final/02.html",
     "isolatedPath": "/isolated/final/02.html",
@@ -327,12 +353,13 @@ const filesInfo = [
     "filename": "02",
     "type": "final",
     "number": 2,
+    "isExtraCredit": false,
     "extraCreditNumber": 2,
-    "title": "Intro to raw React APIs",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/02.extra-1.html",
+    "title": "Intro to raw React APIs",
     "fullFilePath": "<PROJECT_ROOT>/src/final/02.extra-1.html",
     "filePath": "src/final/02.extra-1.html",
     "isolatedPath": "/isolated/final/02.extra-1.html",
@@ -340,12 +367,13 @@ const filesInfo = [
     "filename": "02.extra-1",
     "type": "final",
     "number": 2,
+    "isExtraCredit": true,
     "extraCreditNumber": 1,
-    "title": "Intro to raw React APIs",
     "extraCreditTitle": "nesting elements"
   },
   {
     "id": "src/final/03.html",
+    "title": "Using JSX",
     "fullFilePath": "<PROJECT_ROOT>/src/final/03.html",
     "filePath": "src/final/03.html",
     "isolatedPath": "/isolated/final/03.html",
@@ -353,12 +381,13 @@ const filesInfo = [
     "filename": "03",
     "type": "final",
     "number": 3,
+    "isExtraCredit": false,
     "extraCreditNumber": 3,
-    "title": "Using JSX",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/03.extra-1.html",
+    "title": "Using JSX",
     "fullFilePath": "<PROJECT_ROOT>/src/final/03.extra-1.html",
     "filePath": "src/final/03.extra-1.html",
     "isolatedPath": "/isolated/final/03.extra-1.html",
@@ -366,12 +395,13 @@ const filesInfo = [
     "filename": "03.extra-1",
     "type": "final",
     "number": 3,
+    "isExtraCredit": true,
     "extraCreditNumber": 1,
-    "title": "Using JSX",
     "extraCreditTitle": "interpolate className and children"
   },
   {
     "id": "src/final/03.extra-2.html",
+    "title": "Using JSX",
     "fullFilePath": "<PROJECT_ROOT>/src/final/03.extra-2.html",
     "filePath": "src/final/03.extra-2.html",
     "isolatedPath": "/isolated/final/03.extra-2.html",
@@ -379,12 +409,13 @@ const filesInfo = [
     "filename": "03.extra-2",
     "type": "final",
     "number": 3,
+    "isExtraCredit": true,
     "extraCreditNumber": 2,
-    "title": "Using JSX",
     "extraCreditTitle": "spread props"
   },
   {
     "id": "src/final/03.extra-3.html",
+    "title": "Using JSX",
     "fullFilePath": "<PROJECT_ROOT>/src/final/03.extra-3.html",
     "filePath": "src/final/03.extra-3.html",
     "isolatedPath": "/isolated/final/03.extra-3.html",
@@ -392,12 +423,13 @@ const filesInfo = [
     "filename": "03.extra-3",
     "type": "final",
     "number": 3,
+    "isExtraCredit": true,
     "extraCreditNumber": 3,
-    "title": "Using JSX",
     "extraCreditTitle": "really long extra credit title. Like really long."
   },
   {
     "id": "src/final/04.html",
+    "title": "Creating custom components",
     "fullFilePath": "<PROJECT_ROOT>/src/final/04.html",
     "filePath": "src/final/04.html",
     "isolatedPath": "/isolated/final/04.html",
@@ -405,12 +437,13 @@ const filesInfo = [
     "filename": "04",
     "type": "final",
     "number": 4,
+    "isExtraCredit": false,
     "extraCreditNumber": 4,
-    "title": "Creating custom components",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/04.extra-1.html",
+    "title": "Creating custom components",
     "fullFilePath": "<PROJECT_ROOT>/src/final/04.extra-1.html",
     "filePath": "src/final/04.extra-1.html",
     "isolatedPath": "/isolated/final/04.extra-1.html",
@@ -418,12 +451,13 @@ const filesInfo = [
     "filename": "04.extra-1",
     "type": "final",
     "number": 4,
+    "isExtraCredit": true,
     "extraCreditNumber": 1,
-    "title": "Creating custom components",
     "extraCreditTitle": "using a custom component with React.createElement"
   },
   {
     "id": "src/final/04.extra-2.html",
+    "title": "Creating custom components",
     "fullFilePath": "<PROJECT_ROOT>/src/final/04.extra-2.html",
     "filePath": "src/final/04.extra-2.html",
     "isolatedPath": "/isolated/final/04.extra-2.html",
@@ -431,12 +465,13 @@ const filesInfo = [
     "filename": "04.extra-2",
     "type": "final",
     "number": 4,
+    "isExtraCredit": true,
     "extraCreditNumber": 2,
-    "title": "Creating custom components",
     "extraCreditTitle": "using a custom component with JSX"
   },
   {
     "id": "src/final/05.js",
+    "title": "Styling",
     "fullFilePath": "<PROJECT_ROOT>/src/final/05.js",
     "filePath": "src/final/05.js",
     "isolatedPath": "/isolated/final/05.js",
@@ -444,12 +479,13 @@ const filesInfo = [
     "filename": "05",
     "type": "final",
     "number": 5,
+    "isExtraCredit": false,
     "extraCreditNumber": 5,
-    "title": "Styling",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/05.extra-1.js",
+    "title": "Styling",
     "fullFilePath": "<PROJECT_ROOT>/src/final/05.extra-1.js",
     "filePath": "src/final/05.extra-1.js",
     "isolatedPath": "/isolated/final/05.extra-1.js",
@@ -457,12 +493,13 @@ const filesInfo = [
     "filename": "05.extra-1",
     "type": "final",
     "number": 5,
+    "isExtraCredit": true,
     "extraCreditNumber": 1,
-    "title": "Styling",
     "extraCreditTitle": "Custom component that encapsulates styling"
   },
   {
     "id": "src/final/06.js",
+    "title": "Basic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/final/06.js",
     "filePath": "src/final/06.js",
     "isolatedPath": "/isolated/final/06.js",
@@ -470,12 +507,13 @@ const filesInfo = [
     "filename": "06",
     "type": "final",
     "number": 6,
+    "isExtraCredit": false,
     "extraCreditNumber": 6,
-    "title": "Basic Forms",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/06.extra-1.js",
+    "title": "Basic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/final/06.extra-1.js",
     "filePath": "src/final/06.extra-1.js",
     "isolatedPath": "/isolated/final/06.extra-1.js",
@@ -483,12 +521,13 @@ const filesInfo = [
     "filename": "06.extra-1",
     "type": "final",
     "number": 6,
+    "isExtraCredit": true,
     "extraCreditNumber": 1,
-    "title": "Basic Forms",
     "extraCreditTitle": "using refs"
   },
   {
     "id": "src/final/06.extra-2.js",
+    "title": "Basic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/final/06.extra-2.js",
     "filePath": "src/final/06.extra-2.js",
     "isolatedPath": "/isolated/final/06.extra-2.js",
@@ -496,12 +535,13 @@ const filesInfo = [
     "filename": "06.extra-2",
     "type": "final",
     "number": 6,
+    "isExtraCredit": true,
     "extraCreditNumber": 2,
-    "title": "Basic Forms",
     "extraCreditTitle": "another example extra (final)"
   },
   {
     "id": "src/final/07.js",
+    "title": "Dynamic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/final/07.js",
     "filePath": "src/final/07.js",
     "isolatedPath": "/isolated/final/07.js",
@@ -509,12 +549,13 @@ const filesInfo = [
     "filename": "07",
     "type": "final",
     "number": 7,
+    "isExtraCredit": false,
     "extraCreditNumber": 7,
-    "title": "Dynamic Forms",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/08.js",
+    "title": "Controlled Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/final/08.js",
     "filePath": "src/final/08.js",
     "isolatedPath": "/isolated/final/08.js",
@@ -522,12 +563,13 @@ const filesInfo = [
     "filename": "08",
     "type": "final",
     "number": 8,
+    "isExtraCredit": false,
     "extraCreditNumber": 8,
-    "title": "Controlled Forms",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/09.js",
+    "title": "Rendering Lists",
     "fullFilePath": "<PROJECT_ROOT>/src/final/09.js",
     "filePath": "src/final/09.js",
     "isolatedPath": "/isolated/final/09.js",
@@ -535,12 +577,13 @@ const filesInfo = [
     "filename": "09",
     "type": "final",
     "number": 9,
+    "isExtraCredit": false,
     "extraCreditNumber": 9,
-    "title": "Rendering Lists",
     "extraCreditTitle": ""
   },
   {
     "id": "src/final/09.extra-1.js",
+    "title": "Rendering Lists",
     "fullFilePath": "<PROJECT_ROOT>/src/final/09.extra-1.js",
     "filePath": "src/final/09.extra-1.js",
     "isolatedPath": "/isolated/final/09.extra-1.js",
@@ -548,8 +591,8 @@ const filesInfo = [
     "filename": "09.extra-1",
     "type": "final",
     "number": 9,
+    "isExtraCredit": true,
     "extraCreditNumber": 1,
-    "title": "Rendering Lists",
     "extraCreditTitle": "Focus Demo"
   },
   {
@@ -561,6 +604,7 @@ const filesInfo = [
     "filename": "index",
     "type": "src",
     "number": 0,
+    "isExtraCredit": false,
     "extraCreditNumber": 0
   },
   {
@@ -572,6 +616,7 @@ const filesInfo = [
     "filename": "react-app-env.d",
     "type": "src",
     "number": 0,
+    "isExtraCredit": false,
     "extraCreditNumber": 0
   },
   {
@@ -583,6 +628,7 @@ const filesInfo = [
     "filename": "setupTests",
     "type": "src",
     "number": 0,
+    "isExtraCredit": false,
     "extraCreditNumber": 0
   },
   {
@@ -594,6 +640,7 @@ const filesInfo = [
     "filename": "styles",
     "type": "src",
     "number": 0,
+    "isExtraCredit": false,
     "extraCreditNumber": 0
   }
 ]

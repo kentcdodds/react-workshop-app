@@ -21,6 +21,7 @@ function loadFiles({
       }
       const [firstLine, secondLine] = contents.split('\n')
       let title, extraCreditTitle
+      const isExtraCredit = name.includes('.extra-')
       const fallbackMatch = {groups: {title: ''}}
       if (parentDir === 'final' || parentDir === 'exercise') {
         if (ext === '.js' || ext === '.tsx' || ext === '.ts') {
@@ -44,6 +45,7 @@ function loadFiles({
       }
       return {
         id: filePath,
+        title,
         fullFilePath,
         filePath,
         isolatedPath: filePath.replace('src', '/isolated'),
@@ -51,11 +53,12 @@ function loadFiles({
         filename: name,
         type,
         number: Number((name.match(/(^\d+)/) || [null])[0]),
+        isExtraCredit,
         extraCreditNumber: Number((name.match(/(\d+$)/) || [null])[0]),
-        title,
         extraCreditTitle,
       }
-    }).sort((a, b) => {
+    })
+    .sort((a, b) => {
       // change order so that shorter file names (01) are before longer (01.extra-01)
       if (a.filename.includes(b.filename)) return 1
       if (b.filename.includes(a.filename)) return -1
