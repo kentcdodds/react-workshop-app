@@ -81,13 +81,18 @@ function makeKCDWorkshopApp({
     }
   }
 
+  function escapeForClassList(name) {
+    // classList methods don't allow space or `/` characters
+    return encodeURIComponent(name.replace(/\//g, '_'))
+  }
+
   function handleLocationChange(location = history.location) {
     const {pathname} = location
     // add location pathname to classList of the body
     document.body.classList.remove(
-      previousLocation.pathname.replace(/\//g, '_'),
+      escapeForClassList(previousLocation.pathname),
     )
-    document.body.classList.add(pathname.replace(/\//g, '_'))
+    document.body.classList.add(escapeForClassList(pathname))
 
     // set the title to have info for the exercise
     const isIsolated = pathname.startsWith('/isolated')
