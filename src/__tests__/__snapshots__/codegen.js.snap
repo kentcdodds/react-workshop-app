@@ -221,6 +221,20 @@ const filesInfo = [
     "extraCreditNumber": 6
   },
   {
+    "id": "src/exercise/06 copy.js",
+    "title": "Basic Forms",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/06 copy.js",
+    "filePath": "src/exercise/06 copy.js",
+    "isolatedPath": "/isolated/exercise/06 copy.js",
+    "ext": ".js",
+    "filename": "06 copy",
+    "type": "exercise",
+    "number": 6,
+    "isExtraCredit": false,
+    "extraCreditNumber": 0,
+    "extraCreditTitle": ""
+  },
+  {
     "id": "src/exercise/06.extra-2.js",
     "title": "Basic Forms",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/06.extra-2.js",
@@ -664,6 +678,7 @@ loadDevTools(() => {
       "src/exercise/05.md": () => import("!babel-loader!mdx-loader!./exercise/05.md"),
       "src/exercise/06.js": () => import("./exercise/06.js"),
       "src/exercise/06.md": () => import("!babel-loader!mdx-loader!./exercise/06.md"),
+      "src/exercise/06 copy.js": () => import("./exercise/06 copy.js"),
       "src/exercise/06.extra-2.js": () => import("./exercise/06.extra-2.js"),
       "src/exercise/07.js": () => import("./exercise/07.js"),
       "src/exercise/07.md": () => import("!babel-loader!mdx-loader!./exercise/07.md"),
