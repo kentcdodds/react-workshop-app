@@ -713,7 +713,7 @@ loadDevTools(() => {
     },
     filesInfo,
     projectTitle: pkg.title,
-    gitHubRepoUrl: \`https://github.com/kentcdodds/react-fundamentals\`,
+    gitHubRepoUrl: \`https://github.com/kentcdodds/react-workshop-app\`,
     backend,
     
   })
