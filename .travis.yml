@@ -19,5 +19,7 @@ jobs:
   include:
     - stage: release
       node_js: 14
+      env:
+        - DEBUG=semantic-release:*
       script: kcd-scripts travis-release
       if: fork = false
