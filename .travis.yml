@@ -13,6 +13,7 @@ branches:
   only:
     - master
     - beta
+    - next
 
 jobs:
   include:

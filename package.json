@@ -103,6 +103,13 @@
       "react/prop-types": "off"
     }
   },
+  "release": {
+    "branches": [
+      "master",
+      "next",
+      "beta"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kentcdodds/react-fundamentals.git"
