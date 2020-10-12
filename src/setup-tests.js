@@ -2,7 +2,6 @@ import path from 'path'
 import fs from 'fs'
 import '@testing-library/jest-dom/extend-expect'
 import {configure} from '@testing-library/react'
-import './jest-expect-message'
 import {setup} from './server'
 
 // for slower computers

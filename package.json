@@ -26,7 +26,8 @@
     "codegen.js",
     "setup-tests.js",
     "dev-tools.js",
-    "server.js"
+    "server.js",
+    "test-utils.js"
   ],
   "scripts": {
     "dev": "concurrently \"npm:dev:*\"",
