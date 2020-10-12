@@ -1,6 +1,7 @@
-test('custom errors work', () => {
+import {alfredTip} from '../test-utils'
+
+test('alfred tips work', () => {
   expect(() =>
-    // eslint-disable-next-line jest/valid-expect
-    expect(1, 'one is not two').toBe(2),
+    alfredTip(() => expect(1).toBe(2), 'one is not two'),
   ).toThrowError(/one is not two/)
 })
