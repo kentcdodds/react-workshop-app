@@ -11,6 +11,13 @@
     "node": ">=10",
     "npm": ">=6"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kentcdodds/react-fundamentals"
+  },
+  "bugs": {
+    "url": "https://github.com/kentcdodds/react-fundamentals/issues"
+  },
   "dependencies": {
     "@kentcdodds/react-workshop-app": "file:../..",
     "@testing-library/jest-dom": "^5.11.4",

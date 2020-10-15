@@ -6,14 +6,15 @@ const loadFiles = require('./load-files')
 function getCode({cwd = process.cwd(), ignore, options} = {}) {
   const filesInfo = loadFiles({cwd, ignore})
   let gitHubRepoUrl
+  const pkgPath = path.join(process.cwd(), 'package.json')
   try {
     const {
       repository: {url: repoUrl},
-    } = require('../package.json')
+    } = require(pkgPath)
     gitHubRepoUrl = repoUrl.replace('git+', '').replace('.git', '')
   } catch (error) {
     throw new Error(
-      'Cannot find a repository URL for this workshop. Check that the package.json has {"repository": {"url": "this should be set to a github URL"}}',
+      `Cannot find a repository URL for this workshop. Check that the package.json at "${pkgPath}" has {"repository": {"url": "this should be set to a github URL"}}`,
     )
   }
 
