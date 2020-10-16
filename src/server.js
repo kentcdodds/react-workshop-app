@@ -5,19 +5,20 @@ import {match} from 'node-match-path'
 const getKey = name => `__react_workshop_app_${name}__`
 
 function getDefaultDelay() {
-  if (process.env.NODE_ENV === 'test') {
-    return 0
-  } else {
-    const variableTime = ls(getKey('variable_request_time'), 400)
-    const minTime = ls(getKey('min_request_time'), 400)
-    return Math.random() * variableTime + minTime
-  }
+  const variableTime = ls(getKey('variable_request_time'), 400)
+  const minTime = ls(getKey('min_request_time'), 400)
+  return Math.random() * variableTime + minTime
 }
 
-const sleep = (t = getDefaultDelay()) =>
-  new Promise(resolve => {
-    setTimeout(resolve, t)
+function sleep(t = getDefaultDelay()) {
+  return new Promise(resolve => {
+    if (process.env.NODE_ENV === 'test') {
+      resolve()
+    } else {
+      setTimeout(resolve, t)
+    }
   })
+}
 
 function ls(key, defaultVal) {
   const lsVal = window.localStorage.getItem(key)

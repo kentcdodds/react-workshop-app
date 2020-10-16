@@ -59,6 +59,7 @@ test('fail config request errors', async () => {
 })
 
 test('delay header', async () => {
+  process.env.NODE_ENV = 'development'
   const start = Date.now()
   const delay = 100
   await window.fetch('/get', {headers: {delay}}).then(r => r.json())
