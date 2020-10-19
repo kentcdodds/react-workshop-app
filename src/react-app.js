@@ -963,7 +963,7 @@ function renderReactApp({
             <Route exact path="/">
               <Home mode={mode} setMode={setMode} />
             </Route>
-            <Route exact path="/:exerciseNumber(\\d+)">
+            <Route exact path="/:exerciseNumber(\d+)">
               <ExerciseContainer mode={mode} setMode={setMode} />
             </Route>
             <Route>
