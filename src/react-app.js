@@ -319,6 +319,13 @@ function renderReactApp({
       return () => document.body.removeEventListener('keyup', handleKeyup)
     }, [exerciseNumber])
 
+    if (
+      isNaN(Number(exerciseNumber)) ||
+      exerciseInfo[Number(exerciseNumber)] === undefined
+    ) {
+      return <NotFound />
+    }
+
     const {instruction, exercise, final} = exerciseInfo[exerciseNumber]
 
     let instructionElement
@@ -956,7 +963,7 @@ function renderReactApp({
             <Route exact path="/">
               <Home mode={mode} setMode={setMode} />
             </Route>
-            <Route exact path="/:exerciseNumber">
+            <Route exact path="/:exerciseNumber(\\d+)">
               <ExerciseContainer mode={mode} setMode={setMode} />
             </Route>
             <Route>
