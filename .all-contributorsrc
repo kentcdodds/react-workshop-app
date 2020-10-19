@@ -107,6 +107,15 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "dan-overton",
+      "name": "Dan Overton",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/846955?v=4",
+      "profile": "https://github.com/dan-overton",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
