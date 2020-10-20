@@ -11,18 +11,6 @@ if (module.hot) module.hot.accept()
 
 const filesInfo = [
   {
-    "id": "src/box-styles.css",
-    "fullFilePath": "<PROJECT_ROOT>/src/box-styles.css",
-    "filePath": "src/box-styles.css",
-    "isolatedPath": "/isolated/box-styles.css",
-    "ext": ".css",
-    "filename": "box-styles",
-    "type": "src",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0
-  },
-  {
     "id": "src/examples/example.js",
     "fullFilePath": "<PROJECT_ROOT>/src/examples/example.js",
     "filePath": "src/examples/example.js",
@@ -620,49 +608,12 @@ const filesInfo = [
     "number": 0,
     "isExtraCredit": false,
     "extraCreditNumber": 0
-  },
-  {
-    "id": "src/react-app-env.d.ts",
-    "fullFilePath": "<PROJECT_ROOT>/src/react-app-env.d.ts",
-    "filePath": "src/react-app-env.d.ts",
-    "isolatedPath": "/isolated/react-app-env.d.ts",
-    "ext": ".ts",
-    "filename": "react-app-env.d",
-    "type": "src",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0
-  },
-  {
-    "id": "src/setupTests.js",
-    "fullFilePath": "<PROJECT_ROOT>/src/setupTests.js",
-    "filePath": "src/setupTests.js",
-    "isolatedPath": "/isolated/setupTests.js",
-    "ext": ".js",
-    "filename": "setupTests",
-    "type": "src",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0
-  },
-  {
-    "id": "src/styles.css",
-    "fullFilePath": "<PROJECT_ROOT>/src/styles.css",
-    "filePath": "src/styles.css",
-    "isolatedPath": "/isolated/styles.css",
-    "ext": ".css",
-    "filename": "styles",
-    "type": "src",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0
   }
 ]
 
 loadDevTools(() => {
   makeKCDWorkshopApp({
     imports: {
-      "src/box-styles.css": () => import("./box-styles.css"),
       "src/examples/example.js": () => import("./examples/example.js"),
       "src/examples/example.tsx": () => import("./examples/example.tsx"),
       "src/examples/non-exported-example.js": () => import("./examples/non-exported-example.js"),
@@ -706,10 +657,7 @@ loadDevTools(() => {
       "src/final/08.js": () => import("./final/08.js"),
       "src/final/09.js": () => import("./final/09.js"),
       "src/final/09.extra-1.js": () => import("./final/09.extra-1.js"),
-      "src/index.js": () => import("./index.js"),
-      "src/react-app-env.d.ts": () => import("./react-app-env.d.ts"),
-      "src/setupTests.js": () => import("./setupTests.js"),
-      "src/styles.css": () => import("./styles.css")
+      "src/index.js": () => import("./index.js")
     },
     filesInfo,
     projectTitle: pkg.title,

@@ -4,11 +4,18 @@ const glob = require('glob')
 
 function loadFiles({
   cwd = process.cwd(),
-  ignore = ['**/__tests__/**', '**/test/**', '**/backend.js'],
+  ignore = [
+    '**/__tests__/**',
+    '**/test/**',
+    '**/backend.js',
+    '**/setupTests.js',
+    '**/setupProxy.js',
+    '**/*.d.ts',
+  ],
   ...rest
 } = {}) {
   const fileInfo = glob
-    .sync('src/**/*.*', {cwd, ignore, ...rest})
+    .sync('src/**/*.+(js|html|jsx|ts|tsx|md|mdx)', {cwd, ignore, ...rest})
     // eslint-disable-next-line complexity
     .map(filePath => {
       const fullFilePath = path.join(cwd, filePath)
@@ -64,7 +71,7 @@ function loadFiles({
     if (a.filename.startsWith(b.filename)) return 1
     if (b.filename.startsWith(a.filename)) return -1
     // otherwise preserve order from glob (use explicit condition for consistency in Node 10)
-    return a.id > b.id ? 1 : (a.id < b.id ? -1 : 0)
+    return a.id > b.id ? 1 : a.id < b.id ? -1 : 0
   })
 
   return fileInfo
