@@ -790,7 +790,7 @@ function renderReactApp({
                       })}
                     >
                       <a
-                        href={exercise.isolatedPath}
+                        href={exercise[0].isolatedPath}
                         title="exercise"
                         css={mq({
                           width: '100%',
@@ -817,7 +817,7 @@ function renderReactApp({
                         <span>Exercise</span>
                       </a>
                       <a
-                        href={final.isolatedPath}
+                        href={final[0].isolatedPath}
                         title="final version"
                         css={mq({
                           width: '100%',
