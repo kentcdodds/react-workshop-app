@@ -1,7 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`review the snapshot please 1`] = `
-import 'stop-runaway-react-effects/hijack'
 import {makeKCDWorkshopApp} from '@kentcdodds/react-workshop-app'
 import {loadDevTools} from '@kentcdodds/react-workshop-app/dev-tools'
 import pkg from '../package.json'
@@ -23,24 +22,24 @@ const filesInfo = [
     "extraCreditNumber": 0
   },
   {
-    "id": "src/examples/example.tsx",
-    "fullFilePath": "<PROJECT_ROOT>/src/examples/example.tsx",
-    "filePath": "src/examples/example.tsx",
-    "isolatedPath": "/isolated/examples/example.tsx",
-    "ext": ".tsx",
-    "filename": "example",
-    "type": "examples",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0
-  },
-  {
     "id": "src/examples/non-exported-example.js",
     "fullFilePath": "<PROJECT_ROOT>/src/examples/non-exported-example.js",
     "filePath": "src/examples/non-exported-example.js",
     "isolatedPath": "/isolated/examples/non-exported-example.js",
     "ext": ".js",
     "filename": "non-exported-example",
+    "type": "examples",
+    "number": 0,
+    "isExtraCredit": false,
+    "extraCreditNumber": 0
+  },
+  {
+    "id": "src/examples/ts-example.tsx",
+    "fullFilePath": "<PROJECT_ROOT>/src/examples/ts-example.tsx",
+    "filePath": "src/examples/ts-example.tsx",
+    "isolatedPath": "/isolated/examples/ts-example.tsx",
+    "ext": ".tsx",
+    "filename": "ts-example",
     "type": "examples",
     "number": 0,
     "isExtraCredit": false,
@@ -615,8 +614,8 @@ loadDevTools(() => {
   makeKCDWorkshopApp({
     imports: {
       "src/examples/example.js": () => import("./examples/example.js"),
-      "src/examples/example.tsx": () => import("./examples/example.tsx"),
       "src/examples/non-exported-example.js": () => import("./examples/non-exported-example.js"),
+      "src/examples/ts-example.tsx": () => import("./examples/ts-example.tsx"),
       "src/exercise/01.html": () => import("!raw-loader!./exercise/01.html"),
       "src/exercise/01.md": () => import("!babel-loader!mdx-loader!./exercise/01.md"),
       "src/exercise/02.html": () => import("!raw-loader!./exercise/02.html"),

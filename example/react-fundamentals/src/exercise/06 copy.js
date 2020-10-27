@@ -1,3 +1,7 @@
 // Basic Forms
 
-export default 'support space in filenames'
+function Thing() {
+  return 'support space in filenames'
+}
+
+export default Thing

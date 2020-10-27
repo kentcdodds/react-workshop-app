@@ -32,7 +32,6 @@ function getCode({cwd = process.cwd(), ignore, options} = {}) {
   const hasBackend = fs.existsSync(path.join(cwd, 'src/backend.js'))
 
   return `
-import 'stop-runaway-react-effects/hijack'
 import {makeKCDWorkshopApp} from '@kentcdodds/react-workshop-app'
 import {loadDevTools} from '@kentcdodds/react-workshop-app/dev-tools'
 import pkg from '../package.json'
