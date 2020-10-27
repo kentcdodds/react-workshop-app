@@ -1,8 +1,6 @@
 import preval from 'preval.macro'
 import React from 'react'
 import ReactDOM from 'react-dom'
-// we want the same history that react-router-dom is using
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {createBrowserHistory} from 'history'
 import {setup as setupServer} from './server'
 import {renderReactApp} from './react-app'
