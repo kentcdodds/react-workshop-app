@@ -26,7 +26,7 @@ function loadFiles({
       if (ext === '.md' || ext === '.mdx') {
         type = 'instruction'
       }
-      const [firstLine, secondLine] = contents.split('\n')
+      const [firstLine, secondLine] = contents.split(/\r?\n/)
       let title, extraCreditTitle
       const isExtraCredit = name.includes('.extra-')
       const fallbackMatch = {groups: {title: ''}}
