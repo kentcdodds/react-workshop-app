@@ -12,8 +12,7 @@
 [![version][version-badge]][package]
 [![downloads][downloads-badge]][npmtrends]
 [![MIT License][license-badge]][license]
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors][all-contributors-badge]](#contributors-)
 [![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
 <!-- prettier-ignore-end -->
@@ -115,6 +114,7 @@ Thanks goes to these people ([emoji key][emojis]):
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -127,8 +127,8 @@ MIT
 <!-- prettier-ignore-start -->
 [npm]: https://www.npmjs.com
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/travis/com/kentcdodds/react-workshop-app.svg?style=flat-square
-[build]: https://travis-ci.com/kentcdodds/react-workshop-app
+[build-badge]: https://img.shields.io/github/workflow/status/kentcdodds/react-workshop-app/validate/main?logo=github&style=flat-square
+[build]: https://github.com/kentcdodds/react-workshop-app/actions?query=workflow%3Avalidate
 [coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/react-workshop-app.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/react-workshop-app
 [version-badge]: https://img.shields.io/npm/v/@kentcdodds/react-workshop-app.svg?style=flat-square
@@ -143,6 +143,7 @@ MIT
 [coc]: https://github.com/kentcdodds/react-workshop-app/blob/master/other/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/all-contributors/all-contributors#emoji-key
 [all-contributors]: https://github.com/all-contributors/all-contributors
+[all-contributors-badge]: https://img.shields.io/github/all-contributors/kentcdodds/advanced-react-hooks?color=orange&style=flat-square
 [bugs]: https://github.com/kentcdodds/react-workshop-app/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Acreated-desc+label%3Abug
 [requests]: https://github.com/kentcdodds/react-workshop-app/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement
 [good-first-issue]: https://github.com/kentcdodds/react-workshop-app/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement+label%3A%22good+first+issue%22
