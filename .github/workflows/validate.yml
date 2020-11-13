@@ -28,13 +28,23 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: 📥 Download deps
+      - name: 📥 Download deps (main)
         uses: bahmutov/npm-install@v1
         with:
           useLockFile: false
 
-      - name: ▶️ Run validate script
+      - name: 📥 Download deps (example)
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: example/react-fundamentals
+
+      - name: ▶️ Run validate script (main)
         run: npm run validate
+
+      - name: ▶️ Run validate script (example)
+        run: npm run validate
+        working-directory: example/react-fundamentals
 
       - name: ⬆️ Upload coverage report
         uses: codecov/codecov-action@v1
