@@ -43,13 +43,12 @@
     "validate": "kcd-scripts validate"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
     "@emotion/core": "^10.0.35",
     "@reach/tabs": "^0.11.2",
     "@reach/tooltip": "^0.11.2",
-    "@testing-library/jest-dom": "^5.11.5",
-    "@testing-library/react": "^11.1.0",
-    "babel-loader": "^8.1.0",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.1.2",
     "chalk": "^4.1.0",
     "codegen.macro": "^4.0.0",
     "cross-spawn": "^7.0.3",
@@ -62,7 +61,7 @@
     "is-ci": "^2.0.0",
     "mdx-loader": "^3.0.2",
     "msw": "^0.21.3",
-    "node-match-path": "^0.5.1",
+    "node-match-path": "^0.6.0",
     "normalize.css": "^8.0.1",
     "raw-loader": "^4.0.2",
     "react-error-boundary": "^3.0.2",
@@ -76,13 +75,13 @@
     "cssnano": "^4.1.10",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-cypress": "^2.11.2",
-    "kcd-scripts": "^6.6.0",
-    "postcss-cli": "^8.1.0",
+    "kcd-scripts": "^7.0.2",
+    "postcss-cli": "^8.2.0",
     "preval.macro": "^5.0.0",
     "react": "0.0.0-experimental-e5d06e34b",
     "react-dom": "0.0.0-experimental-e5d06e34b",
-    "resolve": "^1.18.0",
-    "whatwg-fetch": "^3.4.1"
+    "resolve": "^1.19.0",
+    "whatwg-fetch": "^3.5.0"
   },
   "peerDependencies": {
     "react": "*",
