@@ -29,7 +29,10 @@ function getCode({cwd = process.cwd(), ignore, options} = {}) {
     return `"${id}": () => import("${loaders}${relativePath}")`
   })
 
-  const hasBackend = fs.existsSync(path.join(cwd, 'src/backend.js'))
+  const hasBackend =
+    fs.existsSync(path.join(cwd, 'src/backend.js')) ||
+    fs.existsSync(path.join(cwd, 'src/backend.ts')) ||
+    fs.existsSync(path.join(cwd, 'src/backend.tsx'))
 
   return `
 import {makeKCDWorkshopApp} from '@kentcdodds/react-workshop-app'

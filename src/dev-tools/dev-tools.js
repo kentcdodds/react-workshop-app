@@ -18,7 +18,7 @@ function install() {
   const requireDevToolsLocal = require.context(
     './',
     false,
-    /dev-tools\.local\.js/,
+    /dev-tools\.local\.(js|tsx|ts)/,
   )
   const local = requireDevToolsLocal.keys()[0]
   if (local) {

@@ -16,10 +16,14 @@ beforeEach(() => console.info.mockClear())
 
 // enable API mocking in test runs using the same request handlers
 // as for the client-side mocking.
-const backendFilePath = path.join(process.cwd(), 'src/backend.js')
-const hasBackend = fs.existsSync(backendFilePath)
+const cwd = process.cwd()
+const backendFilePath = [
+  fs.existsSync(path.join(cwd, 'src/backend.js')),
+  fs.existsSync(path.join(cwd, 'src/backend.ts')),
+  fs.existsSync(path.join(cwd, 'src/backend.tsx')),
+].find(p => fs.existsSync(p))
 const backend = {handlers: [], onUnhandledRequest: 'error'}
-if (hasBackend) {
+if (backendFilePath) {
   // we do things this way to trick webpack into not realizing this is
   // a dynamic require (because we don't run this file with webpack, so who cares)
   // but we get warnings if we do a regular require here...

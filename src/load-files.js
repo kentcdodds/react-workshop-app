@@ -7,9 +7,9 @@ function loadFiles({
   ignore = [
     '**/__tests__/**',
     '**/test/**',
-    '**/backend.js',
-    '**/setupTests.js',
-    '**/setupProxy.js',
+    '**/backend.+(js|ts|tsx)',
+    '**/setupTests.+(js|ts|tsx)',
+    '**/setupProxy.+(js|ts|tsx)',
     '**/*.d.ts',
   ],
   ...rest
