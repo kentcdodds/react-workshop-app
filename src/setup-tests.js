@@ -18,9 +18,9 @@ beforeEach(() => console.info.mockClear())
 // as for the client-side mocking.
 const cwd = process.cwd()
 const backendFilePath = [
-  fs.existsSync(path.join(cwd, 'src/backend.js')),
-  fs.existsSync(path.join(cwd, 'src/backend.ts')),
-  fs.existsSync(path.join(cwd, 'src/backend.tsx')),
+  path.join(cwd, 'src/backend.js'),
+  path.join(cwd, 'src/backend.ts'),
+  path.join(cwd, 'src/backend.tsx'),
 ].find(p => fs.existsSync(p))
 const backend = {handlers: [], onUnhandledRequest: 'error'}
 if (backendFilePath) {
