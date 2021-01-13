@@ -53,7 +53,7 @@ function makeKCDWorkshopApp({
       ...rest
     } = backend
     const server = setupServer({handlers})
-    server.start({
+    server.start?.({
       quiet,
       serviceWorker,
       ...rest,
