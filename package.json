@@ -6,6 +6,7 @@
   },
   "description": "An abstraction for all my React workshops",
   "main": "dist/@kentcdodds/react-workshop-app.esm.js",
+  "types": "dist/index.d.ts",
   "keywords": [],
   "author": "Kent C. Dodds <me@kentcdodds.com> (https://kentcdodds.com)",
   "license": "MIT",
@@ -43,6 +44,7 @@
     "build:bundle:dev-tools": "cross-env BUILD_INPUT=\"src/dev-tools/*.js\" BUILD_FILENAME_PREFIX=\"dev-tools-build\" kcd-scripts build --bundle esm --no-clean",
     "lint": "kcd-scripts lint",
     "test": "kcd-scripts test",
+    "typecheck": "kcd-scripts typecheck",
     "test:debug": "node --inspect-brk node_modules/kcd-scripts/dist/scripts/test.js --runInBand --no-cache",
     "validate": "kcd-scripts validate"
   },
