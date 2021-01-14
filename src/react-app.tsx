@@ -1,12 +1,15 @@
 /** @jsx jsx */
+/** @jsxFrag React.Fragment */
 
 import 'focus-visible' // polyfill for :focus-visible (https://github.com/WICG/focus-visible)
 import {jsx, Global} from '@emotion/core'
 import React from 'react'
+import type {History} from 'history'
 import facepaint from 'facepaint'
-import {ThemeProvider, useTheme} from 'emotion-theming'
+import {ThemeProvider, useTheme as useEmotionTheme} from 'emotion-theming'
 import preval from 'preval.macro'
 import {ErrorBoundary} from 'react-error-boundary'
+import type {FallbackProps} from 'react-error-boundary'
 import {Router, Switch, Route, Link, useParams} from 'react-router-dom'
 import {Tabs, TabList, Tab, TabPanels, TabPanel} from '@reach/tabs'
 import {
@@ -31,6 +34,8 @@ import {FaDiceD20} from 'react-icons/fa'
 
 import Logo from './assets/logo'
 import getTheme, {prismThemeLight, prismThemeDark} from './theme'
+import type {Theme} from './theme'
+import type {FileInfo, LazyComponents} from './types'
 
 const styleTag = document.createElement('style')
 styleTag.innerHTML = [
@@ -39,14 +44,14 @@ styleTag.innerHTML = [
 document.head.prepend(styleTag)
 
 const extrIcons = [null, CgDice1, CgDice2, CgDice3, CgDice4, CgDice5, CgDice6]
-const getDiceIcon = number => extrIcons[number] ?? FaDiceD20
+const getDiceIcon = (number: number) => extrIcons[number] ?? FaDiceD20
 
-function getDistanceFromTopOfPage(element) {
+function getDistanceFromTopOfPage(element: HTMLElement | null) {
   let distance = 0
 
   while (element) {
     distance += element.offsetTop - element.scrollTop + element.clientTop
-    element = element.offsetParent
+    element = element.offsetParent as HTMLElement | null
   }
 
   return distance
@@ -76,8 +81,19 @@ function renderReactApp({
   lazyComponents,
   gitHubRepoUrl,
   render,
+}: {
+  history: History
+  projectTitle: string
+  filesInfo: Array<FileInfo>
+  lazyComponents: LazyComponents
+  gitHubRepoUrl: string
+  render: (ui: React.ReactElement, el: HTMLElement) => VoidFunction
 }) {
-  const exerciseInfo = []
+  const useTheme = () => useEmotionTheme<Theme>()
+  const exerciseInfo: Array<{
+    exercise: Array<FileInfo & {instruction: FileInfo}>
+    final: Array<FileInfo & {instruction: FileInfo}>
+  }> = []
   const exerciseTypes = ['final', 'exercise', 'instruction']
   for (const fileInfo of filesInfo) {
     if (exerciseTypes.includes(fileInfo.type)) {
@@ -1007,7 +1023,7 @@ function renderReactApp({
     )
   }
 
-  function ErrorFallback({error, componentStack, resetErrorBoundary}) {
+  function ErrorFallback({error, resetErrorBoundary}: FallbackProps) {
     return (
       <div
         css={{
@@ -1021,10 +1037,6 @@ function renderReactApp({
         <div>
           <p>{`Here's the error:`}</p>
           <pre css={{color: 'red', overflowY: 'scroll'}}>{error.message}</pre>
-        </div>
-        <div>
-          <p>{`Here's a component stack trace:`}</p>
-          <pre css={{color: 'red', overflowY: 'scroll'}}>{componentStack}</pre>
         </div>
         <div>
           <p>Try doing one of these things to fix this:</p>
@@ -1048,7 +1060,7 @@ function renderReactApp({
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <App />
     </ErrorBoundary>,
-    document.getElementById('root'),
+    document.getElementById('root')!,
   )
 }
 
@@ -1056,5 +1068,6 @@ export {renderReactApp}
 
 /*
 eslint
-  max-statements: "off"
+  max-statements: "off",
+  @typescript-eslint/no-non-null-assertion: "off"
 */

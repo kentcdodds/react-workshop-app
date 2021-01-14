@@ -1,6 +1,6 @@
-function loadDevTools(callback) {
+function loadDevTools(callback: VoidFunction) {
   // check URL first
-  const url = new URL(window.location)
+  const url = new URL(window.location.toString())
   const setInUrl = url.searchParams.has('dev-tools')
   const urlEnabled = url.searchParams.get('dev-tools') === 'true'
   if (setInUrl) {
@@ -19,7 +19,7 @@ function loadDevTools(callback) {
   }
 
   // the default is off in Cypress
-  if (window.Cypress) return callback()
+  if (window.hasOwnProperty('Cypress')) return callback()
 
   // the default is on in development
   if (process.env.NODE_ENV === 'development') return go()
@@ -29,9 +29,7 @@ function loadDevTools(callback) {
   function go() {
     // use a dynamic import so the dev-tools code isn't bundled with the regular
     // app code so we don't worry about bundle size.
-    import('./dev-tools')
-      .then(devTools => devTools.install())
-      .finally(callback)
+    import('./dev-tools').then(devTools => devTools.install()).finally(callback)
   }
 }
 

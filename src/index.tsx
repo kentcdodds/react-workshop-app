@@ -1,9 +1,11 @@
+import type {RequestHandler} from 'msw'
 import preval from 'preval.macro'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {createBrowserHistory} from 'history'
 import {setup as setupServer} from './server'
 import {renderReactApp} from './react-app'
+import type {FileInfo, LazyComponents} from './types'
 
 const styleTag = document.createElement('style')
 const requiredStyles = [
@@ -11,6 +13,8 @@ const requiredStyles = [
   preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`,
   // this will happen when running the regular app and embedding the example
   // in an iframe.
+  // pretty sure the types are wrong on this one... (It's been fixed in TS 4.2)
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   window.frameElement
     ? `#root{display:grid;place-items:center;height:100vh;}`
     : '',
@@ -29,13 +33,31 @@ function makeKCDWorkshopApp({
   backend,
   options = {},
   ...otherWorkshopOptions
+}: {
+  imports: Record<
+    string,
+    () => Promise<{default: React.ComponentType<unknown>}>
+  >
+  filesInfo: Array<FileInfo>
+  projectTitle: string
+  backend: {
+    handlers: Array<RequestHandler>
+    quiet?: boolean
+    serviceWorker?: {
+      url?: string
+    }
+    [key: string]: unknown
+  }
+  options?: {
+    concurrentMode?: boolean
+  }
 }) {
   // if I we don't do this then HMR can sometimes call this function again
   // which would result in the app getting mounted multiple times.
   const rootEl = document.getElementById('root')
   if (rootEl) rootEl.innerHTML = ''
 
-  const lazyComponents = {}
+  const lazyComponents: LazyComponents = {}
 
   const componentExtensions = ['.js', '.md', '.mdx', '.tsx', '.ts']
 
@@ -249,4 +271,5 @@ export {makeKCDWorkshopApp}
 eslint
   react/prop-types: "off",
   babel/no-unused-expressions: "off",
+  @typescript-eslint/no-explicit-any: "off",
 */

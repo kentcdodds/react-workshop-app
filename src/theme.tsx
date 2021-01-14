@@ -8,8 +8,9 @@ const themeLight = {
   skyLight: '#F4F6F8',
   skyDark: '#C4CDD5',
 }
+type Theme = typeof themeLight
 
-const themeDark = {
+const themeDark: Theme = {
   background: '#19212a',
   backgroundLight: '#212b36',
   text: '#fff',
@@ -20,8 +21,10 @@ const themeDark = {
   skyDark: '#8E9EAC',
 }
 
-const theme = mode => (mode === 'dark' ? themeDark : themeLight)
+const theme = (mode: string): Theme =>
+  mode === 'dark' ? themeDark : themeLight
 
+export type {Theme}
 export default theme
 
 export const prismThemeLight = `

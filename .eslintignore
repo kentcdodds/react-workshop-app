@@ -3,3 +3,4 @@ coverage
 dist
 build
 example
+test-utils.d.ts
