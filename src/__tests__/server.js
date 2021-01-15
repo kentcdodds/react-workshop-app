@@ -1,6 +1,7 @@
+// eslint-disable-next-line import/no-unresolved
 import {setup, rest} from '../server'
 
-const getKey = name => `__react_workshop_app_${name}__`
+const getKey = (name: string) => `__react_workshop_app_${name}__`
 
 setup({
   handlers: [
@@ -19,7 +20,7 @@ test('simple requests', async () => {
   expect(result).toEqual({success: true})
 })
 
-test('GET request errors', async () => {
+test('GET request errors when passing a query param with the text "FAIL"', async () => {
   const result = await window.fetch('/get?fail=FAIL').then(r => r.json())
   expect(result).toEqual({
     status: 500,
@@ -27,7 +28,7 @@ test('GET request errors', async () => {
   })
 })
 
-test('POST request errors', async () => {
+test('POST request errors when passing a body with the text "FAIL"', async () => {
   const result = await window
     .fetch('/post', {method: 'POST', body: 'FAIL'})
     .then(r => r.json())

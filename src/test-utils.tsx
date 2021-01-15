@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 
-function alfredTip(shouldThrow: boolean | (() => boolean), tip: string) {
+function alfredTip(shouldThrow: unknown | (() => unknown), tip: string) {
   if (typeof shouldThrow === 'function') {
     try {
       shouldThrow = shouldThrow()

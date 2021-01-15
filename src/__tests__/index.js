@@ -1,15 +1,16 @@
+// This file cannot be in TypeScript because it imports files from the exercises
+// directory which leads to all the TS defs being generated with the wrong file structure during the build
 import path from 'path'
 import ReactDOM from 'react-dom'
 import matchMediaPolyfill from 'mq-polyfill'
 import {screen, fireEvent} from '@testing-library/react'
 import {makeKCDWorkshopApp} from '..'
-import getAppInfo from '../get-app-info'
+import {getAppInfo} from '../get-app-info'
 
 beforeAll(() => {
   matchMediaPolyfill(window)
 })
 
-let root
 beforeEach(() => {
   root = document.createElement('div')
   root.id = 'root'
@@ -17,7 +18,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  ReactDOM.unmountComponentAtNode(root)
+  if (root) ReactDOM.unmountComponentAtNode(root)
   // no idea, but I was getting "NotFoundError: The node to be removed is not a child of this node."
   // so we'll reset the innerHTML
   // document.body.removeChild(root)
@@ -34,19 +35,16 @@ test('regular app', () => {
       'src/exercise/05.js': () =>
         import('../../example/react-fundamentals/src/exercise/05.js'),
       'src/exercise/05.md': () =>
-        // I'm not sure how these webpack loaders work (or if they're ever run)...
-        import(
-          '!babel-loader!mdx-loader!../../example/react-fundamentals/src/exercise/05.md'
-        ),
+        import('../../example/react-fundamentals/src/exercise/05.md'),
       'src/final/05.js': () =>
         import('../../example/react-fundamentals/src/final/05.js'),
       'src/final/05.extra-1.js': () =>
         import('../../example/react-fundamentals/src/final/05.extra-1.js'),
     },
     filesInfo,
-    projectTitle: 'test project',
     gitHubRepoUrl,
-    backend: require('../../example/react-fundamentals/src/backend'),
+    projectTitle: 'test project',
+    backend: require('../../example/react-fundamentals/src/backend') as Backend,
   })
 
   fireEvent.click(
@@ -68,20 +66,22 @@ test('isolated page', async () => {
       'src/exercise/05.js': () =>
         import('../../example/react-fundamentals/src/exercise/05.js'),
       'src/exercise/05.md': () =>
-        // I'm not sure how these webpack loaders work (or if they're ever run)...
-        import(
-          '!babel-loader!mdx-loader!../../example/react-fundamentals/src/exercise/05.md'
-        ),
+        import('../../example/react-fundamentals/src/exercise/05.md'),
       'src/final/05.js': () =>
         import('../../example/react-fundamentals/src/final/05.js'),
       'src/final/05.extra-1.js': () =>
         import('../../example/react-fundamentals/src/final/05.extra-1.js'),
     },
     filesInfo,
-    projectTitle: 'test project',
     gitHubRepoUrl,
-    backend: require('../../example/react-fundamentals/src/backend'),
+    projectTitle: 'test project',
+    backend: require('../../example/react-fundamentals/src/backend') as Backend,
   })
 
   await screen.findByText('large orange box')
 })
+
+/*
+eslint
+  @typescript-eslint/no-var-requires: "off",
+*/

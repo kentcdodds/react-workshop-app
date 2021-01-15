@@ -1,7 +1,15 @@
 // this generates the code to use in the entry file
-const getAppInfo = require('./get-app-info')
+import {getAppInfo} from './get-app-info'
 
-function getCode({cwd = process.cwd(), ignore, options} = {}) {
+function getCode({
+  cwd = process.cwd(),
+  ignore,
+  options,
+}: {
+  cwd?: string
+  ignore?: Array<string>
+  options?: Record<string, unknown>
+} = {}) {
   const {gitHubRepoUrl, filesInfo, hasBackend, imports} = getAppInfo({
     cwd,
     ignore,
@@ -30,4 +38,4 @@ loadDevTools(() => {
 })`.trim()
 }
 
-module.exports = getCode
+export {getCode}

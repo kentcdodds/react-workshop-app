@@ -40,7 +40,7 @@
     "setup:examples": "cd ./example/react-fundamentals && npm run setup",
     "build": "npm run build:main && concurrently \"npm:build:bundle:*\"",
     "build:main": "kcd-scripts build",
-    "build:bundle:main": "kcd-scripts build --bundle esm --no-clean",
+    "build:bundle:main": "cross-env kcd-scripts build --bundle esm --no-clean",
     "build:bundle:dev-tools": "cross-env BUILD_INPUT=\"src/dev-tools/*.js\" BUILD_FILENAME_PREFIX=\"dev-tools-build\" kcd-scripts build --bundle esm --no-clean",
     "lint": "kcd-scripts lint",
     "test": "kcd-scripts test",

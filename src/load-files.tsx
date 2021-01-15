@@ -1,6 +1,7 @@
-const path = require('path')
-const fs = require('fs')
-const glob = require('glob')
+import path from 'path'
+import fs from 'fs'
+import glob from 'glob'
+import type {FileInfo} from './types'
 
 function loadFiles({
   cwd = process.cwd(),
@@ -13,7 +14,7 @@ function loadFiles({
     '**/*.d.ts',
   ],
   ...rest
-} = {}) {
+} = {}): Array<FileInfo> {
   const fileInfo = glob
     .sync('src/**/*.+(js|html|jsx|ts|tsx|md|mdx)', {cwd, ignore, ...rest})
     // eslint-disable-next-line complexity
@@ -26,28 +27,31 @@ function loadFiles({
       if (ext === '.md' || ext === '.mdx') {
         type = 'instruction'
       }
-      const [firstLine, secondLine] = contents.split(/\r?\n/)
-      let title, extraCreditTitle
+      const [firstLine, secondLine = ''] = contents.split(/\r?\n/)
+      let title = 'Unknown'
+      let extraCreditTitle = 'Unknown'
       const isExtraCredit = name.includes('.extra-')
       const fallbackMatch = {groups: {title: ''}}
       if (parentDir === 'final' || parentDir === 'exercise') {
         if (ext === '.js' || ext === '.tsx' || ext === '.ts') {
           const titleMatch =
-            firstLine.match(/\/\/ (?<title>.*)$/) || fallbackMatch
-          title = titleMatch.groups.title.trim()
+            firstLine.match(/\/\/ (?<title>.*)$/) ?? fallbackMatch
+          title = titleMatch.groups?.title.trim() ?? title
           const extraCreditTitleMatch =
-            secondLine?.match(/\/\/ 💯 (?<title>.*)$/) || fallbackMatch
-          extraCreditTitle = extraCreditTitleMatch.groups.title.trim()
+            secondLine.match(/\/\/ 💯 (?<title>.*)$/) ?? fallbackMatch
+          extraCreditTitle =
+            extraCreditTitleMatch.groups?.title.trim() ?? extraCreditTitle
         } else if (ext === '.html') {
           const titleMatch =
-            firstLine.match(/<!-- (?<title>.*) -->/) || fallbackMatch
-          title = titleMatch.groups.title.trim()
+            firstLine.match(/<!-- (?<title>.*) -->/) ?? fallbackMatch
+          title = titleMatch.groups?.title.trim() ?? title
           const extraCreditTitleMatch =
-            secondLine?.match(/<!-- 💯 (?<title>.*) -->/) || fallbackMatch
-          extraCreditTitle = extraCreditTitleMatch.groups.title.trim()
+            secondLine.match(/<!-- 💯 (?<title>.*) -->/) ?? fallbackMatch
+          extraCreditTitle =
+            extraCreditTitleMatch.groups?.title.trim() ?? extraCreditTitle
         } else if (ext === '.md' || ext === '.mdx') {
-          const titleMatch = firstLine.match(/# (?<title>.*)$/) || fallbackMatch
-          title = titleMatch.groups.title.trim()
+          const titleMatch = firstLine.match(/# (?<title>.*)$/) ?? fallbackMatch
+          title = titleMatch.groups?.title.trim() ?? title
         }
       }
       return {
@@ -59,9 +63,9 @@ function loadFiles({
         ext,
         filename: name,
         type,
-        number: Number((name.match(/(^\d+)/) || [null])[0]),
+        number: Number((name.match(/(^\d+)/) ?? [null])[0]),
         isExtraCredit,
-        extraCreditNumber: Number((name.match(/(\d+$)/) || [null])[0]),
+        extraCreditNumber: Number((name.match(/(\d+$)/) ?? [null])[0]),
         extraCreditTitle,
       }
     })
@@ -77,4 +81,10 @@ function loadFiles({
   return fileInfo
 }
 
-module.exports = loadFiles
+export {loadFiles}
+
+// wrote the code before enabling the rule and didn't want to rewrite the code...
+/*
+eslint
+  @typescript-eslint/prefer-regexp-exec: "off",
+*/

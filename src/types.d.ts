@@ -9,12 +9,26 @@ type FileInfo = {
   type: string
   number: number
   isExtraCredit: boolean
-  extraCreditNumber: number
+  extraCreditNumber?: number
+  extraCreditTitle?: string
 }
 
-type LazyComponents = Record<string, React.LazyExoticComponent<any>>
+type LazyComponents = Record<string, React.LazyExoticComponent<any> | undefined>
 
-export {FileInfo, LazyComponents}
+type DynamicImportFn = () => Promise<{default: React.ComponentType<unknown>}>
+
+type Imports = Record<string, DynamicImportFn>
+
+type Backend = {
+  handlers: Array<RequestHandler>
+  quiet?: boolean
+  serviceWorker?: {
+    url?: string
+  }
+  [key: string]: unknown
+}
+
+export {FileInfo, LazyComponents, Imports, Backend, DynamicImportFn}
 
 /*
 eslint

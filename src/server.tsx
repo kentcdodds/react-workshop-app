@@ -1,4 +1,5 @@
-import type {RequestHandler, MockedRequest} from 'msw'
+import type {RequestHandler, MockedRequest, SetupWorkerApi} from 'msw'
+import type {SetupServerApi} from 'msw/node'
 import {setupWorker, rest} from 'msw'
 import {setupServer} from 'msw/node'
 import {match} from 'node-match-path'
@@ -30,9 +31,13 @@ function ls(key: string, defaultVal: number): number {
   return typeof val !== 'undefined' && Number.isFinite(val) ? val : defaultVal
 }
 
-const server = {}
+const server = {} as SetupServerApi | SetupWorkerApi
 
-function setup({handlers}: {handlers: Array<RequestHandler>}) {
+function setup({
+  handlers,
+}: {
+  handlers: Array<RequestHandler>
+}): SetupServerApi | SetupWorkerApi {
   const enhancedHandlers = handlers.map(handler => {
     const enhancedResolver: Parameters<typeof rest.get>[1] = async (
       req,
@@ -66,7 +71,7 @@ function setup({handlers}: {handlers: Array<RequestHandler>}) {
     }
     return {
       ...handler,
-      enhancedResolver,
+      resolver: enhancedResolver,
     }
   })
   if (process.env.NODE_ENV === 'test') {
