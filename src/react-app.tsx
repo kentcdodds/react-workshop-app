@@ -1,12 +1,16 @@
 /** @jsx jsx */
+/** @jsxFrag React.Fragment */
 
 import 'focus-visible' // polyfill for :focus-visible (https://github.com/WICG/focus-visible)
 import {jsx, Global} from '@emotion/core'
+import type {InterpolationWithTheme} from '@emotion/core'
 import React from 'react'
+import type {History} from 'history'
 import facepaint from 'facepaint'
-import {ThemeProvider, useTheme} from 'emotion-theming'
+import {ThemeProvider, useTheme as useEmotionTheme} from 'emotion-theming'
 import preval from 'preval.macro'
 import {ErrorBoundary} from 'react-error-boundary'
+import type {FallbackProps} from 'react-error-boundary'
 import {Router, Switch, Route, Link, useParams} from 'react-router-dom'
 import {Tabs, TabList, Tab, TabPanels, TabPanel} from '@reach/tabs'
 import {
@@ -31,6 +35,8 @@ import {FaDiceD20} from 'react-icons/fa'
 
 import Logo from './assets/logo'
 import getTheme, {prismThemeLight, prismThemeDark} from './theme'
+import type {Theme} from './theme'
+import type {FileInfo, LazyComponents} from './types'
 
 const styleTag = document.createElement('style')
 styleTag.innerHTML = [
@@ -39,14 +45,14 @@ styleTag.innerHTML = [
 document.head.prepend(styleTag)
 
 const extrIcons = [null, CgDice1, CgDice2, CgDice3, CgDice4, CgDice5, CgDice6]
-const getDiceIcon = number => extrIcons[number] ?? FaDiceD20
+const getDiceIcon = (number: number) => extrIcons[number] ?? FaDiceD20
 
-function getDistanceFromTopOfPage(element) {
+function getDistanceFromTopOfPage(element: HTMLElement | null) {
   let distance = 0
 
   while (element) {
     distance += element.offsetTop - element.scrollTop + element.clientTop
-    element = element.offsetParent
+    element = element.offsetParent as HTMLElement | null
   }
 
   return distance
@@ -58,7 +64,7 @@ const totallyCenteredStyles = {
   display: 'grid',
 }
 
-const visuallyHiddenStyles = {
+const visuallyHiddenStyles: InterpolationWithTheme<Theme> = {
   border: '0',
   clip: 'rect(0 0 0 0)',
   height: '1px',
@@ -69,6 +75,25 @@ const visuallyHiddenStyles = {
   width: '1px',
 }
 
+const exerciseTypes = ['final', 'exercise', 'instruction'] as const
+const isExerciseType = (type: string): type is typeof exerciseTypes[number] =>
+  // .includes *should* allow you to pass any type, but it does not :-(
+  exerciseTypes.includes(type as typeof exerciseTypes[number])
+
+type ExerciseInfo = {
+  id: string
+  title: string
+  number: number
+  exercise: Array<FileInfo>
+  final: Array<FileInfo>
+  instruction: FileInfo
+  next?: ExerciseInfo
+  previous?: ExerciseInfo
+}
+
+type DarkModeState = 'dark' | 'light'
+type SetDarkModeState = React.Dispatch<React.SetStateAction<DarkModeState>>
+
 function renderReactApp({
   history,
   projectTitle,
@@ -76,31 +101,37 @@ function renderReactApp({
   lazyComponents,
   gitHubRepoUrl,
   render,
+}: {
+  history: History
+  projectTitle: string
+  filesInfo: Array<FileInfo>
+  lazyComponents: LazyComponents
+  gitHubRepoUrl: string
+  render: (ui: React.ReactElement, el: HTMLElement) => VoidFunction
 }) {
-  const exerciseInfo = []
-  const exerciseTypes = ['final', 'exercise', 'instruction']
+  const useTheme = () => useEmotionTheme<Theme>()
+  const exerciseInfo: Array<ExerciseInfo> = []
   for (const fileInfo of filesInfo) {
-    if (exerciseTypes.includes(fileInfo.type)) {
+    const type = fileInfo.type
+    if (isExerciseType(type)) {
       exerciseInfo[fileInfo.number] = exerciseInfo[fileInfo.number] ?? {
         exercise: [],
         final: [],
       }
       const info = exerciseInfo[fileInfo.number]
-      if (fileInfo.type === 'instruction') {
+      if (type === 'instruction') {
         info.instruction = fileInfo
         const {title, number, id} = fileInfo
         Object.assign(info, {title, number, id})
       } else {
-        info[fileInfo.type].push(fileInfo)
+        info[type].push(fileInfo)
       }
     }
   }
 
-  for (const info of exerciseInfo) {
-    if (info) {
-      info.next = exerciseInfo[info.number + 1]
-      info.previous = exerciseInfo[info.number - 1]
-    }
+  for (const info of exerciseInfo.filter(Boolean)) {
+    info.next = exerciseInfo[info.number + 1]
+    info.previous = exerciseInfo[info.number - 1]
   }
 
   const mq = facepaint([
@@ -110,7 +141,11 @@ function renderReactApp({
     '@media(min-width: 1200px)',
   ])
 
-  const tabStyles = ({theme}) => ({
+  const tabStyles = ({
+    theme,
+  }: {
+    theme: Theme
+  }): InterpolationWithTheme<Theme> => ({
     background: theme.backgroundLight,
     borderTop: `1px solid ${theme.sky}`,
     height: '100%',
@@ -132,17 +167,23 @@ function renderReactApp({
     },
   })
 
-  function FileTabs({isOpen, files}) {
+  function FileTabs({
+    isOpen,
+    files,
+  }: {
+    isOpen: boolean
+    files: Array<FileInfo>
+  }) {
     const theme = useTheme()
     const [tabIndex, setTabIndex] = React.useState(0)
-    const renderedTabs = React.useRef()
+    const renderedTabs = React.useRef<Set<number>>()
 
     if (!renderedTabs.current) {
       renderedTabs.current = new Set([0])
     }
-    function handleTabChange(index) {
+    function handleTabChange(index: number) {
       setTabIndex(index)
-      renderedTabs.current.add(index)
+      renderedTabs.current?.add(index)
     }
     if (files.length == 1) {
       const {title, extraCreditTitle, isolatedPath} = files[0]
@@ -151,11 +192,11 @@ function renderReactApp({
           isOpen={isOpen}
           isolatedPath={isolatedPath}
           isolatedPathLinkContent="Open on isolated page"
-          title={extraCreditTitle || title}
+          title={extraCreditTitle ?? title}
         >
           {renderedTabs.current.has(0) ? (
             <iframe
-              title={extraCreditTitle || title}
+              title={extraCreditTitle ?? title}
               src={isolatedPath}
               css={{border: 'none', width: '100%', height: '100%'}}
             />
@@ -204,14 +245,14 @@ function renderReactApp({
           {files.map(({title, extraCreditTitle, isolatedPath, id}, index) => (
             <TabPanel key={id}>
               <Sandbox
-                isOpen={isOpen && tabIndex === index}
+                isOpen={tabIndex === index}
                 isolatedPath={isolatedPath}
                 isolatedPathLinkContent="Open on isolated page"
-                title={extraCreditTitle || title}
+                title={extraCreditTitle ?? title}
               >
-                {renderedTabs.current.has(0) ? (
+                {renderedTabs.current?.has(0) ? (
                   <iframe
-                    title={extraCreditTitle || title}
+                    title={extraCreditTitle ?? title}
                     src={isolatedPath}
                     css={{border: 'none', width: '100%', height: '100%'}}
                   />
@@ -231,6 +272,12 @@ function renderReactApp({
     isolatedPathLinkContent,
     title,
     children,
+  }: {
+    isOpen: boolean
+    isolatedPath: string
+    isolatedPathLinkContent: string
+    title: string
+    children: React.ReactNode
   }) {
     const renderContainerRef = React.useRef(null)
     const [height, setHeight] = React.useState(0)
@@ -286,31 +333,36 @@ function renderReactApp({
   }
   Sandbox.displayName = 'Sandbox'
 
-  function ExerciseContainer(props) {
+  function ExerciseContainer(props: {
+    mode: DarkModeState
+    setMode: SetDarkModeState
+  }) {
     const theme = useTheme()
-    const {exerciseNumber} = useParams()
+    const {exerciseNumber: exerciseNumberString} = useParams<{
+      exerciseNumber: string
+    }>()
+    const exerciseNumber = Number(exerciseNumberString)
     const [tabIndex, setTabIndex] = React.useState(0)
-    const renderedTabs = React.useRef()
+    const renderedTabs = React.useRef<Set<number>>()
 
     if (!renderedTabs.current) {
       renderedTabs.current = new Set([0])
     }
-    function handleTabChange(index) {
+    function handleTabChange(index: number) {
       setTabIndex(index)
-      renderedTabs.current.add(index)
+      renderedTabs.current?.add(index)
     }
 
     // allow the user to continue to the next exercise with the left/right keys
     React.useEffect(() => {
-      const handleKeyup = e => {
+      const handleKeyup = (e: KeyboardEvent) => {
         if (e.target !== document.body) return
         if (e.key === 'ArrowRight') {
-          const {number} =
-            exerciseInfo[Number(exerciseNumber) + 1] || exerciseInfo[1]
+          const {number} = exerciseInfo[exerciseNumber + 1] || exerciseInfo[1]
           history.push(`/${number}`)
         } else if (e.key === 'ArrowLeft') {
           const {number} =
-            exerciseInfo[Number(exerciseNumber) - 1] ||
+            exerciseInfo[exerciseNumber - 1] ||
             exerciseInfo[exerciseInfo.length - 1]
           history.push(`/${number}`)
         }
@@ -319,10 +371,7 @@ function renderReactApp({
       return () => document.body.removeEventListener('keyup', handleKeyup)
     }, [exerciseNumber])
 
-    if (
-      isNaN(Number(exerciseNumber)) ||
-      exerciseInfo[Number(exerciseNumber)] === undefined
-    ) {
+    if (isNaN(exerciseNumber) || !exerciseInfo[exerciseNumber]) {
       return <NotFound />
     }
 
@@ -330,8 +379,9 @@ function renderReactApp({
 
     let instructionElement
 
-    if (lazyComponents[instruction.id]) {
-      instructionElement = React.createElement(lazyComponents[instruction.id])
+    const comp = lazyComponents[instruction.id]
+    if (comp) {
+      instructionElement = React.createElement(comp)
     }
 
     return (
@@ -466,9 +516,17 @@ function renderReactApp({
   }
   ExerciseContainer.displayName = 'ExerciseContainer'
 
-  function Navigation({exerciseNumber, mode, setMode}) {
+  function Navigation({
+    exerciseNumber,
+    mode,
+    setMode,
+  }: {
+    exerciseNumber?: number
+    mode: DarkModeState
+    setMode: SetDarkModeState
+  }) {
     const theme = useTheme()
-    const info = exerciseInfo[exerciseNumber]
+    const info = exerciseNumber ? exerciseInfo[exerciseNumber] : null
 
     return (
       <div
@@ -521,7 +579,7 @@ function renderReactApp({
             width: '100%',
           }}
         >
-          {exerciseNumber && (
+          {info ? (
             <>
               <div>
                 {info.previous ? (
@@ -587,7 +645,7 @@ function renderReactApp({
                 ) : null}
               </div>
             </>
-          )}
+          ) : null}
           <div
             css={{
               display: 'flex',
@@ -618,7 +676,7 @@ function renderReactApp({
   }
   Navigation.displayName = 'Navigation'
 
-  function Home(props) {
+  function Home(props: {mode: DarkModeState; setMode: SetDarkModeState}) {
     const theme = useTheme()
     return (
       <>
@@ -901,11 +959,14 @@ function renderReactApp({
 
   function useDarkMode() {
     const preferDarkQuery = '(prefers-color-scheme: dark)'
-    const [mode, setMode] = React.useState(
-      () =>
-        window.localStorage.getItem('colorMode') ||
-        (window.matchMedia(preferDarkQuery).matches ? 'dark' : 'light'),
-    )
+    const [mode, setMode] = React.useState<DarkModeState>(() => {
+      const lsVal = window.localStorage.getItem('colorMode')
+      if (lsVal) {
+        return lsVal === 'dark' ? 'dark' : 'light'
+      } else {
+        return window.matchMedia(preferDarkQuery).matches ? 'dark' : 'light'
+      }
+    })
 
     React.useEffect(() => {
       const mediaQuery = window.matchMedia(preferDarkQuery)
@@ -922,7 +983,7 @@ function renderReactApp({
 
     // we're doing it this way instead of as an effect so we only
     // set the localStorage value if they explicitly change the default
-    return [mode, setMode]
+    return [mode, setMode] as const
   }
 
   function DelayedTransition() {
@@ -953,7 +1014,7 @@ function renderReactApp({
     const theme = getTheme(mode)
 
     React.useLayoutEffect(() => {
-      document.getElementById('root').classList.add('react-workshop-app')
+      document.getElementById('root')?.classList.add('react-workshop-app')
     })
 
     return (
@@ -1007,7 +1068,7 @@ function renderReactApp({
     )
   }
 
-  function ErrorFallback({error, componentStack, resetErrorBoundary}) {
+  function ErrorFallback({error, resetErrorBoundary}: FallbackProps) {
     return (
       <div
         css={{
@@ -1021,10 +1082,6 @@ function renderReactApp({
         <div>
           <p>{`Here's the error:`}</p>
           <pre css={{color: 'red', overflowY: 'scroll'}}>{error.message}</pre>
-        </div>
-        <div>
-          <p>{`Here's a component stack trace:`}</p>
-          <pre css={{color: 'red', overflowY: 'scroll'}}>{componentStack}</pre>
         </div>
         <div>
           <p>Try doing one of these things to fix this:</p>
@@ -1048,7 +1105,7 @@ function renderReactApp({
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <App />
     </ErrorBoundary>,
-    document.getElementById('root'),
+    document.getElementById('root')!,
   )
 }
 
@@ -1056,5 +1113,6 @@ export {renderReactApp}
 
 /*
 eslint
-  max-statements: "off"
+  max-statements: "off",
+  @typescript-eslint/no-non-null-assertion: "off"
 */

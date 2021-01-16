@@ -1,18 +1,27 @@
 // this utility helps to generate the code to use in the entry file
-const fs = require('fs')
-const path = require('path')
-const loadFiles = require('./load-files')
+import fs from 'fs'
+import path from 'path'
+import {loadFiles} from './load-files'
+import type {FileInfo} from './types'
 
-function getAppInfo({cwd = process.cwd(), ignore} = {}) {
+function getAppInfo({
+  cwd = process.cwd(),
+  ignore,
+}: {cwd?: string; ignore?: Array<string>} = {}): {
+  gitHubRepoUrl: string
+  filesInfo: Array<FileInfo>
+  imports: Array<string>
+  hasBackend: boolean
+} {
   const filesInfo = loadFiles({cwd, ignore})
   let gitHubRepoUrl
   const pkgPath = path.join(process.cwd(), 'package.json')
   try {
     const {
       repository: {url: repoUrl},
-    } = require(pkgPath)
+    } = require(pkgPath) as {repository: {url: string}}
     gitHubRepoUrl = repoUrl.replace('git+', '').replace('.git', '')
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error(
       `Cannot find a repository URL for this workshop. Check that the package.json at "${pkgPath}" has {"repository": {"url": "this should be set to a github URL"}}`,
     )
@@ -37,4 +46,9 @@ function getAppInfo({cwd = process.cwd(), ignore} = {}) {
   return {gitHubRepoUrl, filesInfo, imports, hasBackend}
 }
 
-module.exports = getAppInfo
+export {getAppInfo}
+
+/*
+eslint
+  @typescript-eslint/no-var-requires: "off",
+*/

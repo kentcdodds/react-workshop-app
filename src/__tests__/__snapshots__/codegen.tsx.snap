@@ -11,6 +11,7 @@ if (module.hot) module.hot.accept()
 const filesInfo = [
   {
     "id": "src/examples/example.js",
+    "title": "Unknown",
     "fullFilePath": "<PROJECT_ROOT>/src/examples/example.js",
     "filePath": "src/examples/example.js",
     "isolatedPath": "/isolated/examples/example.js",
@@ -19,10 +20,12 @@ const filesInfo = [
     "type": "examples",
     "number": 0,
     "isExtraCredit": false,
-    "extraCreditNumber": 0
+    "extraCreditNumber": 0,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/examples/non-exported-example.js",
+    "title": "Unknown",
     "fullFilePath": "<PROJECT_ROOT>/src/examples/non-exported-example.js",
     "filePath": "src/examples/non-exported-example.js",
     "isolatedPath": "/isolated/examples/non-exported-example.js",
@@ -31,10 +34,12 @@ const filesInfo = [
     "type": "examples",
     "number": 0,
     "isExtraCredit": false,
-    "extraCreditNumber": 0
+    "extraCreditNumber": 0,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/examples/ts-example.tsx",
+    "title": "Unknown",
     "fullFilePath": "<PROJECT_ROOT>/src/examples/ts-example.tsx",
     "filePath": "src/examples/ts-example.tsx",
     "isolatedPath": "/isolated/examples/ts-example.tsx",
@@ -43,7 +48,8 @@ const filesInfo = [
     "type": "examples",
     "number": 0,
     "isExtraCredit": false,
-    "extraCreditNumber": 0
+    "extraCreditNumber": 0,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/exercise/01.html",
@@ -70,7 +76,8 @@ const filesInfo = [
     "type": "instruction",
     "number": 1,
     "isExtraCredit": false,
-    "extraCreditNumber": 1
+    "extraCreditNumber": 1,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/exercise/02.html",
@@ -97,7 +104,8 @@ const filesInfo = [
     "type": "instruction",
     "number": 2,
     "isExtraCredit": false,
-    "extraCreditNumber": 2
+    "extraCreditNumber": 2,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/exercise/03.html",
@@ -124,7 +132,8 @@ const filesInfo = [
     "type": "instruction",
     "number": 3,
     "isExtraCredit": false,
-    "extraCreditNumber": 3
+    "extraCreditNumber": 3,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/exercise/04.html",
@@ -151,21 +160,8 @@ const filesInfo = [
     "type": "instruction",
     "number": 4,
     "isExtraCredit": false,
-    "extraCreditNumber": 4
-  },
-  {
-    "id": "src/exercise/05.js",
-    "title": "Styling",
-    "fullFilePath": "<PROJECT_ROOT>/src/exercise/05.js",
-    "filePath": "src/exercise/05.js",
-    "isolatedPath": "/isolated/exercise/05.js",
-    "ext": ".js",
-    "filename": "05",
-    "type": "exercise",
-    "number": 5,
-    "isExtraCredit": false,
-    "extraCreditNumber": 5,
-    "extraCreditTitle": ""
+    "extraCreditNumber": 4,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/exercise/05.md",
@@ -178,7 +174,22 @@ const filesInfo = [
     "type": "instruction",
     "number": 5,
     "isExtraCredit": false,
-    "extraCreditNumber": 5
+    "extraCreditNumber": 5,
+    "extraCreditTitle": "Unknown"
+  },
+  {
+    "id": "src/exercise/05.tsx",
+    "title": "Styling",
+    "fullFilePath": "<PROJECT_ROOT>/src/exercise/05.tsx",
+    "filePath": "src/exercise/05.tsx",
+    "isolatedPath": "/isolated/exercise/05.tsx",
+    "ext": ".tsx",
+    "filename": "05",
+    "type": "exercise",
+    "number": 5,
+    "isExtraCredit": false,
+    "extraCreditNumber": 5,
+    "extraCreditTitle": ""
   },
   {
     "id": "src/exercise/06.js",
@@ -205,7 +216,8 @@ const filesInfo = [
     "type": "instruction",
     "number": 6,
     "isExtraCredit": false,
-    "extraCreditNumber": 6
+    "extraCreditNumber": 6,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/exercise/06 copy.js",
@@ -260,7 +272,8 @@ const filesInfo = [
     "type": "instruction",
     "number": 7,
     "isExtraCredit": false,
-    "extraCreditNumber": 7
+    "extraCreditNumber": 7,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/exercise/08.js",
@@ -287,7 +300,8 @@ const filesInfo = [
     "type": "instruction",
     "number": 8,
     "isExtraCredit": false,
-    "extraCreditNumber": 8
+    "extraCreditNumber": 8,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/exercise/09.js",
@@ -314,7 +328,8 @@ const filesInfo = [
     "type": "instruction",
     "number": 9,
     "isExtraCredit": false,
-    "extraCreditNumber": 9
+    "extraCreditNumber": 9,
+    "extraCreditTitle": "Unknown"
   },
   {
     "id": "src/final/01.html",
@@ -471,12 +486,12 @@ const filesInfo = [
     "extraCreditTitle": "using a custom component with JSX"
   },
   {
-    "id": "src/final/05.js",
+    "id": "src/final/05.tsx",
     "title": "Styling",
-    "fullFilePath": "<PROJECT_ROOT>/src/final/05.js",
-    "filePath": "src/final/05.js",
-    "isolatedPath": "/isolated/final/05.js",
-    "ext": ".js",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/05.tsx",
+    "filePath": "src/final/05.tsx",
+    "isolatedPath": "/isolated/final/05.tsx",
+    "ext": ".tsx",
     "filename": "05",
     "type": "final",
     "number": 5,
@@ -485,12 +500,12 @@ const filesInfo = [
     "extraCreditTitle": ""
   },
   {
-    "id": "src/final/05.extra-1.js",
+    "id": "src/final/05.extra-1.tsx",
     "title": "Styling",
-    "fullFilePath": "<PROJECT_ROOT>/src/final/05.extra-1.js",
-    "filePath": "src/final/05.extra-1.js",
-    "isolatedPath": "/isolated/final/05.extra-1.js",
-    "ext": ".js",
+    "fullFilePath": "<PROJECT_ROOT>/src/final/05.extra-1.tsx",
+    "filePath": "src/final/05.extra-1.tsx",
+    "isolatedPath": "/isolated/final/05.extra-1.tsx",
+    "ext": ".tsx",
     "filename": "05.extra-1",
     "type": "final",
     "number": 5,
@@ -598,6 +613,7 @@ const filesInfo = [
   },
   {
     "id": "src/index.js",
+    "title": "Unknown",
     "fullFilePath": "<PROJECT_ROOT>/src/index.js",
     "filePath": "src/index.js",
     "isolatedPath": "/isolated/index.js",
@@ -606,7 +622,8 @@ const filesInfo = [
     "type": "src",
     "number": 0,
     "isExtraCredit": false,
-    "extraCreditNumber": 0
+    "extraCreditNumber": 0,
+    "extraCreditTitle": "Unknown"
   }
 ]
 
@@ -624,8 +641,8 @@ loadDevTools(() => {
       "src/exercise/03.md": () => import("!babel-loader!mdx-loader!./exercise/03.md"),
       "src/exercise/04.html": () => import("!raw-loader!./exercise/04.html"),
       "src/exercise/04.md": () => import("!babel-loader!mdx-loader!./exercise/04.md"),
-      "src/exercise/05.js": () => import("./exercise/05.js"),
       "src/exercise/05.md": () => import("!babel-loader!mdx-loader!./exercise/05.md"),
+      "src/exercise/05.tsx": () => import("./exercise/05.tsx"),
       "src/exercise/06.js": () => import("./exercise/06.js"),
       "src/exercise/06.md": () => import("!babel-loader!mdx-loader!./exercise/06.md"),
       "src/exercise/06 copy.js": () => import("./exercise/06 copy.js"),
@@ -647,8 +664,8 @@ loadDevTools(() => {
       "src/final/04.html": () => import("!raw-loader!./final/04.html"),
       "src/final/04.extra-1.html": () => import("!raw-loader!./final/04.extra-1.html"),
       "src/final/04.extra-2.html": () => import("!raw-loader!./final/04.extra-2.html"),
-      "src/final/05.js": () => import("./final/05.js"),
-      "src/final/05.extra-1.js": () => import("./final/05.extra-1.js"),
+      "src/final/05.tsx": () => import("./final/05.tsx"),
+      "src/final/05.extra-1.tsx": () => import("./final/05.extra-1.tsx"),
       "src/final/06.js": () => import("./final/06.js"),
       "src/final/06.extra-1.js": () => import("./final/06.extra-1.js"),
       "src/final/06.extra-2.js": () => import("./final/06.extra-2.js"),

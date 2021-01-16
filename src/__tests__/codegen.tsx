@@ -1,5 +1,5 @@
 import path from 'path'
-import codegen from '../codegen'
+import {getCode} from '../codegen'
 
 const cwd = path
   .join(__dirname, '../../example/react-fundamentals')
@@ -7,17 +7,17 @@ const cwd = path
   .join('/')
 
 expect.addSnapshotSerializer({
-  test(val) {
+  test(val: unknown): val is string {
     return typeof val === 'string'
   },
-  print(val) {
+  print(val: unknown) {
     if (process.platform === 'win32') {
-      val = val.replace(/\\\\/g, '/')
+      val = (val as string).replace(/\\\\/g, '/')
     }
-    return val.split(cwd).join('<PROJECT_ROOT>')
+    return (val as string).split(cwd).join('<PROJECT_ROOT>')
   },
 })
 
 test('review the snapshot please', () => {
-  expect(codegen({cwd})).toMatchSnapshot()
+  expect(getCode({cwd})).toMatchSnapshot()
 })

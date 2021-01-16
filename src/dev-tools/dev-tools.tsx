@@ -4,17 +4,18 @@ import {jsx, Global} from '@emotion/core'
 import '@reach/tabs/styles.css'
 import '@reach/tooltip/styles.css'
 
-import React from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 import {FaTools} from 'react-icons/fa'
 import {Tooltip} from '@reach/tooltip'
 import {Tabs, TabList, TabPanels, TabPanel, Tab} from '@reach/tabs'
 import * as colors from '../styles/colors'
 
-const isLsKey = name => name.startsWith(`__react_workshop_app`)
-const getKey = name => `__react_workshop_app_${name}__`
+const isLsKey = (name: string) => name.startsWith(`__react_workshop_app`)
+const getKey = (name: string) => `__react_workshop_app_${name}__`
 
 function install() {
+  // @ts-expect-error I do not care...
   const requireDevToolsLocal = require.context(
     './',
     false,
@@ -26,7 +27,7 @@ function install() {
   }
 
   function DevTools() {
-    const rootRef = React.useRef()
+    const rootRef = React.useRef<HTMLDivElement>(null)
     const [hovering, setHovering] = React.useState(false)
     const [persist, setPersist] = useLocalStorageState(
       getKey('devtools_persist'),
@@ -40,8 +41,8 @@ function install() {
     const show = persist || hovering
     const toggleShow = () => setPersist(v => !v)
     React.useEffect(() => {
-      function updateHoverState(event) {
-        setHovering(rootRef.current?.contains(event.target) ?? false)
+      function updateHoverState(event: MouseEvent) {
+        setHovering(rootRef.current?.contains(event.target as Node) ?? false)
       }
       document.addEventListener('mousemove', updateHoverState)
       return () => {
@@ -52,7 +53,7 @@ function install() {
     // eslint-disable-next-line consistent-return
     React.useEffect(() => {
       if (hovering) {
-        const iframes = document.querySelectorAll('iframe')
+        const iframes = Array.from(document.querySelectorAll('iframe'))
         for (const iframe of iframes) {
           iframe.style.pointerEvents = 'none'
         }
@@ -83,7 +84,7 @@ function install() {
             border: '2px solid rgb(28, 46, 68)',
             borderRadius: 5,
             color: 'white',
-            fontWeight: '600',
+            fontWeight: 600,
             padding: '5px',
             '::placeholder': {
               color: 'rgba(255,255,255,0.3)',
@@ -253,16 +254,16 @@ ControlsPanel.displayName = 'ControlsPanel'
 
 function ClearLocalStorage() {
   function clear() {
-    const keysToRemove = []
+    const keysToRemove: Array<string> = []
     for (let i = 0; i < window.localStorage.length; i++) {
       const key = window.localStorage.key(i)
-      if (isLsKey(key)) keysToRemove.push(key)
+      if (typeof key === 'string' && isLsKey(key)) keysToRemove.push(key)
     }
     for (const lsKey of keysToRemove) {
       window.localStorage.removeItem(lsKey)
     }
     // refresh
-    window.location.assign(window.location)
+    window.location.assign(window.location.toString())
   }
   return <button onClick={clear}>Purge Database</button>
 }
@@ -274,7 +275,8 @@ function FailureRate() {
     0,
   )
 
-  const handleChange = event => setFailureRate(Number(event.target.value) / 100)
+  const handleChange = (event: React.SyntheticEvent<HTMLInputElement>) =>
+    setFailureRate(Number(event.currentTarget.value) / 100)
 
   return (
     <div
@@ -307,7 +309,8 @@ function EnableDevTools() {
     process.env.NODE_ENV === 'development',
   )
 
-  const handleChange = event => setEnableDevTools(event.target.checked)
+  const handleChange = (event: React.SyntheticEvent<HTMLInputElement>) =>
+    setEnableDevTools(event.currentTarget.checked)
 
   return (
     <div
@@ -336,7 +339,8 @@ function RequestMinTime() {
     400,
   )
 
-  const handleChange = event => setMinTime(Number(event.target.value))
+  const handleChange = (event: React.SyntheticEvent<HTMLInputElement>) =>
+    setMinTime(Number(event.currentTarget.value))
 
   return (
     <div
@@ -369,7 +373,8 @@ function RequestVarTime() {
     400,
   )
 
-  const handleChange = event => setVarTime(Number(event.target.value))
+  const handleChange = (event: React.SyntheticEvent<HTMLInputElement>) =>
+    setVarTime(Number(event.currentTarget.value))
 
   return (
     <div
@@ -396,19 +401,31 @@ function RequestVarTime() {
 }
 RequestVarTime.displayName = 'RequestVarTime'
 
+interface RequestFailFormElements extends HTMLFormControlsCollection {
+  requestMethod: HTMLInputElement
+  urlMatch: HTMLInputElement
+}
+interface RequestFailFormElement extends HTMLFormElement {
+  readonly elements: RequestFailFormElements
+}
+
 function RequestFailUI() {
-  const [failConfig, setFailConfig] = useLocalStorageState(
+  type FailConfig = {
+    requestMethod: string
+    urlMatch: string
+  }
+  const [failConfig, setFailConfig] = useLocalStorageState<Array<FailConfig>>(
     getKey('request_fail_config'),
     [],
   )
 
-  function handleRemoveClick(index) {
+  function handleRemoveClick(index: number) {
     setFailConfig(c => [...c.slice(0, index), ...c.slice(index + 1)])
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: React.SyntheticEvent<RequestFailFormElement>) {
     event.preventDefault()
-    const {requestMethod, urlMatch} = event.target.elements
+    const {requestMethod, urlMatch} = event.currentTarget.elements
     setFailConfig(c => [
       ...c,
       {requestMethod: requestMethod.value, urlMatch: urlMatch.value},
@@ -517,30 +534,36 @@ function RequestFailUI() {
 }
 RequestFailUI.displayName = 'RequestFailUI'
 
-const getLSDebugValue = ({key, state, serialize}) =>
-  `${key}: ${serialize(state)}`
-/**
- *
- * @param {String} key The key to set in localStorage for this value
- * @param {Object} defaultValue The value to use if it is not already in localStorage
- * @param {{serialize: Function, deserialize: Function}} options The serialize and deserialize functions to use (defaults to JSON.stringify and JSON.parse respectively)
- */
-function useLocalStorageState(
+const getLSDebugValue = <TState,>({
   key,
-  defaultValue = '',
-  {serialize = JSON.stringify, deserialize = JSON.parse} = {},
+  state,
+  serialize,
+}: {
+  key: string
+  state: TState
+  serialize: (data: TState) => string
+}) => `${key}: ${serialize(state)}`
+
+type UseLocalStorageOptions<TState = unknown> = {
+  serialize?: (data: TState) => string
+  deserialize?: (str: string) => TState
+}
+function useLocalStorageState<TState>(
+  key: string,
+  defaultValue: TState | (() => TState),
+  {
+    serialize = JSON.stringify,
+    deserialize = JSON.parse,
+  }: UseLocalStorageOptions<TState> = {},
 ) {
   const [state, setState] = React.useState(() => {
     const valueInLocalStorage = window.localStorage.getItem(key)
     if (valueInLocalStorage) {
-      try {
-        return deserialize(valueInLocalStorage)
-      } catch {
-        // something went wrong reading the value in local storage
-        // so we'll go with the default value
-      }
+      return deserialize(valueInLocalStorage)
     }
-    return typeof defaultValue === 'function' ? defaultValue() : defaultValue
+    // can't do typeof because:
+    // https://github.com/microsoft/TypeScript/issues/37663#issuecomment-759728342
+    return defaultValue instanceof Function ? defaultValue() : defaultValue
   })
 
   React.useDebugValue({key, state, serialize}, getLSDebugValue)
@@ -553,13 +576,10 @@ function useLocalStorageState(
       window.localStorage.removeItem(prevKey)
     }
     prevKeyRef.current = key
-  }, [key])
-
-  React.useEffect(() => {
     window.localStorage.setItem(key, serialize(state))
   }, [key, state, serialize])
 
-  return [state, setState]
+  return [state, setState] as const
 }
 
 export {install}
@@ -567,4 +587,7 @@ export {install}
 /*
 eslint
   no-unused-expressions: "off",
+  @typescript-eslint/no-unsafe-assignment: "off",
+  @typescript-eslint/no-unsafe-call: "off",
+  @typescript-eslint/no-unsafe-member-access: "off",
 */

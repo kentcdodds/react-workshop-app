@@ -1,9 +1,17 @@
+import type {SetupWorkerApi} from 'msw'
 import preval from 'preval.macro'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {createBrowserHistory} from 'history'
 import {setup as setupServer} from './server'
 import {renderReactApp} from './react-app'
+import type {
+  FileInfo,
+  LazyComponents,
+  Imports,
+  Backend,
+  DynamicImportFn,
+} from './types'
 
 const styleTag = document.createElement('style')
 const requiredStyles = [
@@ -11,6 +19,8 @@ const requiredStyles = [
   preval`module.exports = require('../other/css-file-to-string')('./other/workshop-app-styles.css')`,
   // this will happen when running the regular app and embedding the example
   // in an iframe.
+  // pretty sure the types are wrong on this one... (It's been fixed in TS 4.2)
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   window.frameElement
     ? `#root{display:grid;place-items:center;height:100vh;}`
     : '',
@@ -29,13 +39,30 @@ function makeKCDWorkshopApp({
   backend,
   options = {},
   ...otherWorkshopOptions
+}: {
+  imports: Imports
+  filesInfo: Array<FileInfo>
+  projectTitle: string
+  backend?: Backend
+  options?: {
+    concurrentMode?: boolean
+  }
+} & {
+  gitHubRepoUrl: string
 }) {
   // if I we don't do this then HMR can sometimes call this function again
   // which would result in the app getting mounted multiple times.
-  const rootEl = document.getElementById('root')
-  if (rootEl) rootEl.innerHTML = ''
+  const rootEl = document.getElementById('root') as HTMLDivElement
+  if (!(rootEl as unknown)) {
+    // eslint-disable-next-line no-alert
+    window.alert(
+      'This document does not have a div with the ID of root but it should. Please add it.',
+    )
+    return
+  }
+  rootEl.innerHTML = ''
 
-  const lazyComponents = {}
+  const lazyComponents: LazyComponents = {}
 
   const componentExtensions = ['.js', '.md', '.mdx', '.tsx', '.ts']
 
@@ -52,26 +79,32 @@ function makeKCDWorkshopApp({
       serviceWorker = {url: '/mockServiceWorker.js'},
       ...rest
     } = backend
-    const server = setupServer({handlers})
-    server.start?.({
-      quiet,
-      serviceWorker,
-      ...rest,
-    })
+    const server = setupServer({handlers}) as SetupWorkerApi
+    if (process.env.NODE_ENV !== 'test') {
+      // eslint-disable-next-line no-void
+      void server.start({
+        quiet,
+        serviceWorker,
+        ...rest,
+      })
+    }
   }
 
   const history = createBrowserHistory()
 
   let previousLocation = history.location
-  let previousIsIsolated = null
+  let previousIsIsolated: boolean | null = null
 
-  function render(ui, el) {
+  function render(ui: React.ReactElement, el: HTMLElement): VoidFunction {
     if (options.concurrentMode) {
+      /* eslint-disable */
+      // @ts-expect-error I don't care enough to be type safe here
       const root = (ReactDOM.unstable_createRoot || ReactDOM.createRoot)(el)
       root.render(ui)
       return function unmount() {
         root.unmount()
       }
+      /* eslint-enable */
     } else {
       ReactDOM.render(ui, el)
 
@@ -81,7 +114,7 @@ function makeKCDWorkshopApp({
     }
   }
 
-  function escapeForClassList(name) {
+  function escapeForClassList(name: string) {
     // classList methods don't allow space or `/` characters
     return encodeURIComponent(name.replace(/\//g, '_'))
   }
@@ -96,7 +129,7 @@ function makeKCDWorkshopApp({
 
     // set the title to have info for the exercise
     const isIsolated = pathname.startsWith('/isolated')
-    let info
+    let info: FileInfo | undefined
     if (isIsolated) {
       const filePath = pathname.replace('/isolated', 'src')
       info = filesInfo.find(i => i.filePath === filePath)
@@ -137,7 +170,7 @@ function makeKCDWorkshopApp({
         .join(' | ')
     }, 20)
 
-    if (isIsolated) {
+    if (isIsolated && info) {
       renderIsolated(imports[info.filePath])
     } else if (previousIsIsolated !== isIsolated) {
       // if we aren't going from isolated to the app, then we don't need
@@ -148,12 +181,12 @@ function makeKCDWorkshopApp({
     previousIsIsolated = isIsolated
   }
 
-  let unmount
+  let unmount: ((el: HTMLElement) => void) | undefined
 
-  function renderIsolated(isolatedModuleImport) {
-    unmount?.(document.getElementById('root'))
+  function renderIsolated(isolatedModuleImport: DynamicImportFn) {
+    unmount?.(rootEl)
 
-    isolatedModuleImport().then(async ({default: defaultExport}) => {
+    void isolatedModuleImport().then(async ({default: defaultExport}) => {
       if (history.location !== previousLocation) {
         // locaiton has changed while we were getting the module
         // so don't bother doing anything... Let the next event handler
@@ -162,10 +195,7 @@ function makeKCDWorkshopApp({
       }
       if (typeof defaultExport === 'function') {
         // regular react component.
-        unmount = render(
-          React.createElement(defaultExport),
-          document.getElementById('root'),
-        )
+        unmount = render(React.createElement(defaultExport), rootEl)
       } else if (typeof defaultExport === 'string') {
         // HTML file
         const domParser = new DOMParser()
@@ -190,11 +220,14 @@ function makeKCDWorkshopApp({
           // replace the script
           const newScript = document.createElement('script')
           for (const attrName of script.getAttributeNames()) {
-            newScript.setAttribute(attrName, script.getAttribute(attrName))
+            newScript.setAttribute(
+              attrName,
+              script.getAttribute(attrName) ?? '',
+            )
           }
           newScript.innerHTML = script.innerHTML
-          script.parentNode.insertBefore(newScript, script)
-          script.parentNode.removeChild(script)
+          script.parentNode?.insertBefore(newScript, script)
+          script.parentNode?.removeChild(script)
 
           // if the new script has a src, add it to the queue
           if (script.hasAttribute('src')) {
@@ -231,8 +264,6 @@ function makeKCDWorkshopApp({
       projectTitle,
       filesInfo,
       lazyComponents,
-      imports,
-      options,
       render,
       ...otherWorkshopOptions,
     })
@@ -247,6 +278,7 @@ export {makeKCDWorkshopApp}
 
 /*
 eslint
-  react/prop-types: "off",
   babel/no-unused-expressions: "off",
+  @typescript-eslint/no-explicit-any: "off",
+  no-void: "off"
 */

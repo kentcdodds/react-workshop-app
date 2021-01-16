@@ -1,21 +1,26 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
 import {useTheme} from 'emotion-theming'
+import type {Theme} from '../theme'
 
-export default function Logo(props) {
-  const theme = useTheme()
+export default function Logo(props: {
+  size?: string | number
+  color?: string
+  strokeWidth?: number
+}) {
+  const theme = useTheme<Theme>()
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={props.size || '34'}
-      height={props.size || '34'}
+      width={props.size ?? '34'}
+      height={props.size ?? '34'}
       viewBox="0 0 34 34"
       {...props}
     >
       <g
-        fill={props.color || theme.primary}
-        stroke={props.color || theme.primary}
-        strokeWidth={props.strokeWidth || 0}
+        fill={props.color ?? theme.primary}
+        stroke={props.color ?? theme.primary}
+        strokeWidth={props.strokeWidth ?? 0}
         transform="translate(2.5 .5)"
       >
         <path d="M14.354133,31.0859801 C14.0177046,31.0859801 13.2046784,30.4131234 12.4196789,27.9179554 C11.6907687,25.5909836 11.214135,22.3667978 11.0459388,18.8345692 C11.0179031,18.3579713 10.6253943,18.021543 10.1768232,18.021543 C9.70022533,18.0495787 9.36379697,18.4420874 9.36379697,18.8906585 C9.50397366,22.5632002 10.0366537,25.9558334 10.7936265,28.394625 C11.7187955,31.3103374 12.8963127,32.7683731 14.3541689,32.7683731 C16.0082839,32.7683731 17.3820241,30.7498029 18.3073366,26.9649391 C18.4194794,26.5163679 18.1391224,26.0677968 17.6905334,25.955654 C17.2419443,25.8435112 16.7933911,26.1238682 16.6812483,26.5724573 C15.8680785,29.8805079 14.8587935,31.0859801 14.354133,31.0859801 Z" />

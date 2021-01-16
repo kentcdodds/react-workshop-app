@@ -5,8 +5,17 @@
 import '../box-styles.css'
 import React from 'react'
 
-function Box({style, size, className = '', ...otherProps}) {
-  const sizeClassName = size ? `box--${size}` : ''
+function Box({
+  style,
+  size,
+  className = '',
+  ...otherProps
+}: {
+  style?: React.CSSProperties
+  size?: 'small' | 'medium' | 'large'
+  className?: string
+} & React.HTMLAttributes<HTMLDivElement>) {
+  const sizeClassName = size ? `box--${size ?? ''}` : ''
   return (
     <div
       className={`box ${className} ${sizeClassName}`}
