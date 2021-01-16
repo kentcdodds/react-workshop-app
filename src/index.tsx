@@ -80,12 +80,14 @@ function makeKCDWorkshopApp({
       ...rest
     } = backend
     const server = setupServer({handlers}) as SetupWorkerApi
-    // eslint-disable-next-line no-void
-    void server.start({
-      quiet,
-      serviceWorker,
-      ...rest,
-    })
+    if (process.env.NODE_ENV !== 'test') {
+      // eslint-disable-next-line no-void
+      void server.start({
+        quiet,
+        serviceWorker,
+        ...rest,
+      })
+    }
   }
 
   const history = createBrowserHistory()

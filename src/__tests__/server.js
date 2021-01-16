@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import {setup, rest} from '../server'
 
-const getKey = (name: string) => `__react_workshop_app_${name}__`
+const getKey = name => `__react_workshop_app_${name}__`
 
 setup({
   handlers: [
