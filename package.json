@@ -49,9 +49,10 @@
     "build:bundle:dev-tools": "cross-env BUILD_INPUT=\"src/dev-tools/*.{ts,tsx}\" BUILD_FILENAME_PREFIX=\"dev-tools-build\" kcd-scripts build --bundle esm --no-clean",
     "lint": "kcd-scripts lint",
     "test": "kcd-scripts test",
+    "test:coverage": "kcd-scripts test --coverage",
     "typecheck": "kcd-scripts typecheck",
     "test:debug": "node --inspect-brk node_modules/kcd-scripts/dist/scripts/test.js --runInBand --no-cache",
-    "validate": "npm run build && kcd-scripts validate"
+    "validate": "npm run build && kcd-scripts validate test:coverage,typecheck,lint"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
