@@ -1,3 +1,5 @@
+import type {RequestHandler} from 'msw'
+
 type FileInfo = {
   title: string
   id: string
@@ -28,7 +30,7 @@ type Backend = {
   [key: string]: unknown
 }
 
-export {FileInfo, LazyComponents, Imports, Backend, DynamicImportFn}
+export type {FileInfo, LazyComponents, Imports, Backend, DynamicImportFn}
 
 /*
 eslint
