@@ -40,7 +40,7 @@
     "dev": "concurrently \"npm:dev:*\"",
     "dev:build": "npm run build -- --watch",
     "dev:examples": "cd ./example/react-fundamentals && npm start",
-    "setup": "concurrently \"npm:setup:*\"",
+    "setup": "npm run setup:main && npm run setup:examples",
     "setup:main": "npm install && npm run validate -s",
     "setup:examples": "cd ./example/react-fundamentals && npm run setup",
     "build": "npm run build:main && concurrently \"npm:build:bundle:*\"",
