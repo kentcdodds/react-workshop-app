@@ -52,15 +52,10 @@ function makeKCDWorkshopApp({
 }) {
   // if I we don't do this then HMR can sometimes call this function again
   // which would result in the app getting mounted multiple times.
-  const rootEl = document.getElementById('root') as HTMLDivElement
-  if (!(rootEl as unknown)) {
-    // eslint-disable-next-line no-alert
-    window.alert(
-      'This document does not have a div with the ID of root but it should. Please add it.',
-    )
-    return
+  let rootEl = document.getElementById('root')
+  if (rootEl) {
+    rootEl.innerHTML = ''
   }
-  rootEl.innerHTML = ''
 
   const lazyComponents: LazyComponents = {}
 
@@ -184,6 +179,8 @@ function makeKCDWorkshopApp({
   let unmount: ((el: HTMLElement) => void) | undefined
 
   function renderIsolated(isolatedModuleImport: DynamicImportFn) {
+    rootEl = document.getElementById('root')
+    if (!rootEl) return
     unmount?.(rootEl)
 
     void isolatedModuleImport().then(async ({default: defaultExport}) => {
@@ -195,7 +192,15 @@ function makeKCDWorkshopApp({
       }
       if (typeof defaultExport === 'function') {
         // regular react component.
-        unmount = render(React.createElement(defaultExport), rootEl)
+        rootEl = document.getElementById('root')
+        if (rootEl) {
+          unmount = render(React.createElement(defaultExport), rootEl)
+        } else {
+          // eslint-disable-next-line no-alert
+          window.alert(
+            'This document has no div with the ID of "root." Please add one... Or bug Kent about it...',
+          )
+        }
       } else if (typeof defaultExport === 'string') {
         // HTML file
         const domParser = new DOMParser()
