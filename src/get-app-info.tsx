@@ -4,16 +4,13 @@ import path from 'path'
 import {loadFiles} from './load-files'
 import type {FileInfo} from './types'
 
-function getAppInfo({
-  cwd = process.cwd(),
-  ignore,
-}: {cwd?: string; ignore?: Array<string>} = {}): {
+function getAppInfo({cwd = process.cwd()}: {cwd?: string} = {}): {
   gitHubRepoUrl: string
   filesInfo: Array<FileInfo>
   imports: Array<string>
   hasBackend: boolean
 } {
-  const filesInfo = loadFiles({cwd, ignore})
+  const filesInfo = loadFiles({cwd})
   let gitHubRepoUrl
   const pkgPath = path.join(process.cwd(), 'package.json')
   try {

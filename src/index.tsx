@@ -11,6 +11,7 @@ import type {
   Imports,
   Backend,
   DynamicImportFn,
+  DefaultDynamicImportFn,
 } from './types'
 
 const styleTag = document.createElement('style')
@@ -63,7 +64,9 @@ function makeKCDWorkshopApp({
 
   for (const {ext, filePath} of filesInfo) {
     if (componentExtensions.includes(ext)) {
-      lazyComponents[filePath] = React.lazy(imports[filePath])
+      lazyComponents[filePath] = React.lazy(
+        moduleWithDefaultExport(imports, filePath),
+      )
     }
   }
 
@@ -166,7 +169,7 @@ function makeKCDWorkshopApp({
     }, 20)
 
     if (isIsolated && info) {
-      renderIsolated(imports[info.filePath])
+      renderIsolated(moduleWithDefaultExport(imports, info.filePath))
     } else if (previousIsIsolated !== isIsolated) {
       // if we aren't going from isolated to the app, then we don't need
       // to bother rendering react anew. The app will handle that.
@@ -185,7 +188,7 @@ function makeKCDWorkshopApp({
 
     void isolatedModuleImport().then(async ({default: defaultExport}) => {
       if (history.location !== previousLocation) {
-        // locaiton has changed while we were getting the module
+        // location has changed while we were getting the module
         // so don't bother doing anything... Let the next event handler
         // deal with it
         return
@@ -279,11 +282,40 @@ function makeKCDWorkshopApp({
   handleLocationChange()
 }
 
+function moduleWithDefaultExport(imports: Imports, filePath: string) {
+  const importFn = imports[filePath]
+  if (!importFn) throw new Error(`'${filePath}' does not exist in imports.`)
+
+  if (filePath.match(/\.mdx?$/)) return importFn as DefaultDynamicImportFn
+
+  const promiseOfModule = importFn()
+  const promiseOfDefault: ReturnType<DefaultDynamicImportFn> = promiseOfModule
+    .then(module => {
+      const Component = module.App ?? module.default
+      if (!Component) {
+        throw Error(
+          'Please add a `export {App}` or `export default ...` to your exercise file to render it.',
+        )
+      }
+      return {default: Component}
+    })
+    .catch(error => {
+      console.error(filePath, error)
+      return {
+        default: () => {
+          throw error
+        },
+      }
+    })
+
+  return () => promiseOfDefault
+}
 export {makeKCDWorkshopApp}
 
 /*
 eslint
   babel/no-unused-expressions: "off",
   @typescript-eslint/no-explicit-any: "off",
+  @typescript-eslint/prefer-regexp-exec: "off",
   no-void: "off"
 */

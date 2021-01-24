@@ -1,15 +1,15 @@
 import React from 'react'
 import chalk from 'chalk'
 import {render, prettyDOM} from '@testing-library/react'
-import Usage from '../final/05'
-// import Usage from '../exercise/05'
+import {App} from '../final/05'
+// import App from '../exercise/05'
 
 test('renders the correct styles new', () => {
-  const {container, getByText, getAllByText} = render(<Usage />)
+  const {container, getByText, getAllByText} = render(<App />)
   const allBoxes = getAllByText(/box/i)
 
   try {
-    allBoxes.forEach(box => expect(box).toHaveClass('box'))
+    allBoxes.forEach((box) => expect(box).toHaveClass('box'))
   } catch (error) {
     //
     //
@@ -24,7 +24,7 @@ test('renders the correct styles new', () => {
   }
 
   try {
-    allBoxes.forEach(box => expect(box).toHaveStyle('font-style: italic;'))
+    allBoxes.forEach((box) => expect(box).toHaveStyle('font-style: italic;'))
   } catch (error) {
     //
     //

@@ -3,20 +3,9 @@ import fs from 'fs'
 import glob from 'glob'
 import type {FileInfo} from './types'
 
-function loadFiles({
-  cwd = process.cwd(),
-  ignore = [
-    '**/__tests__/**',
-    '**/test/**',
-    '**/backend.+(js|ts|tsx)',
-    '**/setupTests.+(js|ts|tsx)',
-    '**/setupProxy.+(js|ts|tsx)',
-    '**/*.d.ts',
-  ],
-  ...rest
-} = {}): Array<FileInfo> {
+function loadFiles({cwd = process.cwd(), ...rest} = {}): Array<FileInfo> {
   const fileInfo = glob
-    .sync('src/**/*.+(js|html|jsx|ts|tsx|md|mdx)', {cwd, ignore, ...rest})
+    .sync('src/{exercise,final}/*.*', {cwd, ...rest})
     // eslint-disable-next-line complexity
     .map(filePath => {
       const fullFilePath = path.join(cwd, filePath)

@@ -26,22 +26,35 @@ afterEach(() => {
   document.body.innerHTML = ''
 })
 
-test('regular app', () => {
-  const {filesInfo, gitHubRepoUrl} = getAppInfo({
+function setup() {
+  const {filesInfo: filesInfoRaw, gitHubRepoUrl} = getAppInfo({
     cwd: path.join(process.cwd(), 'example/react-fundamentals'),
   })
 
+  const imports = {
+    'src/exercise/05.tsx': () =>
+      import('../../example/react-fundamentals/src/exercise/05.tsx'),
+    'src/exercise/05.md': () =>
+      import('../../example/react-fundamentals/src/exercise/05.md'),
+    'src/final/05.tsx': () =>
+      import('../../example/react-fundamentals/src/final/05.tsx'),
+    'src/final/05.extra-1.tsx': () =>
+      import('../../example/react-fundamentals/src/final/05.extra-1.tsx'),
+  }
+  const filesInfo = filesInfoRaw.filter(({id}) => imports[id])
+
+  expect(filesInfo.map(({id}) => id).sort()).toEqual(
+    Object.keys(imports).sort(),
+  )
+
+  return {imports, filesInfo, gitHubRepoUrl}
+}
+
+test('regular app', () => {
+  const {imports, filesInfo, gitHubRepoUrl} = setup()
+
   makeKCDWorkshopApp({
-    imports: {
-      'src/exercise/05.js': () =>
-        import('../../example/react-fundamentals/src/exercise/05.js'),
-      'src/exercise/05.md': () =>
-        import('../../example/react-fundamentals/src/exercise/05.md'),
-      'src/final/05.js': () =>
-        import('../../example/react-fundamentals/src/final/05.js'),
-      'src/final/05.extra-1.js': () =>
-        import('../../example/react-fundamentals/src/final/05.extra-1.js'),
-    },
+    imports,
     filesInfo,
     gitHubRepoUrl,
     projectTitle: 'test project',
@@ -55,25 +68,13 @@ test('regular app', () => {
   )
 })
 
-// TODO: fix this test
-test.skip('isolated page', async () => {
-  const {filesInfo, gitHubRepoUrl} = getAppInfo({
-    cwd: path.join(process.cwd(), 'example/react-fundamentals'),
-  })
+test('isolated page', async () => {
+  const {imports, filesInfo, gitHubRepoUrl} = setup()
 
-  window.history.pushState({}, 'Test page', '/isolated/final/05.js')
+  window.history.pushState({}, 'Test page', '/isolated/final/05.tsx')
 
   makeKCDWorkshopApp({
-    imports: {
-      'src/exercise/05.js': () =>
-        import('../../example/react-fundamentals/src/exercise/05.js'),
-      'src/exercise/05.md': () =>
-        import('../../example/react-fundamentals/src/exercise/05.md'),
-      'src/final/05.js': () =>
-        import('../../example/react-fundamentals/src/final/05.js'),
-      'src/final/05.extra-1.js': () =>
-        import('../../example/react-fundamentals/src/final/05.extra-1.js'),
-    },
+    imports,
     filesInfo,
     gitHubRepoUrl,
     projectTitle: 'test project',
@@ -82,8 +83,3 @@ test.skip('isolated page', async () => {
 
   await screen.findByText('large orange box')
 })
-
-/*
-eslint
-  import/no-unresolved: "off",
-*/
