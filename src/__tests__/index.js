@@ -7,6 +7,8 @@ import {screen, fireEvent} from '@testing-library/react'
 import {makeKCDWorkshopApp} from '..'
 import {getAppInfo} from '../get-app-info'
 
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation()
+
 beforeAll(() => {
   matchMediaPolyfill(window)
 })
@@ -24,6 +26,7 @@ afterEach(() => {
   // so we'll reset the innerHTML
   // document.body.removeChild(root)
   document.body.innerHTML = ''
+  consoleErrorMock.mockClear()
 })
 
 function setup() {
@@ -32,10 +35,19 @@ function setup() {
   })
 
   const imports = {
-    'src/exercise/05.tsx': () =>
-      import('../../example/react-fundamentals/src/exercise/05.tsx'),
+    'src/exercise/01.md': () =>
+      import('../../example/react-fundamentals/src/exercise/01.md'),
+    'src/exercise/01.html': () =>
+      import('../../example/react-fundamentals/src/exercise/01.html'),
+    'src/final/01.html': () =>
+      import('../../example/react-fundamentals/src/final/01.html'),
+    'src/final/01.extra-1.html': () =>
+      import('../../example/react-fundamentals/src/final/01.extra-1.html'),
+
     'src/exercise/05.md': () =>
       import('../../example/react-fundamentals/src/exercise/05.md'),
+    'src/exercise/05.tsx': () =>
+      import('../../example/react-fundamentals/src/exercise/05.tsx'),
     'src/final/05.tsx': () =>
       import('../../example/react-fundamentals/src/final/05.tsx'),
     'src/final/05.extra-1.tsx': () =>
@@ -66,6 +78,8 @@ test('regular app', () => {
       name: /styling/i,
     }),
   )
+
+  expect(consoleErrorMock).toHaveBeenCalledTimes(0)
 })
 
 test('isolated page', async () => {
@@ -82,4 +96,25 @@ test('isolated page', async () => {
   })
 
   await screen.findByText('large orange box')
+
+  // isolated page seems to execute React.lazy of unrelated imports => no console error expected if fixed
+  expect(consoleErrorMock).toHaveBeenCalledTimes(1)
+})
+
+test('isolated page with forgotten export', async () => {
+  const {imports, filesInfo, gitHubRepoUrl} = setup()
+
+  window.history.pushState({}, 'Test page', '/isolated/exercise/05.tsx')
+
+  makeKCDWorkshopApp({
+    imports,
+    filesInfo,
+    gitHubRepoUrl,
+    projectTitle: 'test project',
+    backend: require('../../example/react-fundamentals/src/backend'),
+  })
+
+  await screen.findByText(/add `export {App}`/)
+
+  expect(consoleErrorMock).toHaveBeenCalledTimes(2)
 })

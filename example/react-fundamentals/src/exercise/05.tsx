@@ -43,4 +43,10 @@ function Usage() {
   )
 }
 
-export default Usage
+// testing a "forgotten" export
+// export default Usage
+
+/*
+eslint
+  @typescript-eslint/no-unused-vars: "off"
+*/

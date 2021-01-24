@@ -286,25 +286,24 @@ function moduleWithDefaultExport(imports: Imports, filePath: string) {
   const importFn = imports[filePath]
   if (!importFn) throw new Error(`'${filePath}' does not exist in imports.`)
 
-  if (filePath.match(/\.mdx?$/)) return importFn as DefaultDynamicImportFn
+  if (filePath.match(/\.(mdx?|html)$/))
+    return importFn as DefaultDynamicImportFn
 
   const promiseOfModule = importFn()
   const promiseOfDefault: ReturnType<DefaultDynamicImportFn> = promiseOfModule
     .then(module => {
       const Component = module.App ?? module.default
-      if (!Component) {
-        throw Error(
-          'Please add a `export {App}` or `export default ...` to your exercise file to render it.',
+      if (typeof Component !== 'function') {
+        throw new Error(
+          'Please add `export {App}` or `export default Component` to your exercise file to render it.',
         )
       }
       return {default: Component}
     })
-    .catch(error => {
+    .catch((error: Error) => {
       console.error(filePath, error)
       return {
-        default: () => {
-          throw error
-        },
+        default: () => <div>{error.message}</div>,
       }
     })
 
@@ -317,5 +316,6 @@ eslint
   babel/no-unused-expressions: "off",
   @typescript-eslint/no-explicit-any: "off",
   @typescript-eslint/prefer-regexp-exec: "off",
+  react/jsx-no-useless-fragment: "off",
   no-void: "off"
 */
