@@ -5,7 +5,7 @@ import type {FileInfo} from './types'
 
 function loadFiles({cwd = process.cwd(), ...rest} = {}): Array<FileInfo> {
   const fileInfo = glob
-    .sync('src/{exercise,final}/*.+(js|html|jsx|ts|tsx|md|mdx)', {cwd, ...rest})
+    .sync('src/{exercise,final,examples}/*.+(js|html|jsx|ts|tsx|md|mdx)', {cwd, ...rest})
     // eslint-disable-next-line complexity
     .map(filePath => {
       const fullFilePath = path.join(cwd, filePath)
