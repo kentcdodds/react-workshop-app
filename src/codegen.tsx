@@ -3,17 +3,12 @@ import {getAppInfo} from './get-app-info'
 
 function getCode({
   cwd = process.cwd(),
-  ignore,
   options,
 }: {
   cwd?: string
-  ignore?: Array<string>
   options?: Record<string, unknown>
 } = {}) {
-  const {gitHubRepoUrl, filesInfo, hasBackend, imports} = getAppInfo({
-    cwd,
-    ignore,
-  })
+  const {gitHubRepoUrl, filesInfo, hasBackend, imports} = getAppInfo({cwd})
   return `
 import {makeKCDWorkshopApp} from '@kentcdodds/react-workshop-app'
 import {loadDevTools} from '@kentcdodds/react-workshop-app/dev-tools'

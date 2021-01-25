@@ -15,11 +15,23 @@ type FileInfo = {
   extraCreditTitle?: string
 }
 
-type LazyComponents = Record<string, React.LazyExoticComponent<any> | undefined>
+type NoPropsComponent = React.ComponentType<{}>
 
-type DynamicImportFn = () => Promise<{default: React.ComponentType<unknown>}>
+type LazyComponents = Record<
+  string,
+  React.LazyExoticComponent<NoPropsComponent> | undefined
+>
 
-type Imports = Record<string, DynamicImportFn>
+type DynamicImportFn = () => Promise<{
+  App?: NoPropsComponent
+  default?: NoPropsComponent
+}>
+
+type DefaultDynamicImportFn = () => Promise<{
+  default: NoPropsComponent
+}>
+
+type Imports = Record<string, DynamicImportFn | undefined>
 
 type Backend = {
   handlers: Array<RequestHandler>
@@ -30,7 +42,15 @@ type Backend = {
   [key: string]: unknown
 }
 
-export type {FileInfo, LazyComponents, Imports, Backend, DynamicImportFn}
+export type {
+  FileInfo,
+  LazyComponents,
+  Imports,
+  Backend,
+  NoPropsComponent,
+  DynamicImportFn,
+  DefaultDynamicImportFn,
+}
 
 /*
 eslint

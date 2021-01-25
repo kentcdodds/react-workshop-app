@@ -10,48 +10,6 @@ if (module.hot) module.hot.accept()
 
 const filesInfo = [
   {
-    "id": "src/examples/example.js",
-    "title": "Unknown",
-    "fullFilePath": "<PROJECT_ROOT>/src/examples/example.js",
-    "filePath": "src/examples/example.js",
-    "isolatedPath": "/isolated/examples/example.js",
-    "ext": ".js",
-    "filename": "example",
-    "type": "examples",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0,
-    "extraCreditTitle": "Unknown"
-  },
-  {
-    "id": "src/examples/non-exported-example.js",
-    "title": "Unknown",
-    "fullFilePath": "<PROJECT_ROOT>/src/examples/non-exported-example.js",
-    "filePath": "src/examples/non-exported-example.js",
-    "isolatedPath": "/isolated/examples/non-exported-example.js",
-    "ext": ".js",
-    "filename": "non-exported-example",
-    "type": "examples",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0,
-    "extraCreditTitle": "Unknown"
-  },
-  {
-    "id": "src/examples/ts-example.tsx",
-    "title": "Unknown",
-    "fullFilePath": "<PROJECT_ROOT>/src/examples/ts-example.tsx",
-    "filePath": "src/examples/ts-example.tsx",
-    "isolatedPath": "/isolated/examples/ts-example.tsx",
-    "ext": ".tsx",
-    "filename": "ts-example",
-    "type": "examples",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0,
-    "extraCreditTitle": "Unknown"
-  },
-  {
     "id": "src/exercise/01.html",
     "title": "Basic JavaScript-rendered Hello World",
     "fullFilePath": "<PROJECT_ROOT>/src/exercise/01.html",
@@ -610,29 +568,12 @@ const filesInfo = [
     "isExtraCredit": true,
     "extraCreditNumber": 1,
     "extraCreditTitle": "Focus Demo"
-  },
-  {
-    "id": "src/index.js",
-    "title": "Unknown",
-    "fullFilePath": "<PROJECT_ROOT>/src/index.js",
-    "filePath": "src/index.js",
-    "isolatedPath": "/isolated/index.js",
-    "ext": ".js",
-    "filename": "index",
-    "type": "src",
-    "number": 0,
-    "isExtraCredit": false,
-    "extraCreditNumber": 0,
-    "extraCreditTitle": "Unknown"
   }
 ]
 
 loadDevTools(() => {
   makeKCDWorkshopApp({
     imports: {
-      "src/examples/example.js": () => import("./examples/example.js"),
-      "src/examples/non-exported-example.js": () => import("./examples/non-exported-example.js"),
-      "src/examples/ts-example.tsx": () => import("./examples/ts-example.tsx"),
       "src/exercise/01.html": () => import("!raw-loader!./exercise/01.html"),
       "src/exercise/01.md": () => import("!babel-loader!mdx-loader!./exercise/01.md"),
       "src/exercise/02.html": () => import("!raw-loader!./exercise/02.html"),
@@ -672,8 +613,7 @@ loadDevTools(() => {
       "src/final/07.js": () => import("./final/07.js"),
       "src/final/08.js": () => import("./final/08.js"),
       "src/final/09.js": () => import("./final/09.js"),
-      "src/final/09.extra-1.js": () => import("./final/09.extra-1.js"),
-      "src/index.js": () => import("./index.js")
+      "src/final/09.extra-1.js": () => import("./final/09.extra-1.js")
     },
     filesInfo,
     projectTitle: pkg.title,
