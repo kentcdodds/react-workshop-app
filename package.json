@@ -111,6 +111,11 @@
     "react": "*",
     "react-dom": "*"
   },
+  "browserslist": [
+    "last 2 chrome versions",
+    "last 2 firefox versions",
+    "last 2 edge versions"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "kcd-scripts pre-commit"
