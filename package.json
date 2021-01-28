@@ -112,7 +112,7 @@
     "react-dom": "*"
   },
   "browserslist": [
-    "last 2 chrome versions",
+    "chrome >= 79",
     "last 2 firefox versions",
     "last 2 edge versions"
   ],
