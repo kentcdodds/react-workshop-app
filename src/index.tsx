@@ -33,6 +33,8 @@ const fillScreenCenter = `padding:30px;min-height:100vh;display:grid;align-items
 
 const originalDocumentElement = document.documentElement
 
+let unmount: ((el: HTMLElement) => void) | undefined
+
 function makeKCDWorkshopApp({
   imports,
   filesInfo,
@@ -51,13 +53,6 @@ function makeKCDWorkshopApp({
 } & {
   gitHubRepoUrl: string
 }) {
-  // if I we don't do this then HMR can sometimes call this function again
-  // which would result in the app getting mounted multiple times.
-  let rootEl = document.getElementById('root')
-  if (rootEl) {
-    rootEl.innerHTML = ''
-  }
-
   const lazyComponents: LazyComponents = {}
 
   const componentExtensions = ['.js', '.md', '.mdx', '.tsx', '.ts']
@@ -93,22 +88,28 @@ function makeKCDWorkshopApp({
   let previousLocation = history.location
   let previousIsIsolated: boolean | null = null
 
-  function render(ui: React.ReactElement, el: HTMLElement): VoidFunction {
+  function render(ui: React.ReactElement) {
+    const rootEl = document.getElementById('root')
+    if (rootEl) {
+      unmount?.(rootEl)
+    } else {
+      // eslint-disable-next-line no-alert
+      window.alert(
+        'This document has no div with the ID of "root." Please add one... Or bug Kent about it...',
+      )
+      return
+    }
     if (options.concurrentMode) {
       /* eslint-disable */
       // @ts-expect-error I don't care enough to be type safe here
-      const root = (ReactDOM.unstable_createRoot || ReactDOM.createRoot)(el)
+      const root = (ReactDOM.unstable_createRoot || ReactDOM.createRoot)(rootEl)
       root.render(ui)
-      return function unmount() {
-        root.unmount()
-      }
+      unmount = () => root.unmount()
       /* eslint-enable */
     } else {
-      ReactDOM.render(ui, el)
+      ReactDOM.render(ui, rootEl)
 
-      return function unmount() {
-        ReactDOM.unmountComponentAtNode(el)
-      }
+      unmount = () => ReactDOM.unmountComponentAtNode(rootEl)
     }
   }
 
@@ -120,10 +121,17 @@ function makeKCDWorkshopApp({
   function handleLocationChange(location = history.location) {
     const {pathname} = location
     // add location pathname to classList of the body
-    document.body.classList.remove(
-      escapeForClassList(previousLocation.pathname),
-    )
-    document.body.classList.add(escapeForClassList(pathname))
+    // avoid the dev-tools flash of update by not updating the class name unecessarily
+    const prevClassName = escapeForClassList(previousLocation.pathname)
+    const newClassName = escapeForClassList(pathname)
+    if (document.body.classList.contains(prevClassName)) {
+      document.body.classList.remove(
+        escapeForClassList(previousLocation.pathname),
+      )
+    }
+    if (!document.body.classList.contains(newClassName)) {
+      document.body.classList.add(escapeForClassList(pathname))
+    }
 
     // set the title to have info for the exercise
     const isIsolated = pathname.startsWith('/isolated')
@@ -155,7 +163,7 @@ function makeKCDWorkshopApp({
     // race condition here with the title. It seems to get reset to the
     // title that's defined in the index.html after we set it :shrugs:
     setTimeout(() => {
-      document.title = [
+      const title = [
         info
           ? [
               info.number ? `${info.number}. ` : '',
@@ -166,6 +174,12 @@ function makeKCDWorkshopApp({
       ]
         .filter(Boolean)
         .join(' | ')
+      // the dev-tools flash the title as changed on HMR even
+      // if it's not actually changed, so we'll only change it
+      // when it's necessary:
+      if (document.title !== title) {
+        document.title = title
+      }
     }, 20)
 
     if (isIsolated && info) {
@@ -179,13 +193,7 @@ function makeKCDWorkshopApp({
     previousIsIsolated = isIsolated
   }
 
-  let unmount: ((el: HTMLElement) => void) | undefined
-
   function renderIsolated(isolatedModuleImport: DynamicImportFn) {
-    rootEl = document.getElementById('root')
-    if (!rootEl) return
-    unmount?.(rootEl)
-
     void isolatedModuleImport().then(async ({default: defaultExport}) => {
       if (history.location !== previousLocation) {
         // location has changed while we were getting the module
@@ -195,15 +203,7 @@ function makeKCDWorkshopApp({
       }
       if (typeof defaultExport === 'function') {
         // regular react component.
-        rootEl = document.getElementById('root')
-        if (rootEl) {
-          unmount = render(React.createElement(defaultExport), rootEl)
-        } else {
-          // eslint-disable-next-line no-alert
-          window.alert(
-            'This document has no div with the ID of "root." Please add one... Or bug Kent about it...',
-          )
-        }
+        render(React.createElement(defaultExport))
       } else if (typeof defaultExport === 'string') {
         // HTML file
         const domParser = new DOMParser()
@@ -267,7 +267,7 @@ function makeKCDWorkshopApp({
     if (document.documentElement !== originalDocumentElement) {
       document.documentElement.replaceWith(originalDocumentElement)
     }
-    unmount = renderReactApp({
+    renderReactApp({
       history,
       projectTitle,
       filesInfo,

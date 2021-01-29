@@ -107,7 +107,7 @@ function renderReactApp({
   filesInfo: Array<FileInfo>
   lazyComponents: LazyComponents
   gitHubRepoUrl: string
-  render: (ui: React.ReactElement, el: HTMLElement) => VoidFunction
+  render: (ui: React.ReactElement) => void
 }) {
   const useTheme = () => useEmotionTheme<Theme>()
   const exerciseInfo: Array<ExerciseInfo> = []
@@ -1101,11 +1101,10 @@ function renderReactApp({
     )
   }
 
-  return render(
+  render(
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <App />
     </ErrorBoundary>,
-    document.getElementById('root')!,
   )
 }
 
