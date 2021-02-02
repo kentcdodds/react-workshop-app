@@ -37,8 +37,12 @@
     "test-utils.js"
   ],
   "scripts": {
+    "predev": "npm run build",
     "dev": "concurrently \"npm:dev:*\"",
-    "dev:build": "npm run build -- --watch",
+    "dev:build": "concurrently \"npm:dev:build:*\"",
+    "dev:build:main": "kcd-scripts build --watch --no-clean",
+    "dev:build:bundle:main": "kcd-scripts build --bundle esm --no-clean --watch",
+    "dev:build:bundle:dev-tools": "cross-env BUILD_INPUT=\"src/dev-tools/*.{ts,tsx}\" BUILD_FILENAME_PREFIX=\"dev-tools-build\" kcd-scripts build --bundle esm --no-clean --watch",
     "dev:examples": "cd ./example/react-fundamentals && npm start",
     "setup": "npm run install:main && npm run install:examples && npm run validate && npm run validate:examples",
     "install:main": "npm install",

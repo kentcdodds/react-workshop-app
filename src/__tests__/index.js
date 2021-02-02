@@ -96,25 +96,4 @@ test('isolated page', async () => {
   })
 
   await screen.findByText('large orange box')
-
-  // isolated page seems to execute React.lazy of unrelated imports => no console error expected if fixed
-  expect(consoleErrorMock).toHaveBeenCalledTimes(1)
-})
-
-test('isolated page with forgotten export', async () => {
-  const {imports, filesInfo, gitHubRepoUrl} = setup()
-
-  window.history.pushState({}, 'Test page', '/isolated/exercise/05.tsx')
-
-  makeKCDWorkshopApp({
-    imports,
-    filesInfo,
-    gitHubRepoUrl,
-    projectTitle: 'test project',
-    backend: require('../../example/react-fundamentals/src/backend'),
-  })
-
-  await screen.findByText(/add `export {App}`/)
-
-  expect(consoleErrorMock).toHaveBeenCalledTimes(2)
 })

@@ -202,6 +202,9 @@ function makeKCDWorkshopApp({
         return
       }
       if (typeof defaultExport === 'function') {
+        if (defaultExport === DO_NOT_RENDER) {
+          return
+        }
         // regular react component.
         render(React.createElement(defaultExport))
       } else if (typeof defaultExport === 'string') {
@@ -282,32 +285,32 @@ function makeKCDWorkshopApp({
   handleLocationChange()
 }
 
+// React.lazy *requires* that you pass it a promise that resolves to a default export
+// of a function that returns JSX.Element. But we want to be able to dynamically
+// import a function that we don't actually render (because that file will render itself manually)
+// so we use this as the fallback for that situation and explicitely do not bother rendering it
+function DO_NOT_RENDER() {
+  return <></>
+}
+
 function moduleWithDefaultExport(imports: Imports, filePath: string) {
   const importFn = imports[filePath]
   if (!importFn) throw new Error(`'${filePath}' does not exist in imports.`)
 
-  if (filePath.match(/\.(mdx?|html)$/))
+  if (filePath.match(/\.(mdx?|html)$/)) {
     return importFn as DefaultDynamicImportFn
-
-  const promiseOfModule = importFn()
-  const promiseOfDefault: ReturnType<DefaultDynamicImportFn> = promiseOfModule
-    .then(module => {
-      const Component = module.App ?? module.default
-      if (typeof Component !== 'function') {
-        throw new Error(
-          'Please add `export {App}` or `export default Component` to your exercise file to render it.',
-        )
-      }
-      return {default: Component}
-    })
-    .catch((error: Error) => {
-      console.error(filePath, error)
-      return {
-        default: () => <div>{error.message}</div>,
-      }
-    })
-
-  return () => promiseOfDefault
+  }
+  return function importJS() {
+    return importFn().then(
+      module => ({default: module.App ?? module.default ?? DO_NOT_RENDER}),
+      error => {
+        console.error('Error importing a JS file', filePath, error)
+        return {
+          default: () => <div>{(error as Error).message}</div>,
+        }
+      },
+    )
+  }
 }
 export {makeKCDWorkshopApp}
 

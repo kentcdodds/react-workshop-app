@@ -15,7 +15,7 @@ type FileInfo = {
   extraCreditTitle?: string
 }
 
-type NoPropsComponent = React.ComponentType<{}>
+type NoPropsComponent = () => JSX.Element
 
 type LazyComponents = Record<
   string,
