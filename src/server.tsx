@@ -84,7 +84,7 @@ function setup({
 }
 
 function shouldFail(req: MockedRequest<unknown>) {
-  if (JSON.stringify(req.body).includes('FAIL')) return true
+  if (JSON.stringify(req.body ?? {}).includes('FAIL')) return true
   if (req.url.searchParams.toString().includes('FAIL')) return true
   const failureRate = Number(
     window.localStorage.getItem(getKey('failure_rate')) ?? 0,
