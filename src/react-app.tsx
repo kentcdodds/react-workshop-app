@@ -371,6 +371,16 @@ function renderReactApp({
       return () => document.body.removeEventListener('keyup', handleKeyup)
     }, [exerciseNumber])
 
+    const instructionEl = React.useRef<HTMLDivElement>(null)
+
+    React.useEffect(() => {
+      if (!instructionEl.current) return
+      const anchors = Array.from(instructionEl.current.querySelectorAll('a'))
+      for (const anchor of anchors) {
+        anchor.setAttribute('target', '_blank')
+      }
+    }, [])
+
     if (isNaN(exerciseNumber) || !exerciseInfo[exerciseNumber]) {
       return <NotFound />
     }
@@ -400,6 +410,7 @@ function renderReactApp({
             })}
           >
             <div
+              ref={instructionEl}
               css={mq({
                 position: 'relative',
                 gridRow: [2, 2, 'auto'],
