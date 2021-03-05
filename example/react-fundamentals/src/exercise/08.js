@@ -1,4 +1,5 @@
 // Controlled Forms
+// http://localhost:3000/isolated/exercise/08.js
 
 import React from 'react'
 
@@ -47,7 +48,7 @@ http://ws.kcd.im/?ws=React%20Fundamentals%20&e=Controlled%20Forms&em=
 ////////////////////////////////////////////////////////////////////
 
 function Usage() {
-  const onSubmitUsername = username => console.info('username', username)
+  const onSubmitUsername = (username) => console.info('username', username)
   return (
     <div style={{minWidth: 400}}>
       <UsernameForm onSubmitUsername={onSubmitUsername} />

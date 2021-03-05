@@ -1,6 +1,6 @@
 // Rendering Lists
 // 💯 Focus Demo
-// http://localhost:3000/isolated/exercises-final/09.extra-1
+// http://localhost:3000/isolated/final/09.extra-1.js
 
 import React from 'react'
 
@@ -18,10 +18,10 @@ function FocusDemo() {
   }, [])
 
   function getChangeHandler(item) {
-    return event => {
+    return (event) => {
       const newValue = event.target.value
-      setItems(allItems =>
-        allItems.map(i => ({
+      setItems((allItems) =>
+        allItems.map((i) => ({
           ...i,
           value: i.id === item.id ? newValue : i.value,
         })),
@@ -33,7 +33,7 @@ function FocusDemo() {
     <div>
       <div>
         <h1>Without a key</h1>
-        {items.map(item => (
+        {items.map((item) => (
           <input value={item.value} onChange={getChangeHandler(item)} />
         ))}
       </div>
@@ -49,7 +49,7 @@ function FocusDemo() {
       </div>
       <div>
         <h1>With a Proper Key</h1>
-        {items.map(item => (
+        {items.map((item) => (
           <input
             key={item.id}
             value={item.value}

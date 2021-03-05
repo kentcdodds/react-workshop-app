@@ -1,6 +1,6 @@
 // Basic Forms
 // 💯 another example extra (exercise)
-// http://localhost:3000/isolated/final/06.extra-2.js
+// http://localhost:3000/isolated/exercise/06.extra-2.js
 
 import React from 'react'
 

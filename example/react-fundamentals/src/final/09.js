@@ -1,4 +1,5 @@
 // Rendering Lists
+// http://localhost:3000/isolated/final/09.js
 
 import React from 'react'
 
@@ -13,11 +14,11 @@ function App() {
   const [items, setItems] = React.useState(allItems)
 
   function addItem() {
-    setItems([...items, allItems.find(i => !items.includes(i))])
+    setItems([...items, allItems.find((i) => !items.includes(i))])
   }
 
   function removeItem(item) {
-    setItems(items.filter(i => i !== item))
+    setItems(items.filter((i) => i !== item))
   }
 
   return (
@@ -26,7 +27,7 @@ function App() {
         add item
       </button>
       <ul style={{listStyle: 'none', paddingLeft: 0}}>
-        {items.map(item => (
+        {items.map((item) => (
           <li key={item.id}>
             <button onClick={() => removeItem(item)}>remove</button>{' '}
             <label htmlFor={`${item.value}-input`}>{item.value}</label>{' '}

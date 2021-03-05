@@ -1,4 +1,5 @@
 // Basic Forms
+// http://localhost:3000/isolated/final/06.js
 
 import React from 'react'
 
@@ -20,7 +21,7 @@ function UsernameForm({onSubmitUsername}) {
 }
 
 function Usage() {
-  const onSubmitUsername = username => console.info('username', username)
+  const onSubmitUsername = (username) => console.info('username', username)
   return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
 

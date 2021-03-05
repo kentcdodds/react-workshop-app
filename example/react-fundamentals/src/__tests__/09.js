@@ -18,7 +18,7 @@ test('renders', () => {
   fireEvent.click(inOrange.getByText('remove'))
 
   const allLis = container.querySelectorAll('li')
-  Array.from(allLis).forEach(li => {
+  Array.from(allLis).forEach((li) => {
     const label = li.querySelector('label')
     const input = li.querySelector('input')
     expect(label.textContent).toBe(input.value)

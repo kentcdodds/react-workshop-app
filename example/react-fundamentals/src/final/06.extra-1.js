@@ -1,6 +1,6 @@
 // Basic Forms
 // 💯 using refs
-// http://localhost:3000/isolated/exercises-final/06.extra-1
+// http://localhost:3000/isolated/final/06.extra-1.js
 
 import React from 'react'
 
@@ -24,7 +24,7 @@ function UsernameForm({onSubmitUsername}) {
 }
 
 function Usage() {
-  const onSubmitUsername = username => console.info('username', username)
+  const onSubmitUsername = (username) => console.info('username', username)
   return <UsernameForm onSubmitUsername={onSubmitUsername} />
 }
 

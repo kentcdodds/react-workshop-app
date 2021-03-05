@@ -1,3 +1,5 @@
+// http://localhost:3000/isolated/examples/non-exported-example.js
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
