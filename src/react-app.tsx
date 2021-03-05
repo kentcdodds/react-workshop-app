@@ -1,7 +1,6 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import 'focus-visible' // polyfill for :focus-visible (https://github.com/WICG/focus-visible)
 import {jsx, Global} from '@emotion/core'
 import type {InterpolationWithTheme} from '@emotion/core'
 import React from 'react'
@@ -371,16 +370,6 @@ function renderReactApp({
       return () => document.body.removeEventListener('keyup', handleKeyup)
     }, [exerciseNumber])
 
-    const instructionEl = React.useRef<HTMLDivElement>(null)
-
-    React.useEffect(() => {
-      if (!instructionEl.current) return
-      const anchors = Array.from(instructionEl.current.querySelectorAll('a'))
-      for (const anchor of anchors) {
-        anchor.setAttribute('target', '_blank')
-      }
-    }, [])
-
     if (isNaN(exerciseNumber) || !exerciseInfo[exerciseNumber]) {
       return <NotFound />
     }
@@ -410,7 +399,6 @@ function renderReactApp({
             })}
           >
             <div
-              ref={instructionEl}
               css={mq({
                 position: 'relative',
                 gridRow: [2, 2, 'auto'],
@@ -475,7 +463,9 @@ function renderReactApp({
                     </span>
                   </a>
                 </div>
-                {instructionElement}
+                <div className="instruction-container">
+                  {instructionElement}
+                </div>
               </React.Suspense>
             </div>
             <div css={{background: theme.background}}>
@@ -1063,7 +1053,7 @@ function renderReactApp({
               This will hide the focus indicator if the element receives focus via the mouse,
               but it will still show up on keyboard focus.
             */
-            '.js-focus-visible :focus:not(.focus-visible)': {
+            '*:focus:not(:focus-visible)': {
               outline: 'none',
             },
             hr: {background: theme.textLightest},

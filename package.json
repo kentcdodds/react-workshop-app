@@ -74,7 +74,6 @@
     "cross-spawn": "^7.0.3",
     "emotion-theming": "^10.0.27",
     "facepaint": "^1.2.1",
-    "focus-visible": "^5.2.0",
     "glob": "^7.1.6",
     "history": "^4.10.1",
     "inquirer": "^7.3.3",

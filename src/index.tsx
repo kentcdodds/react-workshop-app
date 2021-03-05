@@ -293,25 +293,50 @@ function DO_NOT_RENDER() {
   return <></>
 }
 
-function moduleWithDefaultExport(imports: Imports, filePath: string) {
+function moduleWithDefaultExport(
+  imports: Imports,
+  filePath: string,
+): DefaultDynamicImportFn {
   const importFn = imports[filePath]
   if (!importFn) throw new Error(`'${filePath}' does not exist in imports.`)
 
-  if (filePath.match(/\.(mdx?|html)$/)) {
+  if (filePath.endsWith('html')) {
     return importFn as DefaultDynamicImportFn
   }
   return function importJS() {
     return importFn().then(
-      module => ({default: module.App ?? module.default ?? DO_NOT_RENDER}),
+      module => {
+        if (filePath.match(/\.mdx?$/)) targetBlankifyInstructionLinks()
+        return {default: module.App ?? module.default ?? DO_NOT_RENDER}
+      },
       error => {
         console.error('Error importing a JS file', filePath, error)
-        return {
-          default: () => <div>{(error as Error).message}</div>,
-        }
+        return {default: () => <div>{(error as Error).message}</div>}
       },
     )
   }
 }
+
+// this is a pain, but we need to add target="_blank" to all the links
+// in the markdown and even though I tried with useEffect, I couldn't
+// get my useEffect to run *after* the markdown was rendered, so we're
+// pulling this hack together 🙄
+function targetBlankifyInstructionLinks() {
+  setTimeout(() => {
+    const instructionContainer = document.querySelector(
+      '.instruction-container',
+    )
+    // this shouldn't happen, but it could...
+    if (!instructionContainer) return
+
+    const anchors = Array.from(instructionContainer.querySelectorAll('a'))
+    for (const anchor of anchors) {
+      anchor.setAttribute('target', '_blank')
+      anchor.setAttribute('rel', 'noopener noreferrer nofollow')
+    }
+  }, 200)
+}
+
 export {makeKCDWorkshopApp}
 
 /*
