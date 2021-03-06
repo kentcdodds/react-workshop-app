@@ -15,9 +15,6 @@ on:
     branches-ignore: ['all-contributors/**']
 jobs:
   main:
-    strategy:
-      matrix:
-        node: [12, 14]
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repo
@@ -26,7 +23,7 @@ jobs:
       - name: ⎔ Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 14
 
       - name: 📥 Download deps (main)
         uses: bahmutov/npm-install@v1
