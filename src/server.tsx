@@ -39,6 +39,8 @@ function setup({
   handlers: Array<RequestHandler>
 }): SetupServerApi | SetupWorkerApi {
   const enhancedHandlers = handlers.map(handler => {
+    // @ts-expect-error it's protected but.....
+    const originalResolver = handler.resolver
     const enhancedResolver: Parameters<typeof rest.get>[1] = async (
       req,
       res,
@@ -48,9 +50,7 @@ function setup({
         if (shouldFail(req)) {
           throw new Error('Request failure (for testing purposes).')
         }
-        // @ts-expect-error the request body type is unknown
-        // and I don't care enough to fix that.
-        const result = await handler.resolver(req, res, ctx)
+        const result = await originalResolver(req, res, ctx)
         return result
       } catch (error: unknown) {
         // @ts-expect-error handling the error case... ugh...
@@ -69,10 +69,9 @@ function setup({
         await sleep(delay)
       }
     }
-    return {
-      ...handler,
-      resolver: enhancedResolver,
-    }
+    // @ts-expect-error not sure of a reasonable way to do this otherwise...
+    handler.resolver = enhancedResolver
+    return handler
   })
   if (process.env.NODE_ENV === 'test') {
     Object.assign(server, setupServer(...enhancedHandlers))
