@@ -454,7 +454,7 @@ function renderReactApp({
                 >
                   <a
                     href={`${gitHubRepoUrl}/edit/main/${instruction.filePath}`}
-                    title="edit docs"
+                    title="edit docs (in the original repo, e.g. to fix typos)"
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                   >
