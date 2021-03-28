@@ -79,7 +79,7 @@
     "is-ci": "^3.0.0",
     "mdx-loader": "^3.0.2",
     "mq-polyfill": "^1.1.8",
-    "msw": "^0.27.0",
+    "msw": "^0.28.0",
     "node-match-path": "^0.6.1",
     "normalize.css": "^8.0.1",
     "raw-loader": "^4.0.2",
