@@ -34,10 +34,8 @@ jobs:
           useLockFile: false
 
       - name: 📥 Download deps (example)
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
-          working-directory: example/react-fundamentals
+        run: npm install --legacy-peer-deps
+        working-directory: example/react-fundamentals
 
       - name: ▶️ Run validate script (main)
         run: npm run validate
