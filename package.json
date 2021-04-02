@@ -60,14 +60,14 @@
     "validate": "npm run build && kcd-scripts validate test:coverage,typecheck,lint"
   },
   "dependencies": {
-    "@babel/runtime": "^7.13.9",
+    "@babel/runtime": "^7.13.10",
     "@emotion/core": "^10.0.35",
-    "@reach/tabs": "^0.13.2",
-    "@reach/tooltip": "^0.13.2",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@types/react": "^17.0.2",
-    "@types/react-dom": "^17.0.1",
+    "@reach/tabs": "^0.14.0",
+    "@reach/tooltip": "^0.14.0",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "chalk": "^4.1.0",
     "codegen.macro": "^4.1.0",
     "cross-env": "^7.0.3",
@@ -79,8 +79,8 @@
     "is-ci": "^3.0.0",
     "mdx-loader": "^3.0.2",
     "mq-polyfill": "^1.1.8",
-    "msw": "^0.28.0",
-    "node-match-path": "^0.6.1",
+    "msw": "^0.28.1",
+    "node-match-path": "^0.6.2",
     "normalize.css": "^8.0.1",
     "raw-loader": "^4.0.2",
     "react-error-boundary": "^3.1.1",
@@ -100,8 +100,8 @@
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-cypress": "^2.11.2",
     "identity-obj-proxy": "^3.0.0",
-    "kcd-scripts": "^8.0.2",
-    "postcss": "^8.2.7",
+    "kcd-scripts": "^8.1.1",
+    "postcss": "^8.2.9",
     "postcss-cli": "^8.3.1",
     "preval.macro": "^5.0.0",
     "react": "0.0.0-experimental-e5d06e34b",
@@ -132,7 +132,8 @@
       "guard-for-in": "off",
       "react/display-name": "off",
       "react/prop-types": "off",
-      "import/no-unresolved": "off"
+      "import/no-unresolved": "off",
+      "@typescript-eslint/sort-type-union-intersection-members": "off"
     }
   }
 }
