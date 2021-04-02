@@ -72,9 +72,8 @@ function makeKCDWorkshopApp({
       serviceWorker = {url: '/mockServiceWorker.js'},
       ...rest
     } = backend
-    const server = setupServer({handlers}) as SetupWorkerApi
     if (process.env.NODE_ENV !== 'test') {
-      // eslint-disable-next-line no-void
+      const server = setupServer({handlers}) as SetupWorkerApi
       void server.start({
         quiet,
         serviceWorker,
