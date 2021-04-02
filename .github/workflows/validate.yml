@@ -34,7 +34,10 @@ jobs:
           useLockFile: false
 
       - name: 📥 Download deps (example)
-        run: cd example/react-fundamentals && npm install
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: example/react-fundamentals
 
       - name: ▶️ Run validate script (main)
         run: npm run validate
