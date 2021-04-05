@@ -110,6 +110,7 @@ Thanks goes to these people ([emoji key][emojis]):
     <td align="center"><a href="http://peter.hozak.info/"><img src="https://avatars0.githubusercontent.com/u/1087670?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Peter Hozák</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=Aprillion" title="Code">💻</a> <a href="https://github.com/kentcdodds/react-workshop-app/commits?author=Aprillion" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/dan-overton"><img src="https://avatars0.githubusercontent.com/u/846955?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dan Overton</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=dan-overton" title="Code">💻</a></td>
     <td align="center"><a href="https://redd.one"><img src="https://avatars.githubusercontent.com/u/14984911?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Artem Zakharchenko</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/commits?author=kettanaito" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/0xnoob"><img src="https://avatars.githubusercontent.com/u/49793844?v=4?s=100" width="100px;" alt=""/><br /><sub><b>0xnoob</b></sub></a><br /><a href="https://github.com/kentcdodds/react-workshop-app/issues?q=author%3A0xnoob" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
