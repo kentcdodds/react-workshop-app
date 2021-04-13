@@ -1,6 +1,9 @@
 import chalk from 'chalk'
 
-function alfredTip(shouldThrow: unknown | (() => unknown), tip: string) {
+function alfredTip(
+  shouldThrow: unknown | (() => unknown),
+  tip: string | (() => string),
+) {
   if (typeof shouldThrow === 'function') {
     try {
       shouldThrow = shouldThrow()
@@ -10,7 +13,8 @@ function alfredTip(shouldThrow: unknown | (() => unknown), tip: string) {
   }
   if (!shouldThrow) return
 
-  const error = new Error(chalk.red(`🚨 ${tip}`))
+  const tipString = typeof tip === 'function' ? tip() : tip
+  const error = new Error(chalk.red(`🚨 ${tipString}`))
   // get rid of the stack to avoid the noisy codeframe
   error.stack = ''
   throw error
