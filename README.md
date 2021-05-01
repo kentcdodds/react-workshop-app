@@ -5,7 +5,6 @@
 </div>
 
 ---
-
 <!-- prettier-ignore-start -->
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
