@@ -664,7 +664,6 @@ loadDevTools(() => {
     projectTitle: pkg.title,
     gitHubRepoUrl: \`https://github.com/kentcdodds/react-workshop-app\`,
     backend,
-    
   })
 })
 `;

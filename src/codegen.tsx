@@ -3,10 +3,8 @@ import {getAppInfo} from './get-app-info'
 
 function getCode({
   cwd = process.cwd(),
-  options,
 }: {
   cwd?: string
-  options?: Record<string, unknown>
 } = {}) {
   const {gitHubRepoUrl, filesInfo, hasBackend, imports} = getAppInfo({cwd})
   return `
@@ -28,7 +26,6 @@ loadDevTools(() => {
     projectTitle: pkg.title,
     gitHubRepoUrl: \`${gitHubRepoUrl}\`,
     ${hasBackend ? `backend,` : ''}
-    ${options ? `options: ${JSON.stringify(options)},` : ''}
   })
 })`.trim()
 }

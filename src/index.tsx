@@ -1,7 +1,7 @@
 import type {SetupWorkerApi} from 'msw'
 import preval from 'preval.macro'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import {createRoot} from 'react-dom/client'
 import {createBrowserHistory} from 'history'
 import {setup as setupServer} from './server'
 import {renderReactApp} from './react-app'
@@ -40,7 +40,6 @@ function makeKCDWorkshopApp({
   filesInfo,
   projectTitle,
   backend,
-  options = {},
   ...otherWorkshopOptions
 }: {
   imports: Imports
@@ -98,18 +97,9 @@ function makeKCDWorkshopApp({
       )
       return
     }
-    if (options.concurrentMode) {
-      /* eslint-disable */
-      // @ts-expect-error I don't care enough to be type safe here
-      const root = (ReactDOM.unstable_createRoot || ReactDOM.createRoot)(rootEl)
-      root.render(ui)
-      unmount = () => root.unmount()
-      /* eslint-enable */
-    } else {
-      ReactDOM.render(ui, rootEl)
-
-      unmount = () => ReactDOM.unmountComponentAtNode(rootEl)
-    }
+    const root = createRoot(rootEl)
+    root.render(ui)
+    unmount = () => root.unmount()
   }
 
   function escapeForClassList(name: string) {
