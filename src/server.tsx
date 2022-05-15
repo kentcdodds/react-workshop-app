@@ -1,7 +1,6 @@
 import type {RequestHandler, MockedRequest, SetupWorkerApi} from 'msw'
 import type {SetupServerApi} from 'msw/node'
-import {setupWorker, rest} from 'msw'
-import {setupServer} from 'msw/node'
+import {rest} from 'msw'
 import {match} from 'node-match-path'
 
 const getKey = (name: string) => `__react_workshop_app_${name}__`
@@ -74,9 +73,15 @@ function setup({
     return handler
   })
   if (process.env.NODE_ENV === 'test') {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const {setupServer} = require('msw/node')
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     Object.assign(server, setupServer(...enhancedHandlers))
     return server
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const {setupWorker} = require('msw')
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     Object.assign(server, setupWorker(...enhancedHandlers))
     return server
   }
