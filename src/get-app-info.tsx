@@ -28,8 +28,8 @@ function getAppInfo({cwd = process.cwd()}: {cwd?: string} = {}): {
     let loaders = ''
     if (ext === '.html') {
       loaders = '!raw-loader!'
-    } else if (ext === '.md' || ext === '.mdx') {
-      loaders = '!babel-loader!mdx-loader!'
+      // } else if (ext === '.md' || ext === '.mdx') {
+      //   loaders = '!babel-loader!@mdx-js/loader!'
     }
     const relativePath = filePath.replace('src/', './')
     return `"${id}": () => import("${loaders}${relativePath}")`

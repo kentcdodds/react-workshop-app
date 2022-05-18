@@ -27,6 +27,7 @@
     "dev-tools-build",
     "codegen.d.ts",
     "codegen.js",
+    "craco.config.js",
     "setup-tests.d.ts",
     "setup-tests.js",
     "dev-tools.d.ts",
@@ -62,6 +63,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@emotion/core": "^10.0.35",
+    "@mdx-js/loader": "^2.1.1",
     "@reach/tabs": "^0.14.0",
     "@reach/tooltip": "^0.14.0",
     "@testing-library/jest-dom": "^5.16.4",
@@ -77,7 +79,6 @@
     "glob": "^7.1.6",
     "history": "^4.10.1",
     "is-ci": "^3.0.0",
-    "mdx-loader": "^3.0.2",
     "mq-polyfill": "^1.1.8",
     "msw": "^0.28.1",
     "node-match-path": "^0.6.2",
