@@ -63,6 +63,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@emotion/core": "^10.0.35",
+    "@mapbox/rehype-prism": "^0.8.0",
     "@mdx-js/loader": "^2.1.1",
     "@reach/tabs": "^0.14.0",
     "@reach/tooltip": "^0.14.0",
