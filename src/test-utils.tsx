@@ -19,13 +19,13 @@ function alfredTip(
 
   const tipString = typeof tip === 'function' ? tip(caughtError) : tip
   const error = new Error(chalk.red(`🚨 ${tipString}`))
-  // get rid of the stack to avoid the noisy codeframe
-  error.stack = ''
   if (displayEl) {
     const el =
       typeof displayEl === 'function' ? displayEl(caughtError) : document.body
     error.message += `\n\n${chalk.reset(prettyDOM(el))}`
   }
+  // get rid of the stack to avoid the noisy codeframe
+  error.stack = error.message
   throw error
 }
 
